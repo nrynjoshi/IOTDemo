@@ -5,7 +5,7 @@ import json
 
 import map_json_to_proper_naming
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 
 @app.route('/energy')
@@ -44,7 +44,7 @@ def parallel_coordinate_keys():
 
 @app.route('/')
 def index_page():
-    return 'Welcome to Demo Flash App for D3.js'
+    return app.send_static_file('index.html')  # Return index.html from the static folder
 
 
 if __name__ == '__main__':
