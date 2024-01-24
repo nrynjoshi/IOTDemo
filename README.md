@@ -20,3 +20,8 @@ This application is based on producing a sample IOT demo app using d3.js for fro
 ```
     npm start
 ```
+#  Accessing Reactjs using python (Build process for deployment )
+1. Run the build.bat file - this will build the reactjs and copy the final build copies to static folder to serve from python (for more information, you can see the postbuild.js file under frontend folder)
+2. Run the python application
+3. if deploying this application on server than deploy using python project
+4. Enjoy the application using web browsers
