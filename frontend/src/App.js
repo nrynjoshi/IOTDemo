@@ -13,12 +13,14 @@ class App extends React.Component {
         <div>D3.js with Reactjs Sample Demo App</div>
           <div>
           
+            <div>
+            <SankeyDiagram width={928} height={600}></SankeyDiagram>
+            </div>
+            
             <hr></hr>
-            <SankeyDiagram></SankeyDiagram> 
+            <ForceDirectedGraph  width={928} height={600}></ForceDirectedGraph>
             <hr></hr>
-            <ForceDirectedGraph></ForceDirectedGraph>
-            <hr></hr>
-            <MobilePatentSuits></MobilePatentSuits>
+            <MobilePatentSuits  width={928} height={600}></MobilePatentSuits>
           </div>
            <div>
            </div>

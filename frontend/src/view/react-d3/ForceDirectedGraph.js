@@ -36,8 +36,8 @@ class ForceDirectedGraph extends React.Component {
 
         if(data != null && httpErrorMessage == null){
            // Specify the dimensions of the chart.
-            const width = 928;
-            const height = 600;
+            const width = this.props.width;
+            const height = this.props.height;
 
             SankeyDiagramDisplay(width, height, data, nodeAlignment, linkColor, "SvgContainerIdForForceDirectedGraph")   
         }
