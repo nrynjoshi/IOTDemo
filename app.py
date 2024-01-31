@@ -17,10 +17,6 @@ def energy_json():
 @app.route('/force-directed-graph')
 def force_directed_graph():
     response = file_util.read_file(r'.\data\force-directed-graph.json')
-
-    response = map_json_to_proper_naming.change_jsonKeyName(response, "nodes", "id", "name")
-    response = map_json_to_proper_naming.change_jsonKeyName(response, "nodes", "group", "category")
-
     return response
 
 
