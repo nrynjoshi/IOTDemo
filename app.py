@@ -37,6 +37,10 @@ def parallel_coordinate_keys():
     response = file_util.read_file(r'.\data\parallel-coordinate-keys.json')
     return response
 
+@app.route('/todo-list')
+def todo_list():
+    response = file_util.read_file(r'.\data\todo-list.json')
+    return response
 
 @app.route('/')
 def index_page():
