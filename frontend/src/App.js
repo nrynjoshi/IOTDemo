@@ -6,7 +6,11 @@ import ForceDirectedGraph from './view/component/ForceDirectedGraph';
 import ParallelCoordinates from "./view/component/ParallelCoordinates";
 import {BACKEND_API_CALL} from "./view/util/Constant";
 import PatientDashboard from "./view/component/PatientDashboard";
-
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import ActivityTrack from "./view/component/ActivityTrack";
+import Analysis from "./view/component/Analysis";
+import EmergencyContact from "./view/component/EmergencyContact";
+import Inbox from "./view/component/Inbox";
 
 
 class App extends React.Component {
@@ -16,39 +20,49 @@ class App extends React.Component {
 
 
     return (
-        //className="App"
-        <div>
 
-            <div className="bg-neutral-500 shadow-lg shadow-cyan-500/50 w-full h-12 header">
-                <ul>
-                    <li><a href="/">Dashboard</a></li>
-                    <li><a href="/">Activities Track</a></li>
-                    <li><a href="/">Analysis</a></li>
-                    <li><a href="/">Emergency Contacts</a></li>
-                    <li><a href="/">Inbox</a></li>
-                </ul>
-            </div>
-            <div className="m-4">
-                <PatientDashboard></PatientDashboard>
-
-            </div>
-            <hr></hr>
-            <div>D3.js with Reactjs Sample Demo App</div>
+        <Router>
             <div>
-                <SankeyDiagram dataEndpoint={BACKEND_API_CALL + '/energy'}></SankeyDiagram>
-                <hr></hr>
-                <ForceDirectedGraph dataEndpoint={BACKEND_API_CALL + '/force-directed-graph'}></ForceDirectedGraph>
-                <hr></hr>
-                <MobilePatentSuits dataEndpoint={BACKEND_API_CALL + '/mobile-patent-suits'}></MobilePatentSuits>
-                <hr></hr>
-                <ParallelCoordinates dataEndpoint={BACKEND_API_CALL + '/parallel-coordinate-cars'}
-                                     keysEndpoint={BACKEND_API_CALL + '/parallel-coordinate-keys'}></ParallelCoordinates>
-            </div>
-            <div>
-            </div>
+
+                <div className="bg-neutral-500 shadow-lg shadow-cyan-500/50 w-full h-12 header">
+                    <ul>
+                        <li><a href="/" className="bg-black">Dashboard</a></li>
+                        <li><a href="/activities-track" >Activities Track</a></li>
+                        <li><a href="/analysis">Analysis</a></li>
+                        <li><a href="/emergency-contacts">Emergency Contacts</a></li>
+                        <li><a href="/inbox">Inbox</a></li>
+                    </ul>
+                </div>
+                <div className="m-4">
+                    <Routes>
+                        <Route path="/" element={<PatientDashboard />} />
+                        <Route path="/activities-track" element={<ActivityTrack />} />
+                        <Route path="/analysis" element={<Analysis />} />
+                        <Route path="/emergency-contacts" element={<EmergencyContact />} />
+                        <Route path="/inbox" element={<Inbox />} />
+
+                    </Routes>
 
 
-        </div>
+                </div>
+                <hr></hr>
+                <div>D3.js with Reactjs Sample Demo App</div>
+                <div>
+                    <SankeyDiagram dataEndpoint={BACKEND_API_CALL + '/energy'}></SankeyDiagram>
+                    <hr></hr>
+                    <ForceDirectedGraph dataEndpoint={BACKEND_API_CALL + '/force-directed-graph'}></ForceDirectedGraph>
+                    <hr></hr>
+                    <MobilePatentSuits dataEndpoint={BACKEND_API_CALL + '/mobile-patent-suits'}></MobilePatentSuits>
+                    <hr></hr>
+                    <ParallelCoordinates dataEndpoint={BACKEND_API_CALL + '/parallel-coordinate-cars'}
+                                         keysEndpoint={BACKEND_API_CALL + '/parallel-coordinate-keys'}></ParallelCoordinates>
+                </div>
+                <div>
+                </div>
+
+
+            </div>
+            </Router>
     );
   }
 
