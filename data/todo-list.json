@@ -14,5 +14,23 @@
         "value":"You have to hydrate yourself now.",
         "time":"6:00 am",
         "repeat_time":"30 min"
+    },
+    {
+        "key":"EAT_LUNCH",
+        "value":"You have to take your lunch now.",
+        "time":"6:00 am",
+        "repeat_time":"30 min"
+    },
+    {
+        "key":"EAT_DINNER",
+        "value":"You have to take your dinner now.",
+        "time":"6:00 am",
+        "repeat_time":"30 min"
+    },
+    {
+        "key":"BED_TIME",
+        "value":"It's your bed time.",
+        "time":"6:00 am",
+        "repeat_time":"30 min"
     }
 ]

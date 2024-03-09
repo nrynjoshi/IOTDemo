@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Joe",
+    "relationship": "uncle",
+    "contact_number": "0777778888",
+    "address": "8 abc street london",
+    "priority": "1"
+  },
+  {
+    "name": "St. Hospital",
+    "relationship": "hospital",
+    "contact_number": "999",
+    "address": "81 abc street london",
+    "priority": "2"
+  }
+]
