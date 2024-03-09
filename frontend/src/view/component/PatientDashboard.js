@@ -1,6 +1,4 @@
 import React from "react";
-import HttpClient from "../util/HttpClient"
-import GaugeChart from 'react-gauge-chart'
 import {BACKEND_API_CALL} from "../util/Constant";
 import SankeyDiagram from "./SankeyDiagram";
 import TodoList from "./TodoList";
@@ -8,7 +6,7 @@ import PageTitle from "./PageTitle";
 
 class PatientDashboard extends React.Component {
 
-    state = {dataCar: null, dataKeys:null, colorEncoding: "weight (lb)", httpErrorMessage: null, isLoading: false};
+    state = { dataKeys:null, httpErrorMessage: null, isLoading: false};
 
     componentDidMount() {
 
@@ -21,14 +19,9 @@ class PatientDashboard extends React.Component {
 
     }
 
-    handleColorEncodingChange = (e) => {
-        console.log('handleColorEncodingChange called');
-        this.setState({colorEncoding: e.target.value});
-    }
-
 
     render() {
-        const {httpErrorMessage, colorEncoding,isLoading, dataCar} = this.state
+        const {httpErrorMessage,isLoading, dataCar} = this.state
         return (<div>
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
@@ -37,67 +30,114 @@ class PatientDashboard extends React.Component {
 
             <div className="">
                 <div className="grid grid-rows-3 grid-flow-col gap-4">
-                    <div className="row-span-2">
-                        <div className="bg-amber-500 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
-                            <h2>Today Todo List</h2>
+                    <div className="row-span-2 bg-white">
+                        <div className="shadow-lg" >
+                            <h2 className="font-bold">Today Todo List</h2>
                             <TodoList dataEndpoint={BACKEND_API_CALL + '/todo-list'}></TodoList>
                         </div>
 
+<hr></hr>
+
                     </div>
                     <div className="row-span-3">
-                        <div className="grid grid-cols-6 gap-6 mt-3">
+                        <div className="grid grid-cols-4 gap-4 mt-3">
 
-                            <div className="shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
                                 <h2>Heart Rate</h2>
-                                <GaugeChart id="gauge-chart5"
-                                            nrOfLevels={420}
-                                            arcsLength={[0.2, 0.6, 0.2]}
-                                            colors={['#F5CD19','#5BE12C', '#EA4228']}
-                                            percent={1.20}
-                                            textColor = {'#5BE12C'}
-                                            formatTextValue={value => value}
-                                            arcPadding={0.02}
-                                />
+                                <div className="flex items-center">
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">98</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="50" height="50"
+                                    class="text-red-500">
+                                    <path fill-rule="evenodd"
+                                        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                </div>
+                                <span className="text-base font-bold text-center p-3">Min:</span>
+                                <span className="text-base font-bold text-center p-3">Max:</span>
+                                
 
                             </div>
 
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
-                                <h2>Blood Oxygen Saturation (SPO2)</h2>
-
+                            <div className="bg-white shadow-2xl shadow-black-500/50 min-w-6 min-h-6">
+                                <h2>SPO2</h2>
+                                <div className="flex items-center">
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">95%</span>
+      
+                                </div>
+                                <span className="text-base font-bold text-center p-3">Min:</span>
+                                <span className="text-base font-bold text-center p-3">Max:</span>
                             </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
                                 <h2>Respiratory Rate</h2>
+                                <div className="flex items-center">
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">12</span>
+                                
+                                </div>
+                                <span className="text-base font-bold text-center p-3">Min:</span>
+                                <span className="text-base font-bold text-center p-3">Max:</span>
+                                
                             </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
                                 <h2>Body Temperature</h2>
+
+                                <div className="flex items-center">
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">99.1&#8457;</span>
+                                
+                                </div>
+                                <span className="text-base font-bold text-center p-3">Min:</span>
+                                <span className="text-base font-bold text-center p-3">Max:</span>
                             </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
                                 <h2>Blood Pressure</h2>
+
+                                <div className="flex items-center">
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">90/60</span>
+                                
+                                </div>
+                                <span className="text-base font-bold text-center p-3">Min:</span>
+                                <span className="text-base font-bold text-center p-3">Max:</span>
+
                             </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
                                 <h2>Blood Sugar</h2>
+                                <div className="flex items-center">
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">95 mg/dl</span>
+                                
+                                </div>
+                                <span className="text-base font-bold text-center p-3">Min:</span>
+                                <span className="text-base font-bold text-center p-3">Max:</span>
                             </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
                                 <h2>Metal Status</h2>
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">Happy</span>
                             </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
-                                <h2>Dietary Habits</h2>
-                            </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                            
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
                                 <h2>Hydration</h2>
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">Looks Ok</span>
                             </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
                                 <h2>Sleep Pattern</h2>
+                                <div className="flex items-center">
+                                    <span className="text-red-500 text-6xl font-bold text-center p-3">6 hrs 8min</span>
+                                </div>
+                                <span className="text-base font-bold text-center p-3">Night Awakening: 0</span>
                             </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
-                                <h2>Medication Adherence</h2>
-                            </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
-                                <h2>Emergency Contact </h2>
-                            </div>
-                            <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
-                                <h2>Urine Status</h2>
-                                volume and color
+
+                            <div className="bg-white shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
+                                <h2>Steps</h2>
+                                <div className="flex items-center">
+                                <span className="text-red-500 text-6xl font-bold text-center p-3">98</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="50" height="50"
+                                    class="text-red-500">
+                                    <path fill-rule="evenodd"
+                                        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                </div>
+                                <span className="text-base font-bold text-center p-3">Min:</span>
+                                <span className="text-base font-bold text-center p-3">Max:</span>
                             </div>
 
 
@@ -106,12 +146,7 @@ class PatientDashboard extends React.Component {
                 </div>
 
             </div>
-            <div className="ml-2">
-                <div className="bg-red-100 shadow-lg shadow-cyan-500/50 min-w-6 min-h-6">
-                    <h2>Urine Status</h2>
-                    <SankeyDiagram dataEndpoint={BACKEND_API_CALL + '/energy'}></SankeyDiagram>
-                </div>
-            </div>
+           
 
 
         </div>);

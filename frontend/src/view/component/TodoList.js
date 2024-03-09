@@ -1,7 +1,7 @@
 import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
 import HttpClient from "../util/HttpClient"
-import {createForceDirectedGraphSVG} from "../react-d3/ForceDirectedGraphD3"
+
 
 
 
