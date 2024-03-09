@@ -46,9 +46,14 @@ def todo_list():
 def index_page():
     return app.send_static_file('index.html')  # Return index.html from the static folder
 
-@app.route('/current_heart_rate')
+@app.route('/current-heart-rate')
 def current_heart_rate():
     return "{ \"value\": \" + 80 + \"}"
+
+@app.route('/emergency-contacts')
+def emergency_contacts():
+    response = file_util.read_file(r'.\data\emergency-contacts.json')
+    return response
 
 
 if __name__ == '__main__':
