@@ -1,5 +1,7 @@
 import React from "react";
 import PageTitle from "./PageTitle";
+import {BACKEND_API_CALL} from "../util/Constant";
+import SankeyDiagram from "./SankeyDiagram";
 
 class ActivityTrack extends React.Component {
 
@@ -17,7 +19,11 @@ class ActivityTrack extends React.Component {
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
                 <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> : <span></span>)}
-<PageTitle title="Activity Tracks"></PageTitle>
+            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6">
+                <PageTitle title="Montly Based Habitual Diagram"></PageTitle>
+                <SankeyDiagram dataEndpoint={BACKEND_API_CALL + '/activity-tracks'}></SankeyDiagram>
+
+            </div>
 
 
         </div>);
