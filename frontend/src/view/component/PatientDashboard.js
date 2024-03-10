@@ -48,7 +48,7 @@ class PatientDashboard extends React.Component {
                     <div className="row-span-3">
                         <div className="grid grid-cols-4 gap-4">
 
-                            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6">
+                            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6 blink">
                                 <h2>Heart Rate</h2>
                                 <div className="flex items-center">
                                 <span className="text-red-500 text-6xl font-bold text-center p-3">98</span>

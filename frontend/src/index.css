@@ -47,3 +47,11 @@ code {
   background-color: #111111;
 }
 /* end header section css*/
+
+.blink {
+  background-color: white;
+  -webkit-animation: blink 800ms step-end infinite;
+          animation: blink 800ms step-end infinite;
+}
+@-webkit-keyframes blink { 50% { background-color: rgb(255, 154, 154); color: white !important; }}
+      @keyframes blink { 50% { background-color: rgb(255, 154, 154); ; color: white !important; }}
