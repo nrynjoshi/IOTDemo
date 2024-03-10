@@ -5,8 +5,8 @@ import * as d3SankeyJS from "d3-sankey";
 export const createSankeyDiagramSVG = (data, linkColor, nodeAlignment) => {
 
         // Specify the dimensions of the chart.
-        const width = 928;
-        const height = 600;
+        const width = 1200;
+        const height = 700;
         const format = d3.format(",.0f");
         const color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -95,7 +95,11 @@ export const createSankeyDiagramSVG = (data, linkColor, nodeAlignment) => {
             .attr("y", d => (d.y1 + d.y0) / 2)
             .attr("dy", "0.35em")
             .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
-            .text(d => d.name);
+            .text(d => d.name)
+        .style("font-size", "18px");
 
         return svg.node();
     }
+
+    // Helper function to convert node names to angles
+

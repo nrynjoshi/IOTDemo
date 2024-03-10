@@ -56,30 +56,30 @@ class SankeyDiagram extends React.Component {
 
     render() {
         const {httpErrorMessage, linkColor, nodeAlignment, isLoading, data} = this.state
-        return (<div>
+        return (<div className="p-1 pl-3">
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
                 <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> : <span></span>)}
-            <h2>Sankey Diagram</h2>
-            <div>
-                Link color &nbsp;
-                <select value={linkColor} onChange={this.handleLinkColorChange}>
-                    <option value="#aaa">static</option>
-                    {/* <option value="source-target">source-target</option> */}
-                    <option value="source">source</option>
-                    <option value="target">target</option>
-                </select>
-            </div>
-            <div>
-                Node alignment &nbsp;
+            {/*<h2>Sankey Diagram</h2>*/}
+            {/*<div>*/}
+            {/*    Link color &nbsp;*/}
+            {/*    <select value={linkColor} onChange={this.handleLinkColorChange}>*/}
+            {/*        <option value="#aaa">static</option>*/}
+            {/*        /!* <option value="source-target">source-target</option> *!/*/}
+            {/*        <option value="source">source</option>*/}
+            {/*        <option value="target">target</option>*/}
+            {/*    </select>*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    Node alignment &nbsp;*/}
 
-                <select value={nodeAlignment} onChange={this.handleNodeAlignmentChange}>
-                    <option value="sankeyLeft">left</option>
-                    <option value="sankeyRight">right</option>
-                    <option value="sankeyCenter">center</option>
-                    <option value="sankeyJustify">justify</option>
-                </select>
-            </div>
+            {/*    <select value={nodeAlignment} onChange={this.handleNodeAlignmentChange}>*/}
+            {/*        <option value="sankeyLeft">left</option>*/}
+            {/*        <option value="sankeyRight">right</option>*/}
+            {/*        <option value="sankeyCenter">center</option>*/}
+            {/*        <option value="sankeyJustify">justify</option>*/}
+            {/*    </select>*/}
+            {/*</div>*/}
 
             {data && <div id="SvgContainerId"></div>}
 
