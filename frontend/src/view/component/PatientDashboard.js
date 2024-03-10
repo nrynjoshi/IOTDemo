@@ -31,7 +31,6 @@ class PatientDashboard extends React.Component {
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
                 <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> : <span></span>)}
-<PageTitle title="Dashboard"></PageTitle>
 
             <div className="">
                 <div className="grid grid-rows-3 grid-flow-col gap-4">
