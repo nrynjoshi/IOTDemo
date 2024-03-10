@@ -55,6 +55,11 @@ def emergency_contacts():
     response = file_util.read_file(r'.\data\emergency-contacts.json')
     return response
 
+@app.route('/activity-tracks')
+def activity_tracks():
+    response = file_util.read_file(r'.\data\activity-tracks.json')
+    return response
+
 
 if __name__ == '__main__':
     app.run()
