@@ -32,10 +32,6 @@ class EmergencyContact extends React.Component {
      render(){
         const { httpErrorMessage, isLoading, data} = this.state
 
-         const handleChange = () => {
-            console.log("clicked checkbox")
-          };
-
             return (
             <div><ErrorBoundary>
 
