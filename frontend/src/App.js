@@ -10,6 +10,7 @@ import Inbox from "./view/component/Inbox";
 import Demo from "./view/component/Demo";
 import PageNotFound from "./view/component/PageNotFound";
 import {BACKEND_API_CALL} from "./view/util/Constant";
+import DateTime from './view/util/DateTime';
 
 class App extends React.Component {
 
@@ -29,10 +30,12 @@ class App extends React.Component {
                          <li><NavLink to="/inbox" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white";}}>Inbox</NavLink></li>
                          <li><NavLink to="/demo" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white";}}>Demo</NavLink></li>
                      </ul>
-
+                     
                  </div>
                  <div >
+                 <div className="text-right"><DateTime></DateTime></div>
                  <div className="m-4">
+                 
                      <Routes>
                          <Route path="/" element={<PatientDashboard/>}/>
                          <Route path="/activities-track" element={<ActivityTrack/>}/>
