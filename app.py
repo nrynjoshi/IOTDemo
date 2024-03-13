@@ -1,12 +1,10 @@
 from flask import Flask
 
 import file_util
-import json
-
-import map_json_to_proper_naming
+from flask_cors import CORS
 
 app = Flask(__name__, static_url_path='')
-
+cors = CORS(app, origins=["http://localhost:3000"])
 
 @app.route('/energy')
 def energy_json():
