@@ -48,16 +48,19 @@ class TodoList extends React.Component {
                 )}
                 {data && data.map((todoListObj) => (
 
-                    <label>
-                        <input
-                            type="checkbox"
-                            // checked={checked}
-                            defaultValue={todoListObj.key}
-                            onChange={handleChange}
-                        />
-                        {todoListObj.value} <br/>
-                    </label>
-                )
+                        <div className="card">
+                            <p>{todoListObj.question}</p>
+                            {todoListObj.options.map((option) => (
+                                
+                                <div>
+                                    <input type="radio" id="html" name={todoListObj.key} value={option}/>
+                                      <label for="html">{option}</label><br/>
+                                </div>
+                            ))}
+                             
+                        </div>
+                  
+                    )
                     )}
 
             </ErrorBoundary></div>
