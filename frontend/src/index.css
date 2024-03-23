@@ -55,3 +55,15 @@ code {
 }
 @-webkit-keyframes blink { 50% { background-color: rgb(255, 154, 154); color: white !important; }}
       @keyframes blink { 50% { background-color: rgb(255, 154, 154); ; color: white !important; }}
+
+.datetime{
+  float: right !important;
+  color: white;
+}
+
+.card{
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: white;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
