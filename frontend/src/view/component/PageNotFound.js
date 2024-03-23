@@ -18,7 +18,7 @@ class PageNotFound extends React.Component {
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
                 <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> : <span></span>)}
 <PageTitle title="Unknow Page"></PageTitle>
-<div> Page does not exist. click here to go to home page</div>
+<div className="card"> Page does not exist. click here to go to home page</div>
 
         </div>);
     }

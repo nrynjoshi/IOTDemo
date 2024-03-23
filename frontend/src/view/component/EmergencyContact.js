@@ -42,7 +42,7 @@ class EmergencyContact extends React.Component {
                 )}
                 {data && data.map((emergencyContact) => (
 
-                    <div className="bg-white mb-3">
+                    <div className="card">
                         <div>Name: {emergencyContact.name}</div>
                         <div>Contact Number: {emergencyContact.contact_number}</div>
                         <div>Address: {emergencyContact.address}</div>

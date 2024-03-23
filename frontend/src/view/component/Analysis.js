@@ -17,42 +17,42 @@ class Analysis extends React.Component {
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
                 <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> : <span></span>)}
-
+                    <PageTitle title="Montly Health Record Analysis"></PageTitle>
 
 <div>
                         <div className="grid grid-cols-2 gap-2">
 
-                            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6">
+                            <div className="card">
                             <PageTitle title="Heart Rate Analysis"></PageTitle>
-                            charts goes here
+                            here we can show the max, min value of heart rate as well as average heart rate for that day
 
                             </div>
 
-                            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6">
+                            <div className="card">
                             <PageTitle title="SPO2 Analysis"></PageTitle>
                             charts goes here
 
                             </div>
 
-                            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6">
+                            <div className="card">
                             <PageTitle title="Blood Sugar Analysis"></PageTitle>
                             charts goes here
 
                             </div>
 
-                            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6">
+                            <div className="card">
                             <PageTitle title="Blood Temperature Analysis"></PageTitle>
                             charts goes here
 
                             </div>
 
-                            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6">
+                            <div className="card">
                             <PageTitle title="Sleep Pattern Analysis"></PageTitle>
                             charts goes here
 
                             </div>
 
-                            <div className="bg-white shadow-lg shadow-grey-500/50 min-w-6 min-h-6">
+                            <div className="card">
                             <PageTitle title="Steps Analysis"></PageTitle>
                             charts goes here
 
