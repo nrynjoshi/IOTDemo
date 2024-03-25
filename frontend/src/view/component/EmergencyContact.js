@@ -40,18 +40,22 @@ class EmergencyContact extends React.Component {
                 ) : (httpErrorMessage ? <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2>:
                 <span></span>
                 )}
+                <div className="grid grid-cols-2 gap-2">
                 {data && data.map((emergencyContact) => (
+                        
+                            <div className="card">
+                                <div>Name: <span className="font-bold">{emergencyContact.name}</span></div>
+                                <div>Contact Number: {emergencyContact.contact_number}</div>
+                                <div>Address: {emergencyContact.address}</div>
+                                <div>Relationship: {emergencyContact.relationship}</div>
+                                <div>Action: <a href="tel:55">Call (work left)</a></div>
+                            </div>
 
-                    <div className="card">
-                        <div>Name: {emergencyContact.name}</div>
-                        <div>Contact Number: {emergencyContact.contact_number}</div>
-                        <div>Address: {emergencyContact.address}</div>
-                        <div>Relationship: {emergencyContact.relationship}</div>
-                        <div>Action: <a href="tel:55">Call (work left)</a></div>
-                    </div>
+                       
+                   
                 )
                     )}
-
+            </div>
             </ErrorBoundary></div>
             );
      }

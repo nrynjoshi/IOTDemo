@@ -2,6 +2,8 @@ import React from "react";
 import PageTitle from "./PageTitle";
 import {BACKEND_API_CALL} from "../util/Constant";
 import SankeyDiagram from "./SankeyDiagram";
+import ForceDirectedGraph from "./ForceDirectedGraph";
+import ParallelCoordinates from "./ParallelCoordinates";
 
 class ActivityTrack extends React.Component {
 
@@ -25,6 +27,20 @@ class ActivityTrack extends React.Component {
 
             </div>
 
+            <div className="card">
+                <PageTitle title="Montly Based Habitual Diagram"></PageTitle>
+                <ForceDirectedGraph dataEndpoint={BACKEND_API_CALL + '/force-directed-graph'}></ForceDirectedGraph>
+
+            </div>
+
+            <div className="card">
+                <PageTitle title="Montly Based Habitual Diagram"></PageTitle>
+                <ParallelCoordinates dataEndpoint={BACKEND_API_CALL + '/parallel-coordinate-cars'}
+                                     keysEndpoint={BACKEND_API_CALL + '/parallel-coordinate-keys'}></ParallelCoordinates>
+
+            </div>
+
+            
 
         </div>);
     }
