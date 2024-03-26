@@ -1,0 +1,162 @@
+{
+  "nodes": [
+    {
+      "name": "Wake Up",
+      "category": "AWAKE"
+    },
+       {
+      "name": "Breakfast",
+      "category": "EATING"
+    }, {
+      "name": "Tea",
+      "category": "LIQUID_DRINK"
+    }, {
+      "name": "Water intake",
+      "category": "LIQUID_DRINK"
+    }, {
+      "name": "Coffee",
+      "category": "LIQUID_DRINK"
+    }, {
+      "name": "Early Medication",
+      "category": "DRUGS"
+    }, {
+      "name": "Afternoon Medication",
+      "category": "DRUGS"
+    }, {
+      "name": "Evening Medication",
+      "category": "DRUGS"
+    }, {
+      "name": "Before Bed Medication",
+      "category": "DRUGS"
+    }, {
+      "name": "Medication",
+      "category": "DRUGS"
+    }, {
+      "name": "Lunch",
+      "category": "EATING"
+    }, {
+      "name": "Afternoon Snack",
+      "category": "EATING"
+    }, {
+      "name": "Dinner",
+      "category": "EATING"
+    }, {
+      "name": "Evening Snack",
+      "category": "EATING"
+    }, {
+      "name": "Bed Time",
+      "category": "BED_REST"
+    }, {
+      "name": "Walking",
+      "category": "WALKING"
+    }, {
+      "name": "Siting",
+      "category": "RESTING"
+    }, {
+      "name": "Using Phone",
+      "category": "ENTERTAINMENT"
+    }, {
+      "name": "Watching T.V",
+      "category": "ENTERTAINMENT"
+    }, {
+      "name": "Loo",
+      "category": "FRESH"
+    }, {
+      "name": "Bathing",
+      "category": "FRESH"
+    }, {
+      "name": "Newspaper",
+      "category": "READING"
+    }
+  ],
+  "links": [
+    {
+      "source": "Wake Up",
+      "target": "Loo",
+      "value": 5
+    },
+     {
+      "source": "Wake Up",
+      "target": "Breakfast",
+      "value": 12
+    },
+     {
+      "source": "Wake Up",
+      "target": "Water intake",
+      "value": 3
+    }, {
+      "source": "Wake Up",
+      "target": "Coffee",
+      "value": 0
+    }, {
+      "source": "Breakfast",
+      "target": "Coffee",
+      "value": 10
+    }, {
+      "source": "Breakfast",
+      "target": "Tea",
+      "value": 15
+    }, {
+      "source": "Breakfast",
+      "target": "Early Medication",
+      "value": 28
+    }, {
+      "source": "Early Medication",
+      "target": "Lunch",
+      "value": 30
+    }, {
+      "source": "Breakfast",
+      "target": "Newspaper",
+      "value": 8
+    }, {
+      "source": "Loo",
+      "target": "Breakfast",
+      "value": 15
+    }, {
+      "source": "Water intake",
+      "target": "Breakfast",
+      "value": 3
+    }, {
+      "source": "Lunch",
+      "target": "Afternoon Snack",
+      "value": 3
+    }, {
+      "source": "Lunch",
+      "target": "Coffee",
+      "value": 3
+    }, {
+      "source": "Lunch",
+      "target": "Watching T.V",
+      "value": 3
+    }, {
+      "source": "Lunch",
+      "target": "Using Phone",
+      "value": 3
+    }, {
+      "source": "Using Phone",
+      "target": "Watching T.V",
+      "value": 3
+    }, {
+      "source": "Afternoon Snack",
+      "target": "Tea",
+      "value": 3
+    }, {
+      "source": "Tea",
+      "target": "Dinner",
+      "value": 3
+    }, {
+      "source": "Lunch",
+      "target": "Walking",
+      "value": 3
+    }, {
+      "source": "Walking",
+      "target": "Siting",
+      "value": 3
+    }, {
+      "source": "Lunch",
+      "target": "Bathing",
+      "value": 3
+    }
+
+  ]
+}
