@@ -1,16 +1,34 @@
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import csv_json_util
 
+
+def getRecordsContainer(blob_name):
+    container_name = "records"  # Name of the container where your CSV file is stored
+    list = get_json_from_storage_container_csv_file(container_name, blob_name)
+    return list
+
+
+def getSelfMadeContainerData(blob_name):
+    container_name = "selfmadedata"  # Name of the container where your CSV file is stored
+    list = get_json_from_storage_container_csv_file(container_name, blob_name)
+    return list
+
+
+def getFitabaseContainerdata(blob_name):
+    container_name = "fitabasedata"  # Name of the container where your CSV file is stored
+    list = get_json_from_storage_container_csv_file(container_name, blob_name)
+    return list
+
+
+# -------------------------- main connection code portion start ---------------------------
+
 # Connection string for your Azure Storage Account
 connection_string = "DefaultEndpointsProtocol=https;AccountName=visualizationdataset;AccountKey=jPzuNJEDQ4EP0KQZ/eNSbIEQCtRBOLte6a8Dl7ipc9Y/UKuyfjGU189qLjH1qrXr5CtsjkjxPETB+AStTwOAFw==;EndpointSuffix=core.windows.net"
 
 
-def getRecords(blob_name):
+def get_json_from_storage_container_csv_file(container_name, blob_name):
     list = []
     try:
-        # Name of the container where your CSV file is stored
-        container_name = "records"
-
         csv_data = download_blob_from_storage(container_name, blob_name)
 
         list = csv_json_util.convert_csv_to_json(csv_data)
@@ -40,4 +58,3 @@ def download_blob_from_storage(container_name, blob_name):
     except Exception as e:
         print(f"Error downloading blob: {e}")
         return None
-
