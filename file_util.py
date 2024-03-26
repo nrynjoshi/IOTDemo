@@ -16,6 +16,3 @@ def read_csv_file(filename):
     data['header'] = list(df.columns.values)
     data['values'] = df.values.tolist()
     return data
-
-def dump_to_json(data):
-    return json.dumps(data)
