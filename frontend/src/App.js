@@ -10,12 +10,18 @@ import PageNotFound from "./view/component/PageNotFound";
 import {BACKEND_API_CALL} from "./view/util/Constant";
 import DateTime from './view/util/DateTime';
 import TodoList from './view/component/TodoList';
+import HttpRequestUtil from './view/util/HttpRequestUtil';
 
 class App extends React.Component {
-
-
+  
   render(){
+    // Call MyComponent to get jsonParams
+    const httpRequestUtil = new  HttpRequestUtil();
 
+    // Access jsonParams
+    const jsonParams = httpRequestUtil.render();
+
+    console.log(jsonParams);
     return (
          <BrowserRouter>
              <div className="w-full text-2xl App">
@@ -33,7 +39,7 @@ class App extends React.Component {
                  <div >
                 
                  <div className="m-4">
-                 
+                  {jsonParams.userId && (<span>Welcome, {jsonParams.userId}</span>)}
                      <Routes>
                          <Route path="/" element={<PatientDashboard/>}/>
                          <Route path="/todo-list" element={<TodoList dataEndpoint= {BACKEND_API_CALL + '/todo-list'}/>}/>
