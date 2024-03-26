@@ -1,5 +1,7 @@
 from flask import Flask
 
+import azure_blob_util
+import csv_json_util
 import file_util
 from flask_cors import CORS
 
@@ -39,24 +41,7 @@ def parallel_coordinate_keys():
 
 @app.route('/todo-list')
 def todo_list():
-    response = file_util.read_csv_file(r'.\data\Daily_Activities_Records.csv')
-    header_key = response['header']
-    values = response['values']
-    list = []
-    for idx, rowByRow in enumerate(values):
-        data = {}
-        options = []
-        for headerIdx, headerVal in enumerate(header_key):
-            jsonKey = headerVal.lower()
-            jsonValue = rowByRow[headerIdx]
-
-            if jsonKey.startswith("option"):
-                options.append(jsonValue)
-            else:
-                data[jsonKey] = jsonValue
-        data['options'] = options
-        list.append(data)
-
+    list = azure_blob_util.getRecords("Daily_Activities_Records.csv")
     return list
 
 
@@ -68,70 +53,70 @@ def index_page():
 @app.route('/current/heart-rate')
 def current_heart_rate():
     data = {'value': "98", 'min_value': "80", 'max_value': "100", 'text': "Heart Rate"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/current/SPO2')
 def current_SP02():
     data = {'value': "98", 'min_value': "80", 'max_value': "100", 'text': "SPO2"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/current/respiratory-rate')
 def current_respiratory_rate():
     data = {'value': "12", 'min_value': "80", 'max_value': "100", 'text': "Respiratory Rate"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/current/body-temperature')
 def current_temperature():
     data = {'value': "99.1", 'min_value': "80", 'max_value': "100", 'text': "Body Temperature"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/current/blood-pressure')
 def current_blood_pressure():
     data = {'value': "90/60", 'min_value': "80", 'max_value': "100", 'text': "Blood Pressure"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/current/blood-sugar')
 def current_blood_sugar():
     data = {'value': "95", 'min_value': "80", 'max_value': "100", 'text': "Blood Sugar"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/current/mental-status')
 def current_mental_status():
     data = {'value': "Happy", 'min_value': "80", 'max_value': "100", 'text': "Metal Status"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/current/sleep-pattern')
 def current_sleep_pattern():
     data = {'value': "6 hrs 8min", 'min_value': "80", 'max_value': "100", 'text': "Sleep Pattern"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/current/steps')
 def current_steps_count():
     data = {'value': "8000", 'min_value': "80", 'max_value': "100", 'text': "Steps"}
-    json_data = file_util.dump_to_json(data)
+    json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/emergency-contacts')
 def emergency_contacts():
-    response = file_util.read_json_file(r'.\data\emergency-contacts.json')
-    return response
+    list = azure_blob_util.getRecords("Emergency Contact List.csv")
+    return list
 
 
 @app.route('/activity-tracks')
