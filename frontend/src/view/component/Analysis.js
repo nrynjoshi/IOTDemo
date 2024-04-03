@@ -31,37 +31,43 @@ class Analysis extends React.Component {
 
                             <div className="card">
                             <PageTitle title="Heart Rate Analysis"></PageTitle>
-                            <HeatMap dataEndpoint={BACKEND_API_CALL + '/energy'}></HeatMap>
+                            <HeatMap dataEndpoint={BACKEND_API_CALL + '/report/heart-rate-analysis'}></HeatMap>
 
                             </div>
 
                             <div className="card">
+                            <PageTitle title="Respiratory Rate Analysis"></PageTitle>
+                            <LineChartWithThresholds dataEndpoint={BACKEND_API_CALL + '/report/respiratory-rate-analysis'}></LineChartWithThresholds>
+                            
+                            </div>
+
+                            <div className="card">
                             <PageTitle title="SPO2 Analysis"></PageTitle>
-                            <LineChartWithThresholds dataEndpoint={BACKEND_API_CALL + '/energy'}></LineChartWithThresholds>
+                            <LineChartWithThresholds dataEndpoint={BACKEND_API_CALL + '/report/spo2-analysis'}></LineChartWithThresholds>
                             
                             </div>
 
                             <div className="card">
                             <PageTitle title="Blood Sugar Analysis"></PageTitle>
-                            <LineChart dataEndpoint={BACKEND_API_CALL + '/energy'}></LineChart>
+                            <LineChart dataEndpoint={BACKEND_API_CALL + '/report/blood-sugar-analysis'}></LineChart>
 
                             </div>
 
                             <div className="card">
                             <PageTitle title="Sleep Pattern Analysis"></PageTitle>
-                            <Hypnogram dataEndpoint={BACKEND_API_CALL + '/energy'}></Hypnogram>
+                            <Hypnogram dataEndpoint={BACKEND_API_CALL + '/report/sleep-pattern-analysis'}></Hypnogram>
 
                             </div>
 
                             <div className="card">
                             <PageTitle title="Body Temperature Analysis"></PageTitle>
-                            <ConnectedScatterPlot dataEndpoint={BACKEND_API_CALL + '/energy'}></ConnectedScatterPlot>
+                            <ConnectedScatterPlot dataEndpoint={BACKEND_API_CALL + '/report/body-temperature-analysis'}></ConnectedScatterPlot>
 
                             </div>
 
                             <div className="card">
                             <PageTitle title="Room Temperature"></PageTitle>
-                            <HeatMap dataEndpoint={BACKEND_API_CALL + '/energy'}></HeatMap>
+                            <HeatMap dataEndpoint={BACKEND_API_CALL + '/report/room-temperature-analysis'}></HeatMap>
 
                             </div>
 
@@ -69,7 +75,7 @@ class Analysis extends React.Component {
 
                             <div className="card">
                             <PageTitle title="Steps Analysis"></PageTitle>
-                            <LineChart dataEndpoint={BACKEND_API_CALL + '/energy'}></LineChart>
+                            <LineChart dataEndpoint={BACKEND_API_CALL + '/report/total-steps-analysis'}></LineChart>
 
                             </div>
 

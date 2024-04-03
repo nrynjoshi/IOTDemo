@@ -52,44 +52,70 @@ def index_page():
 
 @app.route('/api/current/heart-rate')
 def current_heart_rate():
-    data = {'value': "98", 'min_value': "80", 'max_value': "100", 'text': "Heart Rate"}
+    list = azure_blob_util.getSelfMadeContainerData("healthparam__seconds_merged.csv")
+    if len(list) == 0:
+        return {'status': 'error', 'message': ''}
+    latestedUpdatedRecord = list[-1]
+    data = {'value': latestedUpdatedRecord['HeartRate'], 'min_value': "80", 'max_value': "100", 'text': "Heart Rate"}
     json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/api/current/SPO2')
 def current_SP02():
-    data = {'value': "98", 'min_value': "80", 'max_value': "100", 'text': "SPO2"}
+    list = azure_blob_util.getSelfMadeContainerData("healthparam__seconds_merged.csv")
+    if len(list) == 0:
+       return {'status': 'error', 'message': ''}
+    latestedUpdatedRecord = list[-1]
+    print(latestedUpdatedRecord)
+    data = {'value': latestedUpdatedRecord['BloodOxygenSaturation'], 'min_value': "80", 'max_value': "100", 'text': "SPO2"}
     json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/api/current/respiratory-rate')
 def current_respiratory_rate():
-    data = {'value': "12", 'min_value': "80", 'max_value': "100", 'text': "Respiratory Rate"}
+    list = azure_blob_util.getSelfMadeContainerData("healthparam__seconds_merged.csv")
+    if len(list) == 0:
+        return {'status': 'error', 'message': ''}
+    latestedUpdatedRecord = list[-1]
+    data = {'value': latestedUpdatedRecord['RespiratoryRate'], 'min_value': "80", 'max_value': "100", 'text': "Respiratory Rate"}
     json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/api/current/body-temperature')
 def current_temperature():
-    data = {'value': "99.1", 'min_value': "80", 'max_value': "100", 'text': "Body Temperature"}
+    list = azure_blob_util.getSelfMadeContainerData("hourlyBodyTemperate.csv")
+    if len(list) == 0:
+        return {'status': 'error', 'message': ''}
+    latestedUpdatedRecord = list[-1]
+    data = {'value': latestedUpdatedRecord['BodyTemperate_F'], 'min_value': "80", 'max_value': "100", 'text': "Body Temperature"}
     json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/api/current/blood-pressure')
 def current_blood_pressure():
-    data = {'value': "90/60", 'min_value': "80", 'max_value': "100", 'text': "Blood Pressure"}
+    list = azure_blob_util.getSelfMadeContainerData("dailyBloodSugarAndPressure.csv")
+    if len(list) == 0:
+        return {'status': 'error', 'message': ''}
+    latestedUpdatedRecord = list[-1]
+    data = {'value': latestedUpdatedRecord['BloodPressure'], 'min_value': "80", 'max_value': "100", 'text': "Blood Pressure"}
     json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/api/current/blood-sugar')
 def current_blood_sugar():
-    data = {'value': "95", 'min_value': "80", 'max_value': "100", 'text': "Blood Sugar"}
+    list = azure_blob_util.getSelfMadeContainerData("dailyBloodSugarAndPressure.csv")
+    if len(list) == 0:
+        return {'status': 'error', 'message': ''}
+    latestedUpdatedRecord = list[-1]
+    data = {'value': latestedUpdatedRecord['BloodSugarFasting'], 'min_value': "80", 'max_value': "100", 'text': "Blood Sugar"}
     json_data = csv_json_util.dump_to_json(data)
     return json_data
+
 
 
 @app.route('/api/current/mental-status')
@@ -101,14 +127,24 @@ def current_mental_status():
 
 @app.route('/api/current/sleep-pattern')
 def current_sleep_pattern():
-    data = {'value': "6 hrs 8min", 'min_value': "80", 'max_value': "100", 'text': "Sleep Pattern"}
+    list = azure_blob_util.getFitabaseContainerdata("sleepDay_merged.csv")
+    if len(list) == 0:
+        return {'status': 'error', 'message': ''}
+    latestedUpdatedRecord = list[-1]
+    data = {'value': latestedUpdatedRecord['TotalMinutesAsleep'], 'min_value': "80", 'max_value': "100",
+            'text': "Sleep Minute Time"}
     json_data = csv_json_util.dump_to_json(data)
     return json_data
 
 
 @app.route('/api/current/steps')
 def current_steps_count():
-    data = {'value': "8000", 'min_value': "80", 'max_value': "100", 'text': "Steps"}
+    list = azure_blob_util.getFitabaseContainerdata("dailySteps_merged.csv")
+    if len(list) == 0:
+        return {'status': 'error', 'message': ''}
+    latestedUpdatedRecord = list[-1]
+    data = {'value': latestedUpdatedRecord['StepTotal'], 'min_value': "80", 'max_value': "100",
+            'text': "Total Steps"}
     json_data = csv_json_util.dump_to_json(data)
     return json_data
 
@@ -127,31 +163,35 @@ def activity_tracks():
 
 @app.route('/api/report/heart-rate-analysis')
 def heart_rate_analysis():
-    list = azure_blob_util.getRecordsContainer("Daily_Activities_Records.csv")
+    list = azure_blob_util.getSelfMadeContainerData("healthparam__seconds_merged.csv")
     return list
 
+@app.route('/api/report/respiratory-rate-analysis')
+def respiratory_rate_analysis():
+    list = azure_blob_util.getSelfMadeContainerData("healthparam__seconds_merged.csv")
+    return list
 
 @app.route('/api/report/spo2-analysis')
 def spo2_analysis():
-    list = azure_blob_util.getRecordsContainer("Daily_Activities_Records.csv")
+    list = azure_blob_util.getRecordsContainer("healthparam__seconds_merged.csv")
     return list
 
 
 @app.route('/api/report/blood-sugar-analysis')
 def blood_sugar_anaysis():
-    list = azure_blob_util.getRecordsContainer("Daily_Activities_Records.csv")
+    list = azure_blob_util.getSelfMadeContainerData("dailyBloodSugar.csv")
     return list
 
 
 @app.route('/api/report/sleep-pattern-analysis')
 def sleep_pattern_analysis():
-    list = azure_blob_util.getRecordsContainer("Daily_Activities_Records.csv")
+    list = azure_blob_util.getFitabaseContainerdata("sleepDay_merged.csv")
     return list
 
 
 @app.route('/api/report/body-temperature-analysis')
 def body_temperature_analysis():
-    list = azure_blob_util.getRecordsContainer("Daily_Activities_Records.csv")
+    list = azure_blob_util.getSelfMadeContainerData("hourlyBodyTemperate.csv")
     return list
 
 
