@@ -73,6 +73,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'ElderDataVisualization'
+          app-name: 'ElderDataVisualization_group'
           slot-name: 'Production'
           
