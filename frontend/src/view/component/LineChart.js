@@ -3,26 +3,6 @@ import React from "react";
 import HttpClient from "../util/HttpClient"
 import LineChartD3 from "../react-d3/LineChartD3.js";
 
-const data = [
-    { x: 6, y: 1000 },
-    { x: 7, y: 1000 },
-    { x: 8, y: 3000 },
-    { x: 9, y: 25 },
-    { x: 10, y: 18 },
-    { x: 11, y: 4000 },
-    { x: 12, y: 20 },
-    { x: 13, y: 15 },
-    { x: 14, y: 25 },
-    { x: 15, y: 18 },
-    { x: 16, y: 8000 },
-    { x: 17, y: 20 },
-    { x: 18, y: 15 },
-    { x: 19, y: 500 },
-    { x: 20, y: 18 },
-    { x: 21, y: 18 },
-    { x: 22, y: 18 },
-  ];
-
 class LineChart extends React.Component {
     
     state = {data: null, httpErrorMessage:null, isLoading: false};
@@ -33,9 +13,8 @@ class LineChart extends React.Component {
         const fetchData = async () => {
             try {
                 this.setState({isLoading: true})
-            //   const data =  await HttpClient.get(url);
-            //   this.setState({data:data, httpErrorMessage:null});
-            this.setState({data: data});
+             const data =  await HttpClient.get(url);
+              this.setState({data:data, httpErrorMessage:null});
             } catch (error) {
               console.error('Error fetching data:', error);
               this.setState({data:null, httpErrorMessage: JSON.stringify(error.toString()) });
@@ -50,6 +29,8 @@ class LineChart extends React.Component {
 
      render(){
         const { httpErrorMessage, isLoading, data} = this.state
+        const xAxiasLable = this.props.xAxiasLable;
+        const yAxiasLable = this.props.yAxiasLable;
             return (
             <div><ErrorBoundary>
 
@@ -59,7 +40,7 @@ class LineChart extends React.Component {
                         <span></span>
                 )}
 
-                {data && <LineChartD3 data={data} width={500} height={300} />}
+                {data && <LineChartD3 data={data} width={800} height={300} xAxiasLable={xAxiasLable} yAxiasLable={yAxiasLable} />}
 
             </ErrorBoundary></div>
             );
