@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 
 import azure_blob_util
 import csv_json_util
@@ -9,7 +9,7 @@ from datetime import datetime
 from flask_cors import CORS
 
 # CORS access given to all request call from defined url
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__, static_url_path='/')
 cors = CORS(app, origins=["http://localhost:3000", "https://elderdatavisualization.azurewebsites.net"])
 
 
@@ -17,7 +17,6 @@ cors = CORS(app, origins=["http://localhost:3000", "https://elderdatavisualizati
 @app.route('/')
 def index_page():
     return app.send_static_file('index.html')  # Return index.html from the static folder
-
 # Dashboard page api started
 
 @app.route('/api/current/heart-rate')
@@ -418,7 +417,8 @@ def body_temperature_analysis():
             current_date = datetime.now()  # Get the current date
 
             if date_object.month == current_date.month and date_object.year == current_date.year and date_object.day == current_date.day:
-                dateTime = str(date_object.year) + '-' + str(date_object.month) + '-' + str(date_object.day) + ' ' + str(
+                dateTime = str(date_object.year) + '-' + str(date_object.month) + '-' + str(
+                    date_object.day) + ' ' + str(
                     date_object.hour) + ':00:00'
                 data = {'timestamp': dateTime, 'spo2': int(x['BodyTemperate_F'])}
                 response_list.append(data)
