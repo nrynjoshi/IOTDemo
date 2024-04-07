@@ -10,7 +10,7 @@ from flask_cors import CORS
 
 # CORS access given to all request call from defined url
 app = Flask(__name__, static_url_path='')
-cors = CORS(app, origins=["http://localhost:3000"])
+cors = CORS(app, origins=["http://localhost:3000", "https://elderdatavisualization.azurewebsites.net"])
 
 
 # Controller for index page which will display all compiled version of reactjs from python application after build
