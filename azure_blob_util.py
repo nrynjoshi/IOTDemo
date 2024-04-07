@@ -1,6 +1,8 @@
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import csv_json_util
 
+userId = ['1503960366', '2022484408']
+
 
 def getRecordsContainer(blob_name):
     container_name = "records"  # Name of the container where your CSV file is stored
@@ -27,16 +29,43 @@ connection_string = "DefaultEndpointsProtocol=https;AccountName=visualizationdat
 
 
 def get_json_from_storage_container_csv_file(container_name, blob_name):
-    list = []
+    my_list = []
     try:
         csv_data = download_blob_from_storage(container_name, blob_name)
 
-        list = csv_json_util.convert_csv_to_json(csv_data)
+        my_list = csv_json_util.convert_csv_to_json(csv_data)
+        # filter by id and set to main list
+        filterByIdList = []
+        count = 0
+        foundUserId = 0
+        for x in my_list:
 
-        return list
+            print('count: ', count)
+            if count == 10000:
+                print('count break trigger')
+                break
+
+            element_to_check = x['Id']
+
+            # Use filter to create an iterator of elements equal to the target element
+            filtered_elements = filter(lambda userid: userid == element_to_check, userId)
+
+            # Convert the iterator to a list and check if it's not empty
+            if list(filtered_elements):
+                if foundUserId == 0:
+                    foundUserId = element_to_check
+                if foundUserId == element_to_check:
+                    print("Element exists in the list")
+                    filterByIdList.append(x)
+                    count = count + 1
+            else:
+                print("Element does not exist in the list")
+
+        filterByIdList.reverse()
+        return filterByIdList
     except Exception as ex:
         print(f"Error Processing blob: {ex}")
-        return list
+        return my_list
 
 
 def download_blob_from_storage(container_name, blob_name):
