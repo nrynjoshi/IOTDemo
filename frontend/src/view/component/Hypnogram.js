@@ -4,17 +4,17 @@ import HttpClient from "../util/HttpClient"
 import LineChartD3 from "../react-d3/LineChartD3.js";
 import HypnogramD3 from "../react-d3/HypnogramD3.js";
 
-const data = [
-    { timestamp: new Date('2024-03-25T22:00:00'), stage: 'Awake' },
-    { timestamp: new Date('2024-03-25T22:30:00'), stage: 'Light sleep' },
-    { timestamp: new Date('2024-03-25T23:30:00'), stage: 'Deep sleep' },
-    { timestamp: new Date('2024-03-26T00:30:00'), stage: 'REM sleep' },
-    { timestamp: new Date('2024-03-26T01:30:00'), stage: 'Light sleep' },
-    { timestamp: new Date('2024-03-26T02:30:00'), stage: 'Deep sleep' },
-    { timestamp: new Date('2024-03-26T03:30:00'), stage: 'REM sleep' },
-    { timestamp: new Date('2024-03-26T04:30:00'), stage: 'Awake' },
-    // Add more data points as needed
-  ];
+// const data = [
+//     { timestamp: new Date('2024-03-25T22:00:00'), stage: 'Awake' },
+//     { timestamp: new Date('2024-03-25T22:30:00'), stage: 'Light sleep' },
+//     { timestamp: new Date('2024-03-25T23:30:00'), stage: 'Deep sleep' },
+//     { timestamp: new Date('2024-03-26T00:30:00'), stage: 'REM sleep' },
+//     { timestamp: new Date('2024-03-26T01:30:00'), stage: 'Light sleep' },
+//     { timestamp: new Date('2024-03-26T02:30:00'), stage: 'Deep sleep' },
+//     { timestamp: new Date('2024-03-26T03:30:00'), stage: 'REM sleep' },
+//     { timestamp: new Date('2024-03-26T04:30:00'), stage: 'Awake' },
+//     // Add more data points as needed
+//   ];
 
 class Hypnogram extends React.Component {
     
@@ -26,9 +26,9 @@ class Hypnogram extends React.Component {
         const fetchData = async () => {
             try {
                 this.setState({isLoading: true})
-            //   const data =  await HttpClient.get(url);
-            //   this.setState({data:data, httpErrorMessage:null});
-            this.setState({data: data});
+               const data =  await HttpClient.get(url);
+              this.setState({data:data, httpErrorMessage:null});
+            // this.setState({data: data});
             } catch (error) {
               console.error('Error fetching data:', error);
               this.setState({data:null, httpErrorMessage: JSON.stringify(error.toString()) });

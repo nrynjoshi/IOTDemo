@@ -7,34 +7,42 @@ import HttpClient from "../util/HttpClient"
 
 class CurrentDashboardDisplay extends React.Component {
 
-    state = {data: null, httpErrorMessage:null, isLoading: false, url:null};
+    state = {data: null, httpErrorMessage:null, isLoading: false, url:null, fetchingData: false};
 
     async componentDidMount() {
         const url = this.props.dataEndpoint;
         this.setState({url: url})
           
         this.fetchData(false, url); // Fetch data initially
-        this.interval = setInterval(() => this.fetchData(true, url), 5000); // Fetch data every 5 seconds
+        //this.interval = setInterval(() => this.fetchData(true, url), 20 * 1000); // Fetch data every 20 seconds
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval); // Clear interval on component unmount
+       // clearInterval(this.interval); // Clear interval on component unmount
       }
 
     fetchData = async (isIntervalCall, url ) => {
-        try {
+      const { fetchingData} = this.state
+      if(!fetchingData){
+          try {
+            this.setState({fetchingData: true})
             if(!isIntervalCall){
-                this.setState({isLoading: true})
+              this.setState({isLoading: true})
             }
-            
-          const data =  await HttpClient.get(url);
-          this.setState({data:data, httpErrorMessage:null});
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          this.setState({data:null, httpErrorMessage: JSON.stringify(error.toString()) });
-        } finally {
-            this.setState({isLoading: false})
-        }
+
+            const data =  await HttpClient.get(url);
+            this.setState({data:data, httpErrorMessage:null});
+
+        
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            this.setState({data:null, httpErrorMessage: JSON.stringify(error.toString()) });
+          } finally {
+              this.setState({isLoading: false})
+              this.setState({fetchingData: false})
+          }
+      }
+       
       };
 
 

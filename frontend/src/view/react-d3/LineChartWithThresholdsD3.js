@@ -1,76 +1,100 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
-const LineChartWithThresholdsD3 = ({ data, width, height }) => {
+const LineChartWithThresholdsD3 = ({ data, width, height, mild, normal, severe }) => {
   const svgRef = useRef();
 
   useEffect(() => {
     if (!data) return;
 
-    // set the dimensions and margins of the graph
-    const margin = {top: 10, right: 30, bottom: 30, left: 60},
-    innerWidth = width - margin.left - margin.right,
-    innerHeight = height - margin.top - margin.bottom;
+    if (!data || !data.length) return;
+
+    const margin =  {top: 10, right: 30, bottom: 50, left: 85};
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
 
     const svg = d3.select(svgRef.current)
-    .attr('width', width)
-    .attr('height', height)
-    .append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+      .attr('width', width)
+      .attr('height', height)
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
 
-  const x = d3.scaleTime()
-    .domain(d3.extent(data, d => d.timestamp))
-    .range([0, innerWidth]);
+    // Parse the date/time
+    const parseTime = d3.timeParse('%Y-%m-%d %H:%M:%S');
+    
+    // Format the date/time
+    const formatTime = d3.timeFormat('%H:%M');
 
-  const y = d3.scaleLinear()
-    .domain([0, 100])
-    .range([innerHeight, 0]);
+    // X scale
+    const x = d3.scaleTime()
+      .range([0, innerWidth])
+      .domain(d3.extent(data, d => parseTime(d.timestamp)));
 
-  const xAxis = d3.axisBottom(x);
-  svg.append('g')
-    .attr('transform', `translate(0, ${height - margin.bottom - margin.top})`)
-    .call(xAxis);
+    // Y scale
+    const y = d3.scaleLinear()
+      .range([innerHeight, 0])
+      .domain([0, d3.max(data, d => d.spo2)]);
 
-  const yAxis = d3.axisLeft(y);
-  svg.append('g')
-    .call(yAxis);
+    // X axis
+    svg.append('g')
+      .attr('transform', `translate(0,${innerHeight})`)
+      .call(d3.axisBottom(x).tickFormat(formatTime));
 
-  const spo2Line = d3.line()
-    .x(d => x(d.timestamp))
-    .y(d => y(d.spo2));
+      // Add X axis label
+      svg.append("text")
+      .attr('class', 'x-axis-label')
+      .attr('transform', `translate(${innerWidth / 2},${height - margin.bottom / 3})`)
+      .style('text-anchor', 'middle')
+      .text('Today');
 
-  svg.append('path')
-    .datum(data)
-    .attr('fill', 'none')
-    .attr('stroke', 'steelblue')
-    .attr('stroke-width', 1.5)
-    .attr('d', spo2Line);
-  
-  // Add threshold lines
-  const thresholds = [
-    { label: 'Normal Range', value: 95 },
-    { label: 'Mild Hypoxemia', value: 90 },
-    { label: 'Severe Hypoxemia', value: 85 }
-  ];
+    // Y axis
+    svg.append('g')
+      .call(d3.axisLeft(y));
 
-  thresholds.forEach(threshold => {
-    svg.append('line')
-      .attr('x1', 0)
-      .attr('y1', y(threshold.value))
-      .attr('x2', innerWidth)
-      .attr('y2', y(threshold.value))
-      .attr('stroke', 'red')
-      .attr('stroke-dasharray', '4')
-      .attr('stroke-width', 1);
+      // Add Y axis label
+      svg.append("text")
+      .attr('class', 'y-axis-label')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', -margin.left / 2)
+      .attr('x', -innerHeight / 2)
+      .style('text-anchor', 'middle')
+      .text('Respiration Count');
 
-    svg.append('text')
-      .attr('x', innerWidth)
-      .attr('y', y(threshold.value) - 5)
-      .attr('text-anchor', 'end')
-      .text(threshold.label)
-      .style('font-size', '10px')
-      .style('fill', 'red');
-  });
+    // Define the line
+    const line = d3.line()
+      .x(d => x(parseTime(d.timestamp)))
+      .y(d => y(d.spo2));
+
+    // Draw the line
+    svg.append('path')
+      .datum(data)
+      .attr('fill', 'none')
+      .attr('stroke', 'steelblue')
+      .attr('stroke-width', 2)
+      .attr('d', line);
+
+    // Define threshold values
+    const thresholds = [{'value': mild, 'text':'mild'}, {'value': normal, 'text':'normal'}, {'value': severe, 'text':'severe'}] // Example threshold values
+
+    // Draw threshold lines
+    thresholds.forEach((threshold, index) => {
+      svg.append('line')
+        .attr('x1', 0)
+        .attr('y1', y(threshold['value']))
+        .attr('x2', width)
+        .attr('y2', y(threshold['value']))
+        .attr('stroke', `red`)
+        .attr('stroke-dasharray', '4')
+        .attr('stroke-width', 1);
+
+      // Add label for threshold
+      svg.append('text')
+        .attr('x', innerHeight)
+        .attr('y', y(threshold['value']))
+        .attr('dy', index === 0 ? '-0.5em' : '0.35em')
+        .text(`Threshold ${index + 1}: ${threshold['text']}`)
+        .style('fill', 'red');
+    });
 
   }, [data, width, height]);
 
