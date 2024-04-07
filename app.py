@@ -14,9 +14,9 @@ cors = CORS(app, origins=["http://localhost:3000"])
 
 
 # Controller for index page which will display all compiled version of reactjs from python application after build
-# @app.route('/')
-# def index_page():
-#     return app.send_static_file('index.html')  # Return index.html from the static folder
+@app.route('/')
+def index_page():
+    return app.send_static_file('index.html')  # Return index.html from the static folder
 
 # Dashboard page api started
 
