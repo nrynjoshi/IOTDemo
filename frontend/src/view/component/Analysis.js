@@ -27,17 +27,12 @@ class Analysis extends React.Component {
 <div>
                         <div >
 
-                            {/* <div className="card">
+                            <div className="card">
                             <PageTitle title="Hourly Heart Rate Analysis"></PageTitle>
                             <HeatMap dataEndpoint={BACKEND_API_CALL + '/report/heart-rate-analysis'}></HeatMap>
 
                             </div>
 
-                            <div className="card">
-                            <PageTitle title="Room Temperature"></PageTitle>
-                            <HeatMap dataEndpoint={BACKEND_API_CALL + '/report/room-temperature-analysis'}></HeatMap>
-
-                            </div> */}
 
                             
 
@@ -75,7 +70,6 @@ class Analysis extends React.Component {
 
                             </div>
 
-                            
 
                         </div>
                     </div>
