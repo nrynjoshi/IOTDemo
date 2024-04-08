@@ -7,24 +7,15 @@ import useSound from "use-sound";
 import beepSound from "./../audio/beep-02.mp3";
 import SoundUtil from "../util/SoundUtil";
 import CurrentDashboardDisplay from "../util/CurrentDashboardDisplay";
+
 class PatientDashboard extends React.Component {
 
     state = { dataKeys:null, httpErrorMessage: null, isLoading: false};
 
     componentDidMount() {
-
-
+        console.log('printing from componentDidMount of PatientDashboard ')
     }
-
-    componentDidUpdate() {
-
-
-
-    }
-
-
-
-
+    
     render() {
         const {httpErrorMessage,isLoading, dataCar} = this.state
 
@@ -33,7 +24,7 @@ class PatientDashboard extends React.Component {
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
                 <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> : <span></span>)}
 
-            <div className="">
+<>
                 <div className="grid grid-rows-3 grid-flow-col gap-4">
 {/*<SoundUtil triggerValue={97}></SoundUtil>*/}
                     <div className="row-span-3">
@@ -41,9 +32,6 @@ class PatientDashboard extends React.Component {
 
                             <div className="card">
                                 <CurrentDashboardDisplay dataEndpoint= {BACKEND_API_CALL + '/current/heart-rate'} />
-                        
-                                
-
                             </div>
 
                             <div className="card">
@@ -81,7 +69,7 @@ class PatientDashboard extends React.Component {
                     </div>
                 </div>
 
-            </div>
+                </>
            
 
 
@@ -90,4 +78,4 @@ class PatientDashboard extends React.Component {
 }
 
 
-export default PatientDashboard;
+export default React.memo(PatientDashboard);

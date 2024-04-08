@@ -12,6 +12,8 @@ class CurrentDashboardDisplay extends React.Component {
     async componentDidMount() {
         const url = this.props.dataEndpoint;
         this.setState({url: url})
+
+        console.log('printing from componentDidMount',url)
           
         this.fetchData(false, url); // Fetch data initially
         //this.interval = setInterval(() => this.fetchData(true, url), 20 * 1000); // Fetch data every 20 seconds
@@ -23,6 +25,7 @@ class CurrentDashboardDisplay extends React.Component {
 
     fetchData = async (isIntervalCall, url ) => {
       const { fetchingData} = this.state
+      console.log('printing from fetchData',url)
       if(!fetchingData){
           try {
             this.setState({fetchingData: true})
@@ -83,4 +86,4 @@ class CurrentDashboardDisplay extends React.Component {
 }
 
 
-export default CurrentDashboardDisplay;
+export default React.memo(CurrentDashboardDisplay);
