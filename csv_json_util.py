@@ -25,7 +25,7 @@ def convert_csv_to_json(csv_data):
                     data["options"] = options
 
             json_list.append(data)
-            print("convert_csv_to_json completed")
+        print("convert_csv_to_json completed")
         return json_list
     except Exception as ex:
         print("convert_csv_to_json error")
