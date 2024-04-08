@@ -74,11 +74,13 @@ def get_json_from_storage_container_csv_file(container_name, blob_name):
         return my_list
 
 
+# Create the BlobServiceClient object which will be used to create a container client
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+
+
 def download_blob_from_storage(container_name, blob_name):
     try:
         print(f"download_blob_from_storage initialize : {container_name} -> {blob_name}")
-        # Create the BlobServiceClient object which will be used to create a container client
-        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
         # Create a blob client using the blob service client
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
