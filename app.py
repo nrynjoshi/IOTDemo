@@ -2,9 +2,10 @@ from flask import Flask, send_from_directory
 
 import azure_blob_util
 import csv_json_util
+import decision_tree
 import file_util
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from flask_cors import CORS
 
@@ -17,6 +18,8 @@ cors = CORS(app, origins=["http://localhost:3000", "https://elderdatavisualizati
 @app.route('/')
 def index_page():
     return app.send_static_file('index.html')  # Return index.html from the static folder
+
+
 # Dashboard page api started
 
 @app.route('/api/current/heart-rate')
@@ -36,7 +39,7 @@ def current_SP02():
     if len(list) == 0:
         return {'status': 'error', 'message': ''}
     latestedUpdatedRecord = list[-1]
-    print(latestedUpdatedRecord)
+
     data = {'value': latestedUpdatedRecord['BloodOxygenSaturation'], 'min_value': "80", 'max_value': "100",
             'text': "SPO2"}
     json_data = csv_json_util.dump_to_json(data)
@@ -140,7 +143,6 @@ def heart_rate_analysis():
     list = azure_blob_util.getSelfMadeContainerData("healthparam__seconds_merged.csv")
     print('fetch successfully from azure')
 
-    # Define a function to parse time with various formats
     def parse_time(time_str):
         if time_str.strip():  # Check if the string is not empty
             try:
@@ -156,46 +158,63 @@ def heart_rate_analysis():
         else:
             return pd.NaT  # Return NaT (Not a Time) for empty strings
 
-    print('Convert to DataFrame')
-    # Convert to DataFrame
+    # Get today's date
+    today = datetime.today()
+    # Calculate the date one week ago
+    one_week_ago = today - timedelta(days=7)
+    response_list = []
+    for x in list:
+        date_object = parse_time(x['Time'])
+        if one_week_ago.month <= date_object.month <= today.month and one_week_ago.day <= date_object.day <= today.day and one_week_ago.year <= date_object.year <= today.year:
+            response_list.append(x)
+
+    # Convert timestamp to datetime
+    for entry in list:
+        entry['HeartRate'] = int(entry['HeartRate'])  # Convert value to integer
+
+    # Create DataFrame
     df = pd.DataFrame(list)
-    print('Convert Time column to datetime')
-    # Convert 'Time' column to datetime
+
     df['Time'] = df['Time'].apply(parse_time)
-    print('Remove rows with NaT (empty strings)')
     # Remove rows with NaT (empty strings)
     df = df.dropna(subset=['Time'])
-    print('Extract hour from datetime')
-    # Extract hour from datetime
-    df['Hour'] = df['Time'].dt.hour
-    print('extract hour from dataframe')
-    print('Calculate average for each hour started')
+    # Sort data by timestamp
+    df = df.sort_values(by='Time')
 
-    # Convert 'BloodOxygenSaturation' column to numeric, coercing errors to NaN
-    df['HeartRate'] = pd.to_numeric(df['HeartRate'], errors='coerce')
+    # Initialize start time
+    start_time = df.iloc[0]['Time']
 
-    # Calculate average heart rate for each hour
-    average_heart_rate_per_hour = df.groupby('Hour')['HeartRate'].mean().reset_index()
+    # Initialize a list to store JSON values
+    json_list = []
 
-    average_heart_rate_per_hour.rename(columns={'Hour': 'key', 'HeartRate': 'value'}, inplace=True)
-    # Convert DataFrame to a list of dictionaries
-    average_respiratory_rate_per_hour_list = average_heart_rate_per_hour.to_dict(orient='records')
+    # Iterate over sorted data
+    end_time = start_time + pd.Timedelta(hours=2)
+    while end_time <= df.iloc[-1]['Time']:
+        # Select data within the current 2-hour interval
+        interval_data = df[(df['Time'] >= start_time) & (df['Time'] < end_time)]
+        # Calculate average for this interval
+        avg_value = interval_data['HeartRate'].mean()
 
-    # Assuming average_respiratory_rate_per_hour_list contains your list of dictionaries
-    json_data = csv_json_util.dump_to_json(average_respiratory_rate_per_hour_list)
+        # Create JSON object
+        json_obj = {
+            'variable': start_time.strftime('%H'),
+            'value': avg_value,
+            "group": start_time.strftime('%m/%d'),
+        }
 
-    print('Calculate average for each hour completed')
-    print(average_heart_rate_per_hour)
+        # Append JSON object to list
+        json_list.append(json_obj)
 
-    return json_data
+        # Move to the next 2-hour interval
+        start_time = end_time
+        end_time += pd.Timedelta(hours=2)
+
+    return json_list
 
 
 @app.route('/api/report/respiratory-rate-analysis')
 def respiratory_rate_analysis():
     list = azure_blob_util.getSelfMadeContainerData("healthparam__seconds_merged.csv")
-    print('--------------------------------------')
-    print(list)
-    print('--------------------------------------')
     print('fetch successfully from azure')
 
     # Convert timestamp to datetime
@@ -236,6 +255,7 @@ def respiratory_rate_analysis():
     end_time = start_time + pd.Timedelta(hours=1)
     while end_time <= df.iloc[-1]['Time']:
         # Select data within the current 2-hour interval
+
         interval_data = df[(df['Time'] >= start_time) & (df['Time'] < end_time)]
 
         # Calculate average for this interval
@@ -260,12 +280,6 @@ def respiratory_rate_analysis():
 @app.route('/api/report/spo2-analysis')
 def spo2_analysis():
     list = azure_blob_util.getSelfMadeContainerData("healthparam__seconds_merged.csv")
-    print('fetch successfully from azure')
-
-    print('--------------------------------------')
-    print(list)
-    print('--------------------------------------')
-    print('fetch successfully from azure')
 
     # Convert timestamp to datetime
     for entry in list:
@@ -426,12 +440,6 @@ def body_temperature_analysis():
     return response_list
 
 
-@app.route('/api/report/room-temperature-analysis')
-def room_temperature_analysis():
-    list = azure_blob_util.getRecordsContainer("Daily_Activities_Records.csv")
-    return list
-
-
 @app.route('/api/report/total-steps-analysis')
 def total_steps_analysis():
     list = azure_blob_util.getFitabaseContainerdata("dailySteps_merged.csv")
@@ -460,13 +468,9 @@ def energy_json():
 @app.route('/api/force-directed-graph')
 def force_directed_graph():
     response = file_util.read_json_file(r'.\data\force-directed-graph.json')
+
     return response
 
-
-@app.route('/api/mobile-patent-suits')
-def mobile_patent_suits():
-    response = file_util.read_json_file(r'.\data\mobile-patent-suits.json')
-    return response
 
 
 @app.route('/api/parallel-coordinate-cars')
@@ -478,12 +482,15 @@ def parallel_coordinate_cars():
 @app.route('/api/parallel-coordinate-keys')
 def parallel_coordinate_keys():
     response = file_util.read_json_file(r'.\data\parallel-coordinate-keys.json')
+
     return response
 
 
 @app.route('/api/activity-tracks')
 def activity_tracks():
     response = file_util.read_json_file(r'.\data\activity-tracks.json')
+
+
     return response
 
 
@@ -495,6 +502,13 @@ def activity_tracks():
 def emergency_contacts():
     list = azure_blob_util.getRecordsContainer("Emergency Contact List.csv")
     return list
+
+
+@app.route('/api/decision_tree')
+def decision_tree_engine():
+    data = decision_tree.process('no', 'yes', 'yes', 'no', 25, 'yes', 'normal', 'normal')
+
+    return csv_json_util.dump_to_json(data)
 
 
 # Emergency page api part ended

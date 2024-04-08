@@ -516,9 +516,9 @@ class HeatMap extends React.Component {
         const fetchData = async () => {
             try {
                 this.setState({isLoading: true})
-            //   const data =  await HttpClient.get(url);
-            //   this.setState({data:data, httpErrorMessage:null});
-            this.setState({data: data});
+               const data =  await HttpClient.get(url);
+               this.setState({data:data, httpErrorMessage:null});
+            // this.setState({data: data});
             } catch (error) {
               console.error('Error fetching data:', error);
               this.setState({data:null, httpErrorMessage: JSON.stringify(error.toString()) });

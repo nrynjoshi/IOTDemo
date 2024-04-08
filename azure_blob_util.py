@@ -4,6 +4,18 @@ import csv_json_util
 userId = ['1503960366', '2022484408']
 
 
+def getRulesContainer(blob_name):
+    container_name = "rules"  # Name of the container where your CSV file is stored
+    my_list = []
+    try:
+        csv_data = download_blob_from_storage(container_name, blob_name)
+        my_list = csv_json_util.convert_csv_to_json(csv_data)
+        return my_list
+    except Exception as ex:
+        print(f"Error Processing blob: {ex}")
+        return my_list
+
+
 def getRecordsContainer(blob_name):
     container_name = "records"  # Name of the container where your CSV file is stored
     list = get_json_from_storage_container_csv_file(container_name, blob_name)
@@ -40,11 +52,6 @@ def get_json_from_storage_container_csv_file(container_name, blob_name):
         foundUserId = 0
         for x in my_list:
 
-            print('count: ', count)
-            if count == 10000:
-                print('count break trigger')
-                break
-
             element_to_check = x['Id']
 
             # Use filter to create an iterator of elements equal to the target element
@@ -55,11 +62,10 @@ def get_json_from_storage_container_csv_file(container_name, blob_name):
                 if foundUserId == 0:
                     foundUserId = element_to_check
                 if foundUserId == element_to_check:
-                    print("Element exists in the list")
                     filterByIdList.append(x)
                     count = count + 1
-            else:
-                print("Element does not exist in the list")
+            # else:
+            # print("Element does not exist in the list")
 
         filterByIdList.reverse()
         return filterByIdList
@@ -70,6 +76,7 @@ def get_json_from_storage_container_csv_file(container_name, blob_name):
 
 def download_blob_from_storage(container_name, blob_name):
     try:
+        print(f"download_blob_from_storage initialize : {container_name} -> {blob_name}")
         # Create the BlobServiceClient object which will be used to create a container client
         blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
@@ -81,9 +88,10 @@ def download_blob_from_storage(container_name, blob_name):
 
         # Decode the byte stream and convert it to string
         blob_data = download_stream.readall().decode('utf-8')
-
+        print("download_blob_from_storage completed")
         return blob_data
 
     except Exception as e:
+        print("download_blob_from_storage error")
         print(f"Error downloading blob: {e}")
         return None
