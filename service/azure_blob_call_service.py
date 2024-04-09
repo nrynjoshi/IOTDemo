@@ -1,5 +1,5 @@
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
-import csv_json_util
+from service import csv_json_conversion_service
 
 userId = ['1503960366', '2022484408']
 
@@ -9,7 +9,7 @@ def getRulesContainer(blob_name):
     my_list = []
     try:
         csv_data = download_blob_from_storage(container_name, blob_name)
-        my_list = csv_json_util.convert_csv_to_json(csv_data)
+        my_list = csv_json_conversion_service.convert_csv_to_json(csv_data)
         return my_list
     except Exception as ex:
         print(f"Error Processing blob: {ex}")
@@ -45,7 +45,7 @@ def get_json_from_storage_container_csv_file(container_name, blob_name):
     try:
         csv_data = download_blob_from_storage(container_name, blob_name)
 
-        my_list = csv_json_util.convert_csv_to_json(csv_data)
+        my_list = csv_json_conversion_service.convert_csv_to_json(csv_data)
         # filter by id and set to main list
         filterByIdList = []
         count = 0
