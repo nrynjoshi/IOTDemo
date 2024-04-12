@@ -91,9 +91,10 @@ const LineChartWithThresholdsD3 = ({ data, width, height, mild, normal, severe }
       svg.append('text')
         .attr('x', innerHeight)
         .attr('y', y(threshold['value']))
-        .attr('dy', index === 0 ? '-0.5em' : '0.35em')
+        .attr('dy', index === 2 ? '1em' : '1.5em')
         .text(`Threshold ${index + 1}: ${threshold['text']}`)
-        .style('fill', 'red');
+        .style('fill', 'red')
+        .style('font-size', 'medium');;
     });
 
   }, [data, width, height]);

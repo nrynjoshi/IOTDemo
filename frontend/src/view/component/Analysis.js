@@ -62,7 +62,7 @@ class Analysis extends React.Component {
 
                            <div className="card">
                             <PageTitle title="Body Temperature Analysis"></PageTitle>
-                            <LineChartWithThresholds data={data.body_temperature} ></LineChartWithThresholds>
+                            <LineChartWithThresholds data={data.body_temperature}  mild={90} normal={95} severe={99} ></LineChartWithThresholds>
                           
                             </div>
 
