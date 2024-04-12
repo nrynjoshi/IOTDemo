@@ -25,7 +25,7 @@ class App extends React.Component {
     console.log(jsonParams)
     console.log('-------------------------------------------------------')
     if(jsonParams['redirect']){
-      window.location.href = jsonParams['redirect']; // Redirect to the specified URL
+      // window.location.href = jsonParams['redirect']; // Redirect to the specified URL
     }
     
 
