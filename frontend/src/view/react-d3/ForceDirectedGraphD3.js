@@ -36,17 +36,39 @@ export const createForceDirectedGraphSVG = (data) => {
     .join("line")
     .attr("stroke-width", d => Math.sqrt(d.value));
 
-  const node = svg.append("g")
-    .attr("stroke", "#fff")
+
+     // Create nodes
+    const nodeGroup = svg
     .attr("stroke-width", 1.5)
-    .selectAll()
+    .selectAll(".nodeGroup")
     .data(nodes)
-    .join("circle")
-    .attr("r", 5)
+    .enter().append("g")
+    .attr("class", "nodeGroup");
+
+  // Append circles to node group
+  const node = nodeGroup.append("circle")
+    .attr("r", 6)
     .attr("fill", d => color(d.group));
 
-  node.append("title")
-    .text(d => d.id);
+  // Append labels to node group
+  const label = nodeGroup.append("text")
+    .text(d => d.id)
+    .attr("font-size", "12px")
+    .attr("x", 30) // Adjust the x position of the label
+    .attr("y", 5); // Adjust the y position of the label
+
+
+  // Update node and link positions on each tick
+  simulation.on("tick", () => {
+    link.attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
+
+    nodeGroup.attr("transform", d => `translate(${d.x},${d.y})`);
+  });
+
+
 
   // Add a drag behavior.
   node.call(d3.drag()
