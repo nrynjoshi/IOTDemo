@@ -1,8 +1,10 @@
-import pandas as pd
+import math  # Import the math module to check for NaN
 from datetime import datetime, timedelta
+
+import pandas as pd
+
 from service import azure_blob_call_service
 from service import cleanup_csv_record
-import math  # Import the math module to check for NaN
 
 
 # Analysis page api part started
@@ -28,8 +30,7 @@ def heart_record_analysis():
     blood_sugar = blood_sugar_anaysis(blood_sugar)
     spo2 = spo2_analysis(spo2)
     data = {'heart_rate': heart_rate, 'sleep_pattern': sleep_pattern, 'body_temperature': body_temperature,
-            'blood_sugar': blood_sugar, 'spo2': spo2,
-            'respiratory_rate': respiratory_rate, 'total_steps': total_steps}
+            'blood_sugar': blood_sugar, 'spo2': spo2, 'respiratory_rate': respiratory_rate, 'total_steps': total_steps}
 
     return data
 
@@ -97,11 +98,7 @@ def heart_rate_analysis(list):
         avg_value = interval_data['HeartRate'].mean()
 
         # Create JSON object
-        json_obj = {
-            'variable': start_time.strftime('%H'),
-            'value': avg_value,
-            "group": start_time.strftime('%m/%d'),
-        }
+        json_obj = {'variable': start_time.strftime('%H'), 'value': avg_value, "group": start_time.strftime('%m/%d'), }
 
         # Append JSON object to list
         json_list.append(json_obj)

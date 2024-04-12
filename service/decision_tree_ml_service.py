@@ -1,7 +1,8 @@
 # Step 1: Import Libraries
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
 from service import azure_blob_call_service
 
 clf_disease = DecisionTreeClassifier()
@@ -46,9 +47,8 @@ def init():
     isInitDone = True
 
 
-def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_breathing: str, age: int,
-            is_male: str, blood_pressure_level: str,
-            cholesterol_level: str):
+def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_breathing: str, age: int, is_male: str,
+            blood_pressure_level: str, cholesterol_level: str):
     global clf_disease
     global clf_outcome
     global isInitDone
@@ -74,9 +74,8 @@ def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_bre
     # Assuming new_input is a dictionary containing new input data
     new_input = {'Fever': convert_bool_to_int(has_fever), 'Cough': convert_bool_to_int(has_cough),
                  'Fatigue': convert_bool_to_int(has_fatigue),
-                 'Difficulty Breathing': convert_bool_to_int(has_difficulty_breathing),
-                 'Age': age, 'Gender': convert_bool_to_int(is_male),
-                 'Blood Pressure': convert_level_to_int(blood_pressure_level),
+                 'Difficulty Breathing': convert_bool_to_int(has_difficulty_breathing), 'Age': age,
+                 'Gender': convert_bool_to_int(is_male), 'Blood Pressure': convert_level_to_int(blood_pressure_level),
                  'Cholesterol Level': convert_level_to_int(cholesterol_level)}
 
     # Make prediction for Disease

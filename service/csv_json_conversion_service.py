@@ -1,16 +1,15 @@
 import csv
 import json
-import pandas as pd
-from io import StringIO
 import time
+
+import pandas as pd
+
 
 def convert_csv_to_json(csv_data):
     start_time = time.time()
     # Split CSV data into header and body
     json_list = []
     try:
-
-
 
         print("convert_csv_to_json initialize")
         csv_reader = csv.reader(csv_data.splitlines())
