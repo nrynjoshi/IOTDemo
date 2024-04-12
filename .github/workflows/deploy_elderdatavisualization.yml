@@ -30,11 +30,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Grant executable permission to build.bat
-        run: chmod +x build.sh
+      # - name: Grant executable permission to build.bat
+        # run: chmod +x build.sh
 
-      - name: Build Reactjs App and copy to python static
-        run: ./build.sh
+      # - name: Build Reactjs App and copy to python static
+        # run: ./build.sh
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
