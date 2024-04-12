@@ -2,8 +2,7 @@
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
-
-import azure_blob_util
+from service import azure_blob_call_service
 
 clf_disease = DecisionTreeClassifier()
 clf_outcome = DecisionTreeClassifier()
@@ -12,7 +11,7 @@ isInitDone: bool = False
 
 def init():
     # Step 2: Load Dataset
-    json_list = azure_blob_util.getRulesContainer('Disease Symptoms and Patient Profile Dataset.csv')
+    json_list = azure_blob_call_service.getRulesContainer('Disease Symptoms and Patient Profile Dataset.csv')
 
     # Convert list of JSON objects to DataFrame
     data = pd.DataFrame(json_list)

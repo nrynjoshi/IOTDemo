@@ -20,7 +20,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, mild, normal, severe }
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
     // Parse the date/time
-    const parseTime = d3.timeParse('%Y-%m-%d %H:%M:%S');
+    const parseTime = d3.timeParse('%m/%d/%Y %H:%M');
     
     // Format the date/time
     const formatTime = d3.timeFormat('%H:%M');
