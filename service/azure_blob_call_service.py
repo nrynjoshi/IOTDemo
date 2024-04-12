@@ -1,7 +1,10 @@
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from service import csv_json_conversion_service
+import time
+from datetime import datetime
 
-userId = ['1503960366', '2022484408']
+userId = ['1503960366']
+userIdentity = '1503960366'
 
 
 def getRulesContainer(blob_name):
@@ -22,15 +25,16 @@ def getRecordsContainer(blob_name):
     return list
 
 
-def getSelfMadeContainerData(blob_name):
-    container_name = "selfmadedata"  # Name of the container where your CSV file is stored
-    list = get_json_from_storage_container_csv_file(container_name, blob_name)
-    return list
+def getUserRecordDbContainerData(blob_name):
+    current_date = datetime.now()  # Get the current date
+    year = current_date.year
+    month = current_date.month
 
-
-def getFitabaseContainerdata(blob_name):
-    container_name = "fitabasedata"  # Name of the container where your CSV file is stored
-    list = get_json_from_storage_container_csv_file(container_name, blob_name)
+    # Convert the month integer to a string with leading zero if necessary
+    month = str(month).zfill(2)
+    filename = blob_name + '_' + str(year) + '_' + str(month) + '_' + str(userIdentity) + '.csv'
+    container_name = "userrecorddb"  # Name of the container where your CSV file is stored
+    list = get_json_from_storage_container_csv_file(container_name, filename)
     return list
 
 
@@ -43,32 +47,13 @@ connection_string = "DefaultEndpointsProtocol=https;AccountName=visualizationdat
 def get_json_from_storage_container_csv_file(container_name, blob_name):
     my_list = []
     try:
+        start_time = time.time()
         csv_data = download_blob_from_storage(container_name, blob_name)
 
         my_list = csv_json_conversion_service.convert_csv_to_json(csv_data)
-        # filter by id and set to main list
-        filterByIdList = []
-        count = 0
-        foundUserId = 0
-        for x in my_list:
 
-            element_to_check = x['Id']
-
-            # Use filter to create an iterator of elements equal to the target element
-            filtered_elements = filter(lambda userid: userid == element_to_check, userId)
-
-            # Convert the iterator to a list and check if it's not empty
-            if list(filtered_elements):
-                if foundUserId == 0:
-                    foundUserId = element_to_check
-                if foundUserId == element_to_check:
-                    filterByIdList.append(x)
-                    count = count + 1
-            # else:
-            # print("Element does not exist in the list")
-
-        filterByIdList.reverse()
-        return filterByIdList
+        print("get_json_from_storage_container_csv_file --- %s seconds" % (time.time() - start_time))
+        return my_list
     except Exception as ex:
         print(f"Error Processing blob: {ex}")
         return my_list
@@ -80,6 +65,7 @@ blob_service_client = BlobServiceClient.from_connection_string(connection_string
 
 def download_blob_from_storage(container_name, blob_name):
     try:
+        start_time = time.time()
         print(f"download_blob_from_storage initialize : {container_name} -> {blob_name}")
 
         # Create a blob client using the blob service client
@@ -91,6 +77,7 @@ def download_blob_from_storage(container_name, blob_name):
         # Decode the byte stream and convert it to string
         blob_data = download_stream.readall().decode('utf-8')
         print("download_blob_from_storage completed")
+        print("download_blob_from_storage --- %s seconds" % (time.time() - start_time))
         return blob_data
 
     except Exception as e:

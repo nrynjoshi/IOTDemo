@@ -8,12 +8,12 @@ const LineChartD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
     if (!data) return;
 
     // Parse dates
-const parseDate = d3.timeParse('%m/%d/%Y');
-data.forEach(d => {
-  d.x = parseDate(d.x);
-  d.y = +d.y; // Convert y to number
-});
-console.log(data);
+    const parseDate = d3.timeParse('%m/%d/%Y');
+    data.forEach(d => {
+      d.x = parseDate(d.x);
+      d.y = +d.y; // Convert y to number
+    });
+    console.log(data);
 
 // set the dimensions and margins of the graph
 const margin = {top: 10, right: 30, bottom: 50, left: 85};

@@ -20,40 +20,13 @@ class Hypnogram extends React.Component {
     
     state = {data: null, httpErrorMessage:null, isLoading: false};
     
-    componentDidMount() {
-        const url = this.props.dataEndpoint;
-        //calling api for data
-        const fetchData = async () => {
-            try {
-                this.setState({isLoading: true})
-               const data =  await HttpClient.get(url);
-              this.setState({data:data, httpErrorMessage:null});
-            // this.setState({data: data});
-            } catch (error) {
-              console.error('Error fetching data:', error);
-              this.setState({data:null, httpErrorMessage: JSON.stringify(error.toString()) });
-            } finally {
-                this.setState({isLoading: false})
-            }
-          };
-      
-          fetchData();
-        
-    }
+    
 
      render(){
-        const { httpErrorMessage, isLoading, data} = this.state
+        const data = this.props.data;
             return (
             <div><ErrorBoundary>
-
-                {isLoading ? (
-                    <p>Loading ...</p>
-                ) : (httpErrorMessage ? <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> :
-                        <span></span>
-                )}
-
-                {data && <HypnogramD3 data={data} width={500} height={300} />}
-
+                    <HypnogramD3 data={data}  width={1200} height={500}  />
             </ErrorBoundary></div>
             );
      }

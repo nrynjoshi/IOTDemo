@@ -1,7 +1,7 @@
 import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
 import HttpClient from "../util/HttpClient"
-
+import QRCode from 'react-qr-code';
 
 class EmergencyContact extends React.Component {
 
@@ -44,11 +44,23 @@ class EmergencyContact extends React.Component {
                 {data && data.map((emergencyContact) => (
                         
                             <div className="card">
-                                <div>Name: <span className="font-bold">{emergencyContact.name}</span></div>
-                                <div>Contact Number: {emergencyContact.contact_number}</div>
-                                <div>Address: {emergencyContact.address}</div>
-                                <div>Relationship: {emergencyContact.relationship}</div>
-                                <div>Action: <a href="tel:55">Call (work left)</a></div>
+                                <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                    <div>Name: <span className="font-bold">{emergencyContact.name}</span></div>
+                                    <div>Contact Number: {emergencyContact.contact_number}</div>
+                                    <div>Address: {emergencyContact.address}</div>
+                                    <div>Relationship: {emergencyContact.relationship}</div>
+                               </div>
+                               <div className="content-end">
+                               <QRCode
+                                    title={emergencyContact.name}
+                                    value={emergencyContact.contact_number}
+                                     size={'120'}
+                                />
+                                </div>
+                                </div>
+                               
+                               
                             </div>
 
                        

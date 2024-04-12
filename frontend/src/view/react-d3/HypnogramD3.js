@@ -9,7 +9,7 @@ const HypnogramD3 = ({ data, width, height }) => {
     if (!data) return;
 
 
-    const margin = {top: 10, right: 30, bottom: 50, left: 85};
+    const margin = {top: 10, right: 30, bottom: 50, left: 140};
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -20,7 +20,7 @@ const HypnogramD3 = ({ data, width, height }) => {
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
     // Parse timestamp strings into Date objects
-    const parseTime = d3.timeParse('%m/%d/%Y %I:%M:%S %p');
+    const parseTime = d3.timeParse('%m/%d/%Y %I:%M');
     data.forEach(d => {
       d.date = parseTime(d.timestamp);
     });
