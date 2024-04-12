@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, redirect
 
 import controller.todo_list_controller as todo_list_controller
 import controller.activity_track_controller as activity_track_controller
@@ -106,6 +106,16 @@ def decision_tree_engine():
 
 
 # Machine learning part ended
+
+# Error handle
+@app.errorhandler(404)
+def page_not_found(e):
+    path = request.path
+    if path.__contains__('/api/'):
+        return {'status': 'error', 'message': 'API not found'}, 404
+    else:
+        return redirect("/?redirect="+path, code=302)
+
 # ------------------------------------------------------------------------
 # Python application entry point for running application
 if __name__ == '__main__':
