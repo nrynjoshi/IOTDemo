@@ -21,6 +21,13 @@ class App extends React.Component {
 
     // Access jsonParams
     const jsonParams = httpRequestUtil.render();
+    console.log('-------------------------------------------------------')
+    console.log(jsonParams)
+    console.log('-------------------------------------------------------')
+    if(jsonParams['redirect']){
+      window.location.href = jsonParams['redirect']; // Redirect to the specified URL
+    }
+    
 
     console.log(jsonParams);
     return (
