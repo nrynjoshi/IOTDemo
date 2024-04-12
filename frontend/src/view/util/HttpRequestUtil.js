@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-class  HttpRequestUtil  extends React.Component {
+class HttpRequestUtil extends React.Component {
   getQueryParams() {
     const queryParams = new URLSearchParams(window.location.search);
     const jsonParams = {};
