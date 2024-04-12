@@ -5,14 +5,14 @@ import pandas as pd
 
 from service import azure_blob_call_service
 from service import cleanup_csv_record
-
+import time
 
 # Analysis page api part started
 def heart_record_analysis():
     list = azure_blob_call_service.getUserRecordDbContainerData("hourlyHeathRecord")
     if len(list) == 0:
         return {'status': 'error', 'message': ''}
-
+    estart_time = time.time()
     body_temperature = extract_required_key_value(list, ["ActivityHour", "BodyTemperate"])
     heart_rate = extract_required_key_value(list, ["ActivityHour", "HeartRate"])
     respiratory_rate = extract_required_key_value(list, ["ActivityHour", "RespiratoryRate"])
@@ -20,8 +20,12 @@ def heart_record_analysis():
     sleep_pattern = extract_required_key_value(list, ["ActivityHour", "TotalMinuteSleep"])
     blood_sugar = extract_required_key_value(list, ["ActivityHour", "BloodSugarFasting"])
     spo2 = extract_required_key_value(list, ["ActivityHour", "BloodOxygenSaturation"])
+    print("heart_record_analysis after extract --- %s seconds" % (time.time() - estart_time))
 
+    estart_time = time.time()
     # pre process data for ui diagram
+
+
     heart_rate = heart_rate_analysis(heart_rate)
     body_temperature = body_temperature_analysis(body_temperature)
     respiratory_rate = respiratory_rate_analysis(respiratory_rate)
@@ -31,7 +35,7 @@ def heart_record_analysis():
     spo2 = spo2_analysis(spo2)
     data = {'heart_rate': heart_rate, 'sleep_pattern': sleep_pattern, 'body_temperature': body_temperature,
             'blood_sugar': blood_sugar, 'spo2': spo2, 'respiratory_rate': respiratory_rate, 'total_steps': total_steps}
-
+    print("heart_record_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return data
 
 
@@ -71,11 +75,11 @@ def heart_rate_analysis(list):
             response_list.append(x)
 
     # Convert timestamp to datetime
-    for entry in list:
+    for entry in response_list:
         entry['HeartRate'] = int(entry['HeartRate'])  # Convert value to integer
 
     # Create DataFrame
-    df = pd.DataFrame(list)
+    df = pd.DataFrame(response_list)
 
     df['ActivityHour'] = df['ActivityHour'].apply(cleanup_csv_record.parse_time)
     # Remove rows with NaT (empty strings)
