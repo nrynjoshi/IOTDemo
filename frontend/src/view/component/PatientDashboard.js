@@ -6,7 +6,6 @@ import HttpClient from "../util/HttpClient"
 
 import useSound from "use-sound";
 import beepSound from "./../audio/beep-02.mp3";
-import SoundUtil from "../util/SoundUtil";
 import CurrentDashboardDisplay from "../util/CurrentDashboardDisplay";
 
 class PatientDashboard extends React.Component {
@@ -66,7 +65,7 @@ class PatientDashboard extends React.Component {
 
             <>
                 <div className="grid grid-rows-3 grid-flow-col gap-4">
-                    {/*<SoundUtil triggerValue={97}></SoundUtil>*/}
+                    
                     {data &&
                         <div className="row-span-3">
                             <div>
@@ -75,7 +74,7 @@ class PatientDashboard extends React.Component {
                             <div className="grid grid-cols-4 gap-4">
 
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Heart Rate'} displayValue={data.HeartRate} />
+                                    <CurrentDashboardDisplay displayText={'Heart Rate'} displayValue={data.HeartRate} minNormalValue ={60} maxNormalValue ={100}/>
                                 </div>
 
                                 <div className="card">
