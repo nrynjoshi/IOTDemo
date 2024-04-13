@@ -7,13 +7,18 @@ from service import azure_blob_call_service
 import time
 
 
-# Analysis page api part started
+#  page api part started
+
+# This function is the main entry function to gather the hourly health record of specific user for analysis
 def heart_record_analysis():
+    # get a json list for the hourlyHealthRecord blob name
     list = azure_blob_call_service.getUserRecordDbContainerData("hourlyHeathRecord")
     if len(list) == 0:
         return {'status': 'error', 'message': ''}
 
     estart_time = time.time()
+
+    # this statement will split the whole json list into desired list with only given keys value inside new list
     body_temperature = extract_required_key_value(list, ["ActivityHour", "BodyTemperate"])
     heart_rate = extract_required_key_value(list, ["ActivityHour", "HeartRate"])
     respiratory_rate = extract_required_key_value(list, ["ActivityHour", "RespiratoryRate"])
@@ -26,6 +31,7 @@ def heart_record_analysis():
     estart_time = time.time()
     # pre process data for ui diagram
 
+    # this below statement will parse the different health parameter list as per required data for visualization
     heart_rate = heart_rate_analysis(heart_rate)
     body_temperature = body_temperature_analysis(body_temperature)
     respiratory_rate = respiratory_rate_analysis(respiratory_rate)
@@ -33,12 +39,16 @@ def heart_record_analysis():
     sleep_pattern = sleep_pattern_analysis(sleep_pattern)
     blood_sugar = blood_sugar_anaysis(blood_sugar)
     spo2 = spo2_analysis(spo2)
+
+    # preparing the json object for response
     data = {'heart_rate': heart_rate, 'sleep_pattern': sleep_pattern, 'body_temperature': body_temperature,
             'blood_sugar': blood_sugar, 'spo2': spo2, 'respiratory_rate': respiratory_rate, 'total_steps': total_steps}
     print("heart_record_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return data
 
 
+# this will extract the defined json key value as a new list by eliminating rest of the json key value to make the
+# json lite and more simplified
 def extract_required_key_value(data, keys_to_keep):
     # Define the keys you want to keep in the new list
 
@@ -57,6 +67,8 @@ def extract_required_key_value(data, keys_to_keep):
     return new_list
 
 
+# this will help to clean all NaN value from list so that the process function will receive the clean list and
+# consitent
 def cleanupNaNValueFromList(data):
     # Filter out JSON objects with NaN values
     filtered_data = [obj for obj in data if not any(val != val for val in obj.values())]
@@ -330,12 +342,12 @@ def total_steps_analysis(list):
 
 # Analysis page api part ended
 
+# this function will parse the json datetime string to datetime object for processing with timestamp
 def parse_time(time_str):
     if time_str.strip():  # Check if the string is not empty
         try:
             return pd.to_datetime(time_str, format='%m/%d/%Y %H:%M')
         except ValueError:
             return pd.NaT  # Return NaT (Not a Time) for empty strings
-
     else:
         return pd.NaT  # Return NaT (Not a Time) for empty strings

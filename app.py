@@ -25,8 +25,8 @@ def current_heath_record():
     if len(list) == 0:
         return {'status': 'error', 'message': ''}
     latestedUpdatedRecord = list[-1]
-    json_data = csv_json_conversion_service.dump_to_json(latestedUpdatedRecord)
-    return json_data
+    # json_data = csv_json_conversion_service.dump_to_json(latestedUpdatedRecord)
+    return latestedUpdatedRecord
 
 
 # Dashboard page api part ended
@@ -35,7 +35,7 @@ def current_heath_record():
 @app.route('/api/todo-list', methods=['GET'])
 def todo_list():
     json_data = todo_list_service.todo_list()
-    json_data = csv_json_conversion_service.dump_to_json(json_data)
+    # json_data = csv_json_conversion_service.dump_to_json(json_data)
     return json_data
 
 
@@ -46,32 +46,13 @@ def todo_list():
 @app.route('/api/report/health-record', methods=['GET'])
 def health_record_analysis():
     json_data = analysis_service.heart_record_analysis()
-    json_data = csv_json_conversion_service.dump_to_json(json_data)
+    # json_data = csv_json_conversion_service.dump_to_json(json_data)
     return json_data
 
 
 # Analysis page api part ended
 # ------------------------------------------------------------------------
 # Activities page api part started
-@app.route('/api/energy', methods=['GET'])
-def energy_json():
-    return activity_track_service.energy_json()
-
-
-@app.route('/api/force-directed-graph', methods=['GET'])
-def force_directed_graph():
-    return activity_track_service.force_directed_graph()
-
-
-@app.route('/api/parallel-coordinate-cars', methods=['GET'])
-def parallel_coordinate_cars():
-    return activity_track_service.parallel_coordinate_cars()
-
-
-@app.route('/api/parallel-coordinate-keys', methods=['GET'])
-def parallel_coordinate_keys():
-    return activity_track_service.parallel_coordinate_keys()
-
 
 @app.route('/api/activity-tracks', methods=['GET'])
 def activity_tracks():

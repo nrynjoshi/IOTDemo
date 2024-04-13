@@ -3,7 +3,8 @@ from datetime import datetime
 
 from azure.storage.blob import BlobServiceClient
 
-from service import csv_json_conversion_service
+import csv
+import time
 
 # hardcoded the userIdentify but it will collect from session in future work
 userIdentity = '1503960366'
@@ -16,7 +17,7 @@ def getConstantContainer(blob_name):
     my_list = []
     try:
         csv_data = download_blob_from_storage(container_name, blob_name)
-        my_list = csv_json_conversion_service.convert_csv_to_json(csv_data)
+        my_list = convert_csv_to_json(csv_data)
         return my_list
     except Exception as ex:
         print(f"Error Processing blob: {ex}")
@@ -82,7 +83,7 @@ def get_json_from_storage_container_csv_file(container_name, blob_name):
         csv_data = download_blob_from_storage(container_name, blob_name)
 
         # It will convert the csv_data to json since the whole application will work on json data
-        my_list = csv_json_conversion_service.convert_csv_to_json(csv_data)
+        my_list = convert_csv_to_json(csv_data)
 
         print("get_json_from_storage_container_csv_file --- %s seconds" % (time.time() - start_time))
         return my_list
@@ -118,3 +119,40 @@ def download_blob_from_storage(container_name, blob_name):
         print("download_blob_from_storage error")
         print(f"Error downloading blob: {e}")
         return None
+
+# this function will convert the csv dataset to json object
+# this will take csv_data as a param value and return a json list
+def convert_csv_to_json(csv_data):
+    start_time = time.time()
+    # Split CSV data into header and body
+    json_list = []
+    try:
+
+        print("convert_csv_to_json initialize")
+        csv_reader = csv.reader(csv_data.splitlines())
+        csv_header = next(csv_reader)  # Get the header
+
+        for row in csv_reader:
+            data = {}
+            options = []
+            for i, column in enumerate(row):
+                jsonKey = csv_header[i]
+                jsonValue = column
+
+                # this statement check if csv key start with option (i.e. option1, option2, option3) then it will
+                # convert that all keys into a list a value with option json key name
+                if jsonKey.startswith("option"):
+                    options.append(jsonValue)
+                else:
+                    data[jsonKey] = jsonValue
+                if options:
+                    data["options"] = options
+
+            json_list.append(data)
+        print("convert_csv_to_json completed")
+        print("convert_csv_to_json --- %s seconds" % (time.time() - start_time))
+        return json_list
+    except Exception as ex:
+        print("convert_csv_to_json error")
+        print(f"Error CSV To JSON conversion: {ex}")
+        return json_list
