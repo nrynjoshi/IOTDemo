@@ -5,12 +5,14 @@ from azure.storage.blob import BlobServiceClient
 
 from service import csv_json_conversion_service
 
-userId = ['1503960366']
+# hardcoded the userIdentify but it will collect from session in future work
 userIdentity = '1503960366'
 
 
-def getRulesContainer(blob_name):
-    container_name = "rules"  # Name of the container where your CSV file is stored
+# getConstantContainer function will read the information from blob_name csv file under constant container
+# It takes param blob_name which is the filename with extension i.e.csv to download a file from server
+def getConstantContainer(blob_name):
+    container_name = "constant"  # Name of the container where your CSV file is stored
     my_list = []
     try:
         csv_data = download_blob_from_storage(container_name, blob_name)
@@ -21,21 +23,41 @@ def getRulesContainer(blob_name):
         return my_list
 
 
-def getRecordsContainer(blob_name):
-    container_name = "records"  # Name of the container where your CSV file is stored
-    list = get_json_from_storage_container_csv_file(container_name, blob_name)
-    return list
+# getUserBasicInfoByIdentity function will read the user information from static defined userId from
+# user_basic_info.csv blob_name csv file under userrecorddb.
+# It will give that user basic information like name, dataofbirth etc
+def getUserBasicInfoByIdentity():
+    container_name = "userrecorddb"  # Name of the container where your CSV file is stored
+    # reading the actual data
+    list = get_json_from_storage_container_csv_file(container_name, "user_basic_info.csv")
+    userInfo = {}
+    for x in list:
+        if x['Id'] == userIdentity:
+            userInfo = x
+            break
+    if len(userInfo) == 0:
+        raise Exception("User does not exist")
+    return userInfo
 
 
+# getUserRecordDbContainerData function will read the information from blob_name csv file under userrecorddb
+# container for the specific user and current year and month dataset It takes param blob_name which is the filename
+
+# with extension i.e.csv to download a file from server
 def getUserRecordDbContainerData(blob_name):
+    # Getting the current date time to get the current month and year for preparing the proper filename
     current_date = datetime.now()  # Get the current date
     year = current_date.year
     month = current_date.month
 
     # Convert the month integer to a string with leading zero if necessary
     month = str(month).zfill(2)
+
+    # Prepare the filename to access the data for given year and given month with specific userId only
+    # TODO: Latter that userIdentification Id will be fetch from session after login work, this one goes for future enhancement
     filename = blob_name + '_' + str(year) + '_' + str(month) + '_' + str(userIdentity) + '.csv'
     container_name = "userrecorddb"  # Name of the container where your CSV file is stored
+    # reading the actual data
     list = get_json_from_storage_container_csv_file(container_name, filename)
     return list
 
@@ -46,12 +68,20 @@ def getUserRecordDbContainerData(blob_name):
 connection_string = "DefaultEndpointsProtocol=https;AccountName=visualizationdataset;AccountKey=jPzuNJEDQ4EP0KQZ/eNSbIEQCtRBOLte6a8Dl7ipc9Y/UKuyfjGU189qLjH1qrXr5CtsjkjxPETB+AStTwOAFw==;EndpointSuffix=core.windows.net"
 
 
+# get_json_from_storage_container_csv_file function will download the blob file i.e csv from cloud storage and
+# convert that csv file to json object It takes param container_name which is the container or directory where the
+
+# file has been stored It takes param blob_name which is the filename with extension i.e.csv to download a file from
+# server
 def get_json_from_storage_container_csv_file(container_name, blob_name):
     my_list = []
     try:
         start_time = time.time()
+
+        # It will download the csv data file from azure server under defined container_name with given blob_name filename
         csv_data = download_blob_from_storage(container_name, blob_name)
 
+        # It will convert the csv_data to json since the whole application will work on json data
         my_list = csv_json_conversion_service.convert_csv_to_json(csv_data)
 
         print("get_json_from_storage_container_csv_file --- %s seconds" % (time.time() - start_time))
@@ -65,6 +95,9 @@ def get_json_from_storage_container_csv_file(container_name, blob_name):
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
 
+# download_blob_from_storage function will download the blob file i.e csv from azure storage
+# It takes param container_name which is the container or directory where the file has been stored
+# It takes param blob_name which is the filename with extension i.e.csv to download a file from server
 def download_blob_from_storage(container_name, blob_name):
     try:
         start_time = time.time()
@@ -81,7 +114,6 @@ def download_blob_from_storage(container_name, blob_name):
         print("download_blob_from_storage completed")
         print("download_blob_from_storage --- %s seconds" % (time.time() - start_time))
         return blob_data
-
     except Exception as e:
         print("download_blob_from_storage error")
         print(f"Error downloading blob: {e}")

@@ -12,7 +12,7 @@ isInitDone: bool = False
 
 def init():
     # Step 2: Load Dataset
-    json_list = azure_blob_call_service.getRulesContainer('Disease Symptoms and Patient Profile Dataset.csv')
+    json_list = azure_blob_call_service.getConstantContainer('Disease Symptoms and Patient Profile Dataset.csv')
 
     # Convert list of JSON objects to DataFrame
     data = pd.DataFrame(json_list)
@@ -58,7 +58,7 @@ def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_bre
         init()
 
     def convert_bool_to_int(b):
-        if b.lower() in ('yes', 'true', 't', 'y', '1', 'male'):
+        if b.lower() in ('yes', 'true', 't', 'y', '1', 'male', 'm', 'high'):
             return 1
         else:
             return 0

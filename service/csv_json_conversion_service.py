@@ -2,9 +2,6 @@ import csv
 import json
 import time
 
-import pandas as pd
-
-
 def convert_csv_to_json(csv_data):
     start_time = time.time()
     # Split CSV data into header and body
@@ -50,10 +47,3 @@ def read_json_file(filename):
     response = json.dumps(data, indent=2)
     return response
 
-
-def read_csv_file(filename):
-    df = pd.read_csv(filename, dtype=str)
-    df = df.fillna('')
-    print(df)
-    data = {'header': list(df.columns.values), 'values': df.values.tolist()}
-    return data
