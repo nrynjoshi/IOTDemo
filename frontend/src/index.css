@@ -13,10 +13,11 @@ body {
 }
 
 
-h2{
+h2 {
   font-weight: bold;
   padding: 0.3rem;
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -43,7 +44,7 @@ code {
   text-decoration: none;
 }
 
-.header{
+.header {
   position: sticky;
   top: 0;
   z-index: 100;
@@ -52,22 +53,36 @@ code {
 .header ul li a:hover {
   background-color: #111111;
 }
+
 /* end header section css*/
 
 .blink {
   background-color: white;
   -webkit-animation: blink 800ms step-end infinite;
-          animation: blink 800ms step-end infinite;
+  animation: blink 800ms step-end infinite;
 }
-@-webkit-keyframes blink { 50% { background-color: rgb(255, 154, 154); color: white !important; }}
-      @keyframes blink { 50% { background-color: rgb(255, 154, 154); ; color: white !important; }}
 
-.datetime{
+@-webkit-keyframes blink {
+  50% {
+    background-color: rgb(255, 154, 154);
+    color: white !important;
+  }
+}
+
+@keyframes blink {
+  50% {
+    background-color: rgb(255, 154, 154);
+    ;
+    color: white !important;
+  }
+}
+
+.datetime {
   float: right !important;
   color: white;
 }
 
-.card{
+.card {
   padding: 10px;
   margin-bottom: 15px;
   background-color: white;

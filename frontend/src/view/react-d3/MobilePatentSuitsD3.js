@@ -3,12 +3,12 @@ import * as d3 from "d3";
 export const createMobilePatentSuitSVG = (data) => {
 
     // Specify the dimensions of the chart.
-        const width = 928;
-        const height = 600;
+    const width = 928;
+    const height = 600;
     const color = d3.scaleOrdinal(d3.schemeCategory10);
 
     const types = Array.from(new Set(data.map(d => d.type)));
-    const nodes = Array.from(new Set(data.flatMap(l => [l.source, l.target])), id => ({id}));
+    const nodes = Array.from(new Set(data.flatMap(l => [l.source, l.target])), id => ({ id }));
     const links = data.map(d => Object.create(d))
 
     const simulation = d3.forceSimulation(nodes)
@@ -85,29 +85,29 @@ function linkArc(d) {
       M${d.source.x},${d.source.y}
       A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
     `;
-  }
+}
 
- const drag = (simulation) => {
+const drag = (simulation) => {
 
     function dragstarted(event, d) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
     }
 
     function dragged(event, d) {
-      d.fx = event.x;
-      d.fy = event.y;
+        d.fx = event.x;
+        d.fy = event.y;
     }
 
     function dragended(event, d) {
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
     }
 
     return d3.drag()
         .on("start", dragstarted)
         .on("drag", dragged)
         .on("end", dragended);
-  }
+}

@@ -1,7 +1,9 @@
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
-from service import csv_json_conversion_service
 import time
 from datetime import datetime
+
+from azure.storage.blob import BlobServiceClient
+
+from service import csv_json_conversion_service
 
 userId = ['1503960366']
 userIdentity = '1503960366'

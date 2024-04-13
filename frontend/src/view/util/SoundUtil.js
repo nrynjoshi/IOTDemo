@@ -2,29 +2,36 @@ import React, { useState, useEffect } from 'react';
 import useSound from 'use-sound';
 import beepSound from '../audio/beep-02.mp3';
 
-const SoundUtil = ({ triggerValue  }) => {
-   const [play, { stop }] = useSound(beepSound);
+const SoundUtil = ({value, minNormalValue, maxNormalValue }) => {
+  const [play, { stop }] = useSound(beepSound);
+  const [showTag, setShowTag] = useState(false);
 
-   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (triggerValue > 95 && triggerValue < 100) {
-        play();
-      } else {
-        stop();
-      }
+  useEffect(() => {
+    let  intervalId = null
+    if(!minNormalValue && !maxNormalValue){
+      return;
+    }
+    play(); // Play the sound when the component mounts
 
-      if (triggerValue === 110) {
-        stop();
-      }
-    }, 1000);
-
+    if (minNormalValue > value || maxNormalValue < value) {
+      setShowTag(true);
+      intervalId = setInterval(() => play(), 1300);
+    }else {
+      setShowTag(false);
+      stop();
+      clearInterval(intervalId);
+    }
     return () => clearInterval(intervalId);
-  }, [triggerValue, play, stop]);
+  }, [value, minNormalValue, maxNormalValue, play, stop ]);
 
   return (
-    <div>
-      <p>Trigger Value: {triggerValue}</p>
-    </div>
+    <>
+      {showTag && (
+        <span role="img" className='blink' aria-label="Person with lines near mouth">
+          🗣
+        </span>
+      )}
+    </>
   );
 };
 

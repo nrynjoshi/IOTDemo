@@ -1,15 +1,13 @@
 from flask import Flask, request, redirect
+from flask_cors import CORS
 
-import controller.todo_list_controller as todo_list_controller
 import controller.activity_track_controller as activity_track_controller
 import controller.analysis_controller as analysis_controller
 import controller.emergency_contact_controller as emergency_contact_controller
 import controller.machine_learning_controller as machine_learning_controller
-
+import controller.todo_list_controller as todo_list_controller
 from service import azure_blob_call_service
 from service import csv_json_conversion_service
-
-from flask_cors import CORS
 
 # ------------------------------------------------------------------------
 
@@ -57,6 +55,7 @@ def health_record_analysis():
     json_data = analysis_controller.heart_record_analysis()
     json_data = csv_json_conversion_service.dump_to_json(json_data)
     return json_data
+
 
 # Analysis page api part ended
 # ------------------------------------------------------------------------
@@ -114,7 +113,8 @@ def page_not_found(e):
     if path.__contains__('/api/'):
         return {'status': 'error', 'message': 'API not found'}, 404
     else:
-        return redirect("/?redirect="+path, code=302)
+        return redirect("/?redirect=" + path, code=302)
+
 
 # ------------------------------------------------------------------------
 # Python application entry point for running application

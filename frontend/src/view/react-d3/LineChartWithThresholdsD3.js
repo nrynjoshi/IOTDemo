@@ -9,7 +9,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, mild, normal, severe }
 
     if (!data || !data.length) return;
 
-    const margin =  {top: 10, right: 30, bottom: 50, left: 85};
+    const margin = { top: 10, right: 30, bottom: 50, left: 85 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -21,7 +21,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, mild, normal, severe }
 
     // Parse the date/time
     const parseTime = d3.timeParse('%m/%d/%Y %H:%M');
-    
+
     // Format the date/time
     const formatTime = d3.timeFormat('%H:%M');
 
@@ -40,8 +40,8 @@ const LineChartWithThresholdsD3 = ({ data, width, height, mild, normal, severe }
       .attr('transform', `translate(0,${innerHeight})`)
       .call(d3.axisBottom(x).tickFormat(formatTime));
 
-      // Add X axis label
-      svg.append("text")
+    // Add X axis label
+    svg.append("text")
       .attr('class', 'x-axis-label')
       .attr('transform', `translate(${innerWidth / 2},${height - margin.bottom / 3})`)
       .style('text-anchor', 'middle')
@@ -51,8 +51,8 @@ const LineChartWithThresholdsD3 = ({ data, width, height, mild, normal, severe }
     svg.append('g')
       .call(d3.axisLeft(y));
 
-      // Add Y axis label
-      svg.append("text")
+    // Add Y axis label
+    svg.append("text")
       .attr('class', 'y-axis-label')
       .attr('transform', 'rotate(-90)')
       .attr('y', -margin.left / 2)
@@ -74,7 +74,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, mild, normal, severe }
       .attr('d', line);
 
     // Define threshold values
-    const thresholds = [{'value': mild, 'text':'mild'}, {'value': normal, 'text':'normal'}, {'value': severe, 'text':'severe'}] // Example threshold values
+    const thresholds = [{ 'value': mild, 'text': 'mild' }, { 'value': normal, 'text': 'normal' }, { 'value': severe, 'text': 'severe' }] // Example threshold values
 
     // Draw threshold lines
     thresholds.forEach((threshold, index) => {

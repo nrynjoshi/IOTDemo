@@ -1,10 +1,10 @@
 import React from "react";
 import HttpClient from "../util/HttpClient"
-import {createParallelCoordinatesSVG} from "../react-d3/ParallelCoordinatesD3"
+import { createParallelCoordinatesSVG } from "../react-d3/ParallelCoordinatesD3"
 
 class ParallelCoordinates extends React.Component {
 
-    state = {dataCar: null, dataKeys:null, colorEncoding: "weight (lb)", httpErrorMessage: null, isLoading: false};
+    state = { dataCar: null, dataKeys: null, colorEncoding: "weight (lb)", httpErrorMessage: null, isLoading: false };
 
     componentDidMount() {
         const car_url = this.props.dataEndpoint;
@@ -12,17 +12,17 @@ class ParallelCoordinates extends React.Component {
         //calling api for data
         const fetchData = async () => {
             try {
-                this.setState({isLoading: true})
+                this.setState({ isLoading: true })
                 const dataCar = await HttpClient.get(car_url);
-                this.setState({dataCar: dataCar, httpErrorMessage: null});
+                this.setState({ dataCar: dataCar, httpErrorMessage: null });
 
                 const dataKeys = await HttpClient.get(key_url);
-                this.setState({dataKeys: dataKeys, httpErrorMessage: null});
+                this.setState({ dataKeys: dataKeys, httpErrorMessage: null });
             } catch (error) {
                 console.error('Error fetching data:', error);
-                this.setState({data: null, httpErrorMessage: JSON.stringify(error.toString())});
+                this.setState({ data: null, httpErrorMessage: JSON.stringify(error.toString()) });
             } finally {
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false })
             }
         };
 
@@ -32,7 +32,7 @@ class ParallelCoordinates extends React.Component {
 
     componentDidUpdate() {
 
-        const {dataCar, dataKeys, colorEncoding, httpErrorMessage} = this.state
+        const { dataCar, dataKeys, colorEncoding, httpErrorMessage } = this.state
 
         if (dataCar != null && dataKeys != null && httpErrorMessage == null) {
 
@@ -49,16 +49,16 @@ class ParallelCoordinates extends React.Component {
 
     handleColorEncodingChange = (e) => {
         console.log('handleColorEncodingChange called');
-        this.setState({colorEncoding: e.target.value});
+        this.setState({ colorEncoding: e.target.value });
     }
 
 
     render() {
-        const {httpErrorMessage, colorEncoding,isLoading, dataCar} = this.state
+        const { httpErrorMessage, colorEncoding, isLoading, dataCar } = this.state
         return (<div>
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
-                <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> : <span></span>)}
+                <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> : <span></span>)}
             <h2>Parallel Coordinates</h2>
             <div>
                 Color Encoding &nbsp;

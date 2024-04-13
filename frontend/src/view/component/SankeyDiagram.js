@@ -1,24 +1,24 @@
 import React from "react";
 import HttpClient from "../util/HttpClient"
-import {createSankeyDiagramSVG} from "../react-d3/SankeyDiagramD3"
+import { createSankeyDiagramSVG } from "../react-d3/SankeyDiagramD3"
 
 class SankeyDiagram extends React.Component {
 
-    state = {data: null, linkColor: "source", nodeAlignment: "sankeyJustify", httpErrorMessage: null, isLoading: false};
+    state = { data: null, linkColor: "source", nodeAlignment: "sankeyJustify", httpErrorMessage: null, isLoading: false };
 
     componentDidMount() {
         const url = this.props.dataEndpoint;
         //calling api for data
         const fetchData = async () => {
             try {
-                this.setState({isLoading: true})
+                this.setState({ isLoading: true })
                 const data = await HttpClient.get(url);
-                this.setState({data: data, httpErrorMessage: null});
+                this.setState({ data: data, httpErrorMessage: null });
             } catch (error) {
                 console.error('Error fetching data:', error);
-                this.setState({data: null, httpErrorMessage: JSON.stringify(error.toString())});
+                this.setState({ data: null, httpErrorMessage: JSON.stringify(error.toString()) });
             } finally {
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false })
             }
         };
 
@@ -28,7 +28,7 @@ class SankeyDiagram extends React.Component {
 
     componentDidUpdate() {
 
-        const {linkColor, nodeAlignment, data, httpErrorMessage} = this.state
+        const { linkColor, nodeAlignment, data, httpErrorMessage } = this.state
 
         if (data != null && httpErrorMessage == null) {
 
@@ -45,21 +45,21 @@ class SankeyDiagram extends React.Component {
 
     handleLinkColorChange = (e) => {
         console.log('handleLineColorChange called');
-        this.setState({linkColor: e.target.value});
+        this.setState({ linkColor: e.target.value });
     }
 
     handleNodeAlignmentChange = (e) => {
         console.log('handleNodeAlignmentChange called');
-        this.setState({nodeAlignment: e.target.value});
+        this.setState({ nodeAlignment: e.target.value });
     }
 
 
     render() {
-        const {httpErrorMessage, linkColor, nodeAlignment, isLoading, data} = this.state
+        const { httpErrorMessage, linkColor, nodeAlignment, isLoading, data } = this.state
         return (<div className="p-1 pl-3">
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
-                <h2 style={{backgroundColor: 'red'}}>{httpErrorMessage}</h2> : <span></span>)}
+                <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> : <span></span>)}
             {/*<h2>Sankey Diagram</h2>*/}
             {/*<div>*/}
             {/*    Link color &nbsp;*/}

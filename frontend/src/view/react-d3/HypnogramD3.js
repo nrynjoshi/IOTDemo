@@ -1,4 +1,4 @@
- 
+
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
@@ -9,7 +9,7 @@ const HypnogramD3 = ({ data, width, height }) => {
     if (!data) return;
 
 
-    const margin = {top: 10, right: 30, bottom: 50, left: 140};
+    const margin = { top: 10, right: 30, bottom: 50, left: 140 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -67,7 +67,7 @@ const HypnogramD3 = ({ data, width, height }) => {
     // Add X axis label
     svg.append("text")
       .attr('class', 'x-axis-label')
-      .attr('transform', `translate(${innerWidth / 2},${height- margin.bottom/ 2})`)
+      .attr('transform', `translate(${innerWidth / 2},${height - margin.bottom / 2})`)
       .style('text-anchor', 'middle')
       .text('Day of the Month');
 
@@ -87,7 +87,7 @@ const HypnogramD3 = ({ data, width, height }) => {
 
   return (
     <svg ref={svgRef} width={width} height={height}>
-  </svg>
+    </svg>
   );
 };
 

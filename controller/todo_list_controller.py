@@ -1,6 +1,7 @@
+import copy
+
 from service import azure_blob_call_service
 from service import cleanup_csv_record
-import copy
 
 
 # TODO-List page api part started
