@@ -22,7 +22,7 @@ class ActivityTrack extends React.Component {
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
                 <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> : <span></span>)}
             <div className="card">
-                <PageTitle title="Montly Based Habitual Diagram"></PageTitle>
+                <PageTitle title="Daily Disease Evaluation Based on Symptoms"></PageTitle>
                 <SankeyDiagram dataEndpoint={BACKEND_API_CALL + '/activity-tracks'}></SankeyDiagram>
 
             </div>
