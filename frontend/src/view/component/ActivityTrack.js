@@ -28,17 +28,17 @@ class ActivityTrack extends React.Component {
             </div>
 
             <div className="card">
-                <PageTitle title="Montly Based Habitual Diagram"></PageTitle>
-                <ForceDirectedGraph dataEndpoint={BACKEND_API_CALL + '/force-directed-graph'}></ForceDirectedGraph>
+                <PageTitle title="Daily Disease Evaluation Based on Symptoms"></PageTitle>
+                <ForceDirectedGraph dataEndpoint={BACKEND_API_CALL + '/activity-tracks'}></ForceDirectedGraph>
 
             </div>
 
-            <div className="card">
+            {/* <div className="card">
                 <PageTitle title="Montly Based Habitual Diagram"></PageTitle>
                 <ParallelCoordinates dataEndpoint={BACKEND_API_CALL + '/parallel-coordinate-cars'}
                     keysEndpoint={BACKEND_API_CALL + '/parallel-coordinate-keys'}></ParallelCoordinates>
 
-            </div>
+            </div> */}
 
 
 
