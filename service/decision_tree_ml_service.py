@@ -47,6 +47,14 @@ def init():
     isInitDone = True
 
 
+def decision_tree_engine(input_json):
+    data = process(input_json['has_fever'], input_json['has_cough'], input_json['has_fatigue'],
+                   input_json['has_difficulty_breathing'], input_json['age'],
+                   input_json['is_male'], input_json['blood_pressure_level'],
+                   input_json['cholesterol_level'])
+    return data
+
+
 def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_breathing: str, age: int, is_male: str,
             blood_pressure_level: str, cholesterol_level: str):
     global clf_disease

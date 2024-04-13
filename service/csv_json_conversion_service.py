@@ -2,6 +2,7 @@ import csv
 import json
 import time
 
+
 def convert_csv_to_json(csv_data):
     start_time = time.time()
     # Split CSV data into header and body
@@ -46,4 +47,3 @@ def read_json_file(filename):
     # Convert the updated dictionary back to a JSON string
     response = json.dumps(data, indent=2)
     return response
-
