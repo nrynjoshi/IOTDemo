@@ -64,22 +64,12 @@ def cleanupNaNValueFromList(data):
 
 
 def heart_rate_analysis(list):
-    # Get today's date
-    today = datetime.today()
-    # Calculate the date one week ago
-    one_week_ago = today - timedelta(days=7)
-    response_list = []
-    for x in list:
-        date_object = parse_time(x['ActivityHour'])
-        if one_week_ago.month <= date_object.month <= today.month and one_week_ago.day <= date_object.day <= today.day and one_week_ago.year <= date_object.year <= today.year:
-            response_list.append(x)
-
     # Convert timestamp to datetime
-    for entry in response_list:
+    for entry in list:
         entry['HeartRate'] = int(entry['HeartRate'])  # Convert value to integer
 
     # Create DataFrame
-    df = pd.DataFrame(response_list)
+    df = pd.DataFrame(list)
 
     df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
     # Remove rows with NaT (empty strings)
