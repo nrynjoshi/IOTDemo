@@ -98,6 +98,14 @@ class EmergencyContact extends React.Component {
                             </select>
                         </div>
                         <div>
+                            <label htmlFor="is_male" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Select you gender</label>
+                            <select name="is_male" id="is_male" onChange={(event) => handleChange(event, "is_male")} value={requestBody.is_male} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option disabled>Select any</option>
+                                <option value="yes">Male</option>
+                                <option value="no">Female</option>
+                            </select>
+                        </div>
+                        <div>
                             <label htmlFor="age" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Enter your age</label>
                             <input type="number" id="age" name="age" value={requestBody.age} onChange={(event) => handleChange(event, "age")} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                         </div>
