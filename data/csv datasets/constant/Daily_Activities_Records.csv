@@ -1,0 +1,8 @@
+ID,key,question,option1,option2,option3,option4,time
+1,EAT_BREAKFAST,Did you have your breakfast between 6:00 am to 6:30 pm?,"Yes, I have my breakfast on time","No, I did not have any breakfast at that time",I did not have breakfast today.,I do not recall.,[06:00]
+2,DRINK_COFFEE,Did you drink your tea or coffee around  ${time}?,"Yes, I drink my coffee.","No, Coffee today","No, I did not have today",I do not recall.,"[6:00, 14:00, 20:00]"
+3,DRINK_WATER,Did you drink your water around  ${time}?,"Yes, I did.","No, I did not.","No, I did not have today",I do not recall.,"[6:00, 14:00, 20:00]"
+4,EAT_LUNCH,Did you have your lunch between 13:00 to 13:30 ?,"Yes, I did.","No, I did not.","No, I did not have today",I do not recall.,[13:00]
+5,EAT_DINNER,Did you have your lunch between 18:00 to 18:30 ?,"Yes, I did.","No, I did not.","No, I did not have today",I do not recall.,[18:00]
+6,BED_TIME,Did you have your lunch between 22:00 to 22:30 ?,"Yes, I did.","No, I did not.","No, I did not have today",I do not recall.,[22:00]
+7,WAKEUP_TIME,Did you have your lunch between 6:00 to 7:00 ?,"Yes, I did.","No, I did not.","No, I did not have today",I do not recall.,[06:00]
