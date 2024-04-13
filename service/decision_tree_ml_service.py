@@ -58,7 +58,7 @@ def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_bre
         init()
 
     def convert_bool_to_int(b):
-        if b.lower() in ('yes', 'true', 't', 'y', '1'):
+        if b.lower() in ('yes', 'true', 't', 'y', '1', 'male'):
             return 1
         else:
             return 0
