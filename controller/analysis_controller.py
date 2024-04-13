@@ -4,14 +4,15 @@ from datetime import datetime, timedelta
 import pandas as pd
 
 from service import azure_blob_call_service
-from service import cleanup_csv_record
 import time
+
 
 # Analysis page api part started
 def heart_record_analysis():
     list = azure_blob_call_service.getUserRecordDbContainerData("hourlyHeathRecord")
     if len(list) == 0:
         return {'status': 'error', 'message': ''}
+
     estart_time = time.time()
     body_temperature = extract_required_key_value(list, ["ActivityHour", "BodyTemperate"])
     heart_rate = extract_required_key_value(list, ["ActivityHour", "HeartRate"])
@@ -24,7 +25,6 @@ def heart_record_analysis():
 
     estart_time = time.time()
     # pre process data for ui diagram
-
 
     heart_rate = heart_rate_analysis(heart_rate)
     body_temperature = body_temperature_analysis(body_temperature)
@@ -70,7 +70,7 @@ def heart_rate_analysis(list):
     one_week_ago = today - timedelta(days=7)
     response_list = []
     for x in list:
-        date_object = cleanup_csv_record.parse_time(x['ActivityHour'])
+        date_object = parse_time(x['ActivityHour'])
         if one_week_ago.month <= date_object.month <= today.month and one_week_ago.day <= date_object.day <= today.day and one_week_ago.year <= date_object.year <= today.year:
             response_list.append(x)
 
@@ -81,7 +81,7 @@ def heart_rate_analysis(list):
     # Create DataFrame
     df = pd.DataFrame(response_list)
 
-    df['ActivityHour'] = df['ActivityHour'].apply(cleanup_csv_record.parse_time)
+    df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
     # Remove rows with NaT (empty strings)
     df = df.dropna(subset=['ActivityHour'])
     # Sort data by timestamp
@@ -129,7 +129,7 @@ def respiratory_rate_analysis(list):
     response_list = []
 
     for x in list:
-        date_object = cleanup_csv_record.parse_time(x['ActivityHour'])
+        date_object = parse_time(x['ActivityHour'])
         if date_object:
             current_date = datetime.now()  # Get the current date
 
@@ -155,7 +155,7 @@ def spo2_analysis(list):
     response_list = []
 
     for x in list:
-        date_object = cleanup_csv_record.parse_time(x['ActivityHour'])
+        date_object = parse_time(x['ActivityHour'])
         if date_object:
             current_date = datetime.now()  # Get the current date
 
@@ -181,7 +181,7 @@ def blood_sugar_anaysis(list):
     # Create DataFrame
     df = pd.DataFrame(list)
 
-    df['ActivityHour'] = df['ActivityHour'].apply(cleanup_csv_record.parse_time)
+    df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
     # Remove rows with NaT (empty strings)
     df = df.dropna(subset=['ActivityHour'])
     # Sort data by timestamp
@@ -208,7 +208,7 @@ def blood_sugar_anaysis(list):
         # Append JSON object to list
         json_list.append(json_obj)
 
-        # Move to the next 2-hour interval
+        # Move to the next 1-day interval
         start_time = end_time
         end_time += pd.Timedelta(days=1)
     json_list = cleanupNaNValueFromList(json_list)
@@ -230,7 +230,7 @@ def sleep_pattern_analysis(list):
     # Create DataFrame
     df = pd.DataFrame(list)
 
-    df['ActivityHour'] = df['ActivityHour'].apply(cleanup_csv_record.parse_time)
+    df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
     # Remove rows with NaT (empty strings)
     df = df.dropna(subset=['ActivityHour'])
     # Sort data by timestamp
@@ -251,7 +251,6 @@ def sleep_pattern_analysis(list):
         # Calculate average for this interval
         TotalMinutesAsleep = interval_data['TotalMinuteSleep'].sum()
 
-        stage = ''
         if TotalMinutesAsleep >= 420:
             stage = 'Deep Sleep'
         elif TotalMinutesAsleep >= 330:
@@ -278,7 +277,7 @@ def body_temperature_analysis(list):
     response_list = []
 
     for x in list:
-        date_object = cleanup_csv_record.parse_time(x['ActivityHour'])
+        date_object = parse_time(x['ActivityHour'])
         if date_object:
             current_date = datetime.now()  # Get the current date
 
@@ -304,7 +303,7 @@ def total_steps_analysis(list):
     # Create DataFrame
     df = pd.DataFrame(list)
 
-    df['ActivityHour'] = df['ActivityHour'].apply(cleanup_csv_record.parse_time)
+    df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
     # Remove rows with NaT (empty strings)
     df = df.dropna(subset=['ActivityHour'])
     # Sort data by timestamp
@@ -338,4 +337,15 @@ def total_steps_analysis(list):
     json_list = cleanupNaNValueFromList(json_list)
     return json_list
 
+
 # Analysis page api part ended
+
+def parse_time(time_str):
+    if time_str.strip():  # Check if the string is not empty
+        try:
+            return pd.to_datetime(time_str, format='%m/%d/%Y %H:%M')
+        except ValueError:
+            return pd.NaT  # Return NaT (Not a Time) for empty strings
+
+    else:
+        return pd.NaT  # Return NaT (Not a Time) for empty strings
