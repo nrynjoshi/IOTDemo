@@ -1,33 +1,8 @@
 # Activities page api part started
-from service import csv_json_conversion_service, azure_blob_call_service, decision_tree_ml_service
+from service import azure_blob_call_service, decision_tree_ml_service
 from datetime import datetime
 import pandas as pd
 import copy
-
-
-def energy_json():
-    response = csv_json_conversion_service.read_json_file(r'.\data\energy.json')
-    return response
-
-
-def force_directed_graph():
-    response = csv_json_conversion_service.read_json_file(r'.\data\force-directed-graph.json')
-    # ---
-    nodes = [{"id": "", "group": ""}]
-    links = []
-    link = {"source": "", "target": "", "": "value"}
-    return response
-
-
-def parallel_coordinate_cars():
-    response = csv_json_conversion_service.read_json_file(r'.\data\parallel-coordinate-cars.json')
-    return response
-
-
-def parallel_coordinate_keys():
-    response = csv_json_conversion_service.read_json_file(r'.\data\parallel-coordinate-keys.json')
-
-    return response
 
 
 def activity_tracks():
@@ -71,8 +46,11 @@ def activity_tracks():
                                                               has_difficulty_breathing, age,
                                                               gender, blood_pressure_level,
                                                               cholesterol_level)
-        outcome_mapping_sources = ['Body Temperature' + ' ' + str(has_fever), 'Coughing'+ ' ' + str(has_cough), 'Difficulty Breathing'+ ' ' + str(has_difficulty_breathing), 'Blood Pressure'+ ' ' + str(blood_pressure_level), 'Cholesterol Level'+ ' ' + str(cholesterol_level)]
-        target_for_ml_process_outcome = ml_process_outcome['disease'] + '( '+ml_process_outcome['outcome'] + ')'
+        outcome_mapping_sources = ['Body Temperature' + ' ' + str(has_fever), 'Coughing' + ' ' + str(has_cough),
+                                   'Difficulty Breathing' + ' ' + str(has_difficulty_breathing),
+                                   'Blood Pressure' + ' ' + str(blood_pressure_level),
+                                   'Cholesterol Level' + ' ' + str(cholesterol_level)]
+        target_for_ml_process_outcome = ml_process_outcome['disease'] + '( ' + ml_process_outcome['outcome'] + ')'
         for outcome in outcome_mapping_sources:
             data = {
                 "source": outcome,

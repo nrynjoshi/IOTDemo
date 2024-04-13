@@ -9,7 +9,8 @@ clf_disease = DecisionTreeClassifier()
 clf_outcome = DecisionTreeClassifier()
 isInitDone: bool = False
 
-
+# This init function will only trigger once on the application life cycle and this will only trigger when
+# decision-making application called first time
 def init():
     # Step 2: Load Dataset
     json_list = azure_blob_call_service.getConstantContainer('Disease Symptoms and Patient Profile Dataset.csv')
@@ -18,8 +19,9 @@ def init():
     data = pd.DataFrame(json_list)
 
     # Step 3: Data Preprocessing (if needed)
-    # Convert 'yes' and 'no' values to binary (0 or 1)
-
+    # Convert 'yes' and 'no' values to binary 1, 0 respectively for supporting in decision
+    # Convert 'Male' and 'Female' values to binary 1, 0 respectively for supporting in decision
+    # Convert 'Low', 'Normal', and 'High' values to binary -1, 0, 1 respectively for supporting in decision
     data['Fever'] = data['Fever'].map({'yes': 1, 'no': 0})
     data['Cough'] = data['Cough'].map({'yes': 1, 'no': 0})
     data['Fatigue'] = data['Fatigue'].map({'yes': 1, 'no': 0})
@@ -30,6 +32,7 @@ def init():
     data['Gender'] = data['Gender'].map({'Male': 1, 'Female': 0})
 
     # Step 4: Split Data into Features and Labels
+    # feeding the expected outcome field after making decision
     X = data.drop(['Disease', 'Outcome Variable'], axis=1)  # Features
     y_disease = data['Disease']  # Label for Disease
     y_outcome = data['Outcome Variable']  # Label for Outcome Variable
@@ -47,6 +50,7 @@ def init():
     isInitDone = True
 
 
+# this function will get the json object and split that value as a separate param for further processing of information
 def decision_tree_engine(input_json):
     data = process(input_json['has_fever'], input_json['has_cough'], input_json['has_fatigue'],
                    input_json['has_difficulty_breathing'], input_json['age'],
@@ -55,22 +59,29 @@ def decision_tree_engine(input_json):
     return data
 
 
+# this is actual evaluation logic of machine learning algorithm will takes a range of input paramater to make a
+# decision and provid a expected outcome based on the input and its train values
 def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_breathing: str, age: int, is_male: str,
             blood_pressure_level: str, cholesterol_level: str):
+    # declare the global set variable from the function level
     global clf_disease
     global clf_outcome
     global isInitDone
 
-    # Step 7: Make Predictions
+    # this statment will only execute once in a whole application run time to train the model this statement will
+    # trigger whenever someone call for decision-making based on this machine learning only to save the performance
+    # and load
     if not isInitDone:
-        init()
+        init()  # this will init the model and train the model
 
+    # this will convert different types of value to boolean as defined while training model
     def convert_bool_to_int(b):
         if b.lower() in ('yes', 'true', 't', 'y', '1', 'male', 'm', 'high'):
             return 1
         else:
             return 0
 
+    # this will convert different types of value to boolean as defined while training model
     def convert_level_to_int(b):
         if b.lower() in 'high':
             return 1
@@ -93,6 +104,7 @@ def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_bre
     # Make prediction for Outcome Variable
     predicted_outcome = clf_outcome.predict(new_input_df)
 
+    # this function will convert integer outcome to equivalent string value for predicted_outcome
     def convert_outcome_to_string(b):
         if b == 1:
             return 'Positive'
@@ -101,5 +113,7 @@ def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_bre
 
     print("Predicted Disease:", predicted_disease)
     print("Predicted Outcome Variable:", predicted_outcome)
+
+    # preparing the json body for return statement
     outcome = {'disease': predicted_disease[0], 'outcome': convert_outcome_to_string(predicted_outcome)}
     return outcome
