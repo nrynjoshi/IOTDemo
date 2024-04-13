@@ -1,13 +1,6 @@
 from flask import Flask, request, redirect
 from flask_cors import CORS
-
-import controller.activity_track_controller as activity_track_controller
-import controller.analysis_controller as analysis_controller
-import controller.emergency_contact_controller as emergency_contact_controller
-import controller.machine_learning_controller as machine_learning_controller
-import controller.todo_list_controller as todo_list_controller
-from service import azure_blob_call_service
-from service import csv_json_conversion_service
+from service import csv_json_conversion_service, azure_blob_call_service, activity_track_service, analysis_service, decision_tree_ml_service,todo_list_service
 
 # ------------------------------------------------------------------------
 
@@ -41,7 +34,7 @@ def current_heath_record():
 # TODO-List page api part started
 @app.route('/api/todo-list', methods=['GET'])
 def todo_list():
-    json_data = todo_list_controller.todo_list()
+    json_data = todo_list_service.todo_list()
     json_data = csv_json_conversion_service.dump_to_json(json_data)
     return json_data
 
@@ -52,7 +45,7 @@ def todo_list():
 
 @app.route('/api/report/health-record', methods=['GET'])
 def health_record_analysis():
-    json_data = analysis_controller.heart_record_analysis()
+    json_data = analysis_service.heart_record_analysis()
     json_data = csv_json_conversion_service.dump_to_json(json_data)
     return json_data
 
@@ -62,27 +55,27 @@ def health_record_analysis():
 # Activities page api part started
 @app.route('/api/energy', methods=['GET'])
 def energy_json():
-    return activity_track_controller.energy_json()
+    return activity_track_service.energy_json()
 
 
 @app.route('/api/force-directed-graph', methods=['GET'])
 def force_directed_graph():
-    return activity_track_controller.force_directed_graph()
+    return activity_track_service.force_directed_graph()
 
 
 @app.route('/api/parallel-coordinate-cars', methods=['GET'])
 def parallel_coordinate_cars():
-    return activity_track_controller.parallel_coordinate_cars()
+    return activity_track_service.parallel_coordinate_cars()
 
 
 @app.route('/api/parallel-coordinate-keys', methods=['GET'])
 def parallel_coordinate_keys():
-    return activity_track_controller.parallel_coordinate_keys()
+    return activity_track_service.parallel_coordinate_keys()
 
 
 @app.route('/api/activity-tracks', methods=['GET'])
 def activity_tracks():
-    return activity_track_controller.activity_tracks()
+    return activity_track_service.activity_tracks()
 
 
 # Activities page api part ended
@@ -92,7 +85,8 @@ def activity_tracks():
 
 @app.route('/api/emergency-contacts', methods=['GET'])
 def emergency_contacts():
-    return emergency_contact_controller.emergency_contacts()
+    list = azure_blob_call_service.getConstantContainer("Emergency Contact List.csv")
+    return list
 
 
 # Emergency page api part ended
@@ -101,7 +95,7 @@ def emergency_contacts():
 @app.route('/api/decision_tree', methods=['POST'])
 def decision_tree_engine():
     input_json = request.get_json(force=True)
-    return machine_learning_controller.decision_tree_engine(input_json)
+    return decision_tree_ml_service.decision_tree_engine(input_json)
 
 
 # Machine learning part ended

@@ -54,7 +54,6 @@ class ForceDirectedGraph extends React.Component {
         ) : (httpErrorMessage ? <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> :
           <span></span>
         )}
-        <h2>Force Directed Graph</h2>
         {data && <div id="SvgContainerIdForForceDirectedGraph"></div>}
 
       </ErrorBoundary></div>

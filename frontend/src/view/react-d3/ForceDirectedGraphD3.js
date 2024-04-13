@@ -2,7 +2,7 @@ import * as d3 from "d3";
 
 export const createForceDirectedGraphSVG = (data) => {
   // Specify the dimensions of the chart.
-  const width = 928;
+  const width = 800;
   const height = 600;
 
   // Specify the color scale.
@@ -14,11 +14,16 @@ export const createForceDirectedGraphSVG = (data) => {
   const nodes = data.nodes.map(d => ({ ...d }));
 
   // Create a simulation with several forces.
-  const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d.id))
-    .force("charge", d3.forceManyBody())
+  // const simulation = d3.forceSimulation(nodes)
+  //   .force("link", d3.forceLink(links).id(d => d.name))
+  //   .force("charge", d3.forceManyBody().strength(-100)) // Adjust charge strength
+  //   .force("center", d3.forceCenter(width / 2, height / 2));
+    // .on("tick", ticked);
+    const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.name).distance(250))
+    .force("charge", d3.forceManyBody().strength(-400))
     .force("center", d3.forceCenter(width / 2, height / 2))
-    .on("tick", ticked);
+    .force("collide", d3.forceCollide().radius(30));
 
   // Create the SVG container.
   const svg = d3.create("svg")
@@ -34,12 +39,12 @@ export const createForceDirectedGraphSVG = (data) => {
     .selectAll()
     .data(links)
     .join("line")
-    .attr("stroke-width", d => Math.sqrt(d.value));
+    .attr("stroke-width", 1.5);
 
 
      // Create nodes
     const nodeGroup = svg
-    .attr("stroke-width", 1.5)
+    .attr("stroke-width", 2)
     .selectAll(".nodeGroup")
     .data(nodes)
     .enter().append("g")
@@ -47,12 +52,12 @@ export const createForceDirectedGraphSVG = (data) => {
 
   // Append circles to node group
   const node = nodeGroup.append("circle")
-    .attr("r", 6)
-    .attr("fill", d => color(d.group));
+    .attr("r", 15)
+    .attr("fill", d => color(d.category));
 
   // Append labels to node group
   const label = nodeGroup.append("text")
-    .text(d => d.id)
+    .text(d => d.name)
     .attr("font-size", "12px")
     .attr("x", 30) // Adjust the x position of the label
     .attr("y", 5); // Adjust the y position of the label
