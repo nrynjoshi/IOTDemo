@@ -78,21 +78,21 @@ class PatientDashboard extends React.Component {
                                 </div>
 
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Body Temperature'} displayValue={data.BodyTemperate} />
+                                    <CurrentDashboardDisplay displayText={'Body Temperature'} displayValue={data.BodyTemperate} minNormalValue ={97.8} maxNormalValue ={99.1}/>
                                 </div>
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Blood Sugar Fasting'} displayValue={data.BloodSugarFasting} />
+                                    <CurrentDashboardDisplay displayText={'Blood Sugar Fasting'} displayValue={data.BloodSugarFasting} minNormalValue ={70} maxNormalValue ={100}/>
 
                                 </div>
                                 <div className="card">
                                     <CurrentDashboardDisplay displayText={'Blood Pressure in mmHg'} displayValue={data.BloodPressure_mmHg} />
                                 </div>
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Respiratory Rate'} displayValue={data.RespiratoryRate} />
+                                    <CurrentDashboardDisplay displayText={'Respiratory Rate'} displayValue={data.RespiratoryRate} minNormalValue ={12} maxNormalValue ={20}/>
 
                                 </div>
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Blood Oxygen Saturation'} displayValue={data.BloodOxygenSaturation} />
+                                    <CurrentDashboardDisplay displayText={'Blood Oxygen Saturation'} displayValue={data.BloodOxygenSaturation} minNormalValue ={95} maxNormalValue ={100}/>
 
                                 </div>
 
