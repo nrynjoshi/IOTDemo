@@ -60,7 +60,7 @@ def decision_tree_engine(input_json):
 
 
 # this is actual evaluation logic of machine learning algorithm will takes a range of input paramater to make a
-# decision and provid a expected outcome based on the input and its train values
+# decision and provide a expected outcome based on the input and its train values
 def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_breathing: str, age: int, is_male: str,
             blood_pressure_level: str, cholesterol_level: str):
     print("has_fever: ", has_fever,
