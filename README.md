@@ -36,7 +36,7 @@ The csv data set for the application has been save on csv datasets directory and
 
 # Software Architecture Diagram
 
-<img src="./readme-img/software-architecture-diagram.png" width="800" height="300" style="background-color: #e5e7eb">
+<img src="./readme-img/software-architecture-diagram.png" width="800" height="300">
 
 # Data Visualization Sample Screenshot
 <img src="./readme-img/blood-sugar-analysis.png" width="400" height="200">
