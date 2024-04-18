@@ -76,7 +76,9 @@ def emergency_contacts():
 @app.route('/api/decision_tree', methods=['POST'])
 def decision_tree_engine():
     input_json = request.get_json(force=True)
-    return decision_tree_ml_service.decision_tree_engine(input_json)
+    list = decision_tree_ml_service.decision_tree_engine(input_json)
+    response_json = {'input': input_json, 'output': list}
+    return response_json
 
 
 # Machine learning part ended

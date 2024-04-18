@@ -50,7 +50,7 @@ class Analysis extends React.Component {
 
                     <div className="card">
                         <PageTitle title="Hourly Heart Rate Analysis"></PageTitle>
-                        <HeatMap data={data.heart_rate}></HeatMap>
+                        <HeatMap data={data.heart_rate} xAxiasLable={'Day of the Month'} yAxiasLable={'Hourly Record'}></HeatMap>
 
                     </div>
 
@@ -62,30 +62,31 @@ class Analysis extends React.Component {
 
                     <div className="card">
                         <PageTitle title="Body Temperature Analysis"></PageTitle>
-                        <LineChartWithThresholds data={data.body_temperature} mild={90} normal={95} severe={99} ></LineChartWithThresholds>
+                        <LineChartWithThresholds data={data.body_temperature} thresholds= {{'mild' : 90,'normal' : 95, 'severe' : 99 }} xAxiasLable={'Today Hourly Record'} yAxiasLable={'Body Temperature in Fahrenheit '}></LineChartWithThresholds>
 
                     </div>
 
                     <div className="card">
                         <PageTitle title="Blood Sugar Analysis"></PageTitle>
-                        <LineChart data={data.blood_sugar} xAxiasLable={'This Month'} yAxiasLable={'Blood Sugar in mg/dL'}></LineChart>
+                        <LineChart data={data.blood_sugar} xAxiasLable={'Day of the Month'} yAxiasLable={'Blood Sugar level in mg/dL'}></LineChart>
 
                     </div>
 
                     <div className="card">
                         <PageTitle title="SPO2 Analysis"></PageTitle>
-                        <LineChartWithThresholds data={data.spo2} mild={90} normal={98} severe={100} ></LineChartWithThresholds>
+                        {/* <LineChartWithThresholds data={data.spo2} mild={90} normal={98} severe={100} ></LineChartWithThresholds> */}
+                        <LineChartWithThresholds data={data.spo2} thresholds= {{'mild' : 90,'normal' : 95, 'severe' : 85 }}  xAxiasLable={'Today Hourly Record'} yAxiasLable={'Oxygen Saturation Percentage'}></LineChartWithThresholds>
 
                     </div>
 
                     <div className="card">
                         <PageTitle title="Respiratory Rate Analysis"></PageTitle>
-                        <LineChartWithThresholds data={data.respiratory_rate} mild={12} normal={16} severe={20} ></LineChartWithThresholds>
+                        <LineChartWithThresholds data={data.respiratory_rate} thresholds= {{'mild' : 12,'normal' : 16, 'severe' : 20 }} xAxiasLable={'Today Hourly Record'} yAxiasLable={'Respiratory Rate'}></LineChartWithThresholds>
                     </div>
 
                     <div className="card">
                         <PageTitle title="Steps Analysis"></PageTitle>
-                        <LineChart data={data.total_steps} xAxiasLable={'This Month'} yAxiasLable={'Total Steps Cound'}></LineChart>
+                        <LineChart data={data.total_steps} xAxiasLable={'Day of the Month'} yAxiasLable={'Total Steps Count'}></LineChart>
 
                     </div>
 

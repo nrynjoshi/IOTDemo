@@ -13,12 +13,13 @@ class LineChartWithThresholds extends React.Component {
 
     render() {
         const data = this.props.data;
-        const mild = this.props.mild;
-        const normal = this.props.normal;
-        const severe = this.props.severe;
+        const xAxiasLable = this.props.xAxiasLable;
+        const yAxiasLable = this.props.yAxiasLable;
+
+        const thresholds = this.props.thresholds
         return (
             <div><ErrorBoundary>
-                <LineChartWithThresholdsD3 data={data} width={1200} height={500} mild={mild} normal={normal} severe={severe} />
+                <LineChartWithThresholdsD3 data={data} width={1200} height={500} thresholdsContext={thresholds} xAxiasLable={xAxiasLable} yAxiasLable={yAxiasLable}  />
             </ErrorBoundary></div>
         );
     }

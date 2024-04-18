@@ -1,13 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
-const HeatMapD3 = ({ data, width, height }) => {
+const HeatMapD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
   const svgRef = useRef();
 
   useEffect(() => {
     if (!data) return;
 
-    const margin = { top: 10, right: 10, bottom: 30, left: 40 };
+    const margin = { top: 10, right: 30, bottom: 50, left: 85 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -22,10 +22,26 @@ const HeatMapD3 = ({ data, width, height }) => {
       .domain(data.map(d => d.group))
       .padding(0.05);
 
+      // Add X axis label
+    svg.append("text")
+    .attr('class', 'x-axis-label')
+    .attr('transform', `translate(${innerWidth / 2},${height - margin.bottom / 3})`)
+    .style('text-anchor', 'middle')
+    .text(xAxiasLable);
+
     const yScale = d3.scaleBand()
       .range([innerHeight, 0])
       .domain(data.map(d => d.variable))
       .padding(0.05);
+
+       // Add Y axis label
+    svg.append("text")
+    .attr('class', 'y-axis-label')
+    .attr('transform', 'rotate(-90)')
+    .attr('y', -margin.left / 2)
+    .attr('x', -innerHeight / 2)
+    .style('text-anchor', 'middle')
+    .text(yAxiasLable);
 
     const colorScale = d3.scaleSequential(d3.interpolateInferno)
       .domain([0, d3.max(data, d => d.value)]);

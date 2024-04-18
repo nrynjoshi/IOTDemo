@@ -46,18 +46,21 @@ def activity_tracks():
                                                               has_difficulty_breathing, age,
                                                               gender, blood_pressure_level,
                                                               cholesterol_level)
+
+        print("ActivityHour: ", date_object)
         outcome_mapping_sources = ['Body Temperature' + ' ' + str(has_fever), 'Coughing' + ' ' + str(has_cough),
                                    'Difficulty Breathing' + ' ' + str(has_difficulty_breathing),
                                    'Blood Pressure' + ' ' + str(blood_pressure_level),
                                    'Cholesterol Level' + ' ' + str(cholesterol_level)]
-        target_for_ml_process_outcome = ml_process_outcome['disease'] + '( ' + ml_process_outcome['outcome'] + ')'
-        for outcome in outcome_mapping_sources:
-            data = {
-                "source": outcome,
-                "target": target_for_ml_process_outcome,
-                "value": 15
-            }
-            links.append(data)
+        for ml_outcome in ml_process_outcome:
+            target_for_ml_process_outcome = ml_outcome['disease'] + '( ' + ml_outcome['outcome'] + ')'
+            for outcome in outcome_mapping_sources:
+                data = {
+                    "source": outcome,
+                    "target": target_for_ml_process_outcome,
+                    "value": 15
+                }
+                links.append(data)
 
     nodes = []
     for x in links:

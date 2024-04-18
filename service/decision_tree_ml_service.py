@@ -63,6 +63,16 @@ def decision_tree_engine(input_json):
 # decision and provid a expected outcome based on the input and its train values
 def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_breathing: str, age: int, is_male: str,
             blood_pressure_level: str, cholesterol_level: str):
+    print("has_fever: ", has_fever,
+          "has_cough: ", has_cough,
+          "has_fatigue: ", has_fatigue,
+          "has_difficulty_breathing: ", has_difficulty_breathing,
+          "age: ", age,
+          "is_male: ", is_male,
+          "blood_pressure_level: ", blood_pressure_level,
+          "cholesterol_level: ", cholesterol_level
+          )
+
     # declare the global set variable from the function level
     global clf_disease
     global clf_outcome
@@ -115,5 +125,9 @@ def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_bre
     print("Predicted Outcome Variable:", predicted_outcome)
 
     # preparing the json body for return statement
-    outcome = {'disease': predicted_disease[0], 'outcome': convert_outcome_to_string(predicted_outcome)}
-    return outcome
+    resource_list = []
+    for idx, x in enumerate(predicted_disease):
+        outcome = {'disease': x, 'outcome': convert_outcome_to_string(predicted_outcome[idx])}
+        resource_list.append(outcome)
+
+    return resource_list
