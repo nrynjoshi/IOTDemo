@@ -30,3 +30,25 @@ Experience the future of healthcare with our innovative solution, where data-dri
 2. Run the python application
 3. if deploying this application on server than deploy using python project
 4. Enjoy the application using web browsers
+
+# CSV Dataset
+The csv data set for the application has been save on csv datasets directory and you can find the process to upload the dataset and makes this application work on your system on that directory readme.md file.
+
+# Software Architecture Diagram
+
+<img src="./readme-img/software-architecture-diagram.png" width="800" height="300" style="background-color: #e5e7eb">
+
+# Data Visualization Sample Screenshot
+<img src="./readme-img/blood-sugar-analysis.png" width="400" height="200">
+<img src="./readme-img/body-temperature-analysis.png" width="400" height="200">
+<img src="./readme-img/disease-finder.png" width="400" height="200">
+<img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram.png" width="400" height="200">
+<img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram1.png" width="400" height="200">
+<img src="./readme-img/heart-rate-analysis.png" width="400" height="200">
+<img src="./readme-img/respiratory-rate-analysis.png" width="400" height="200">
+<img src="./readme-img/sleep-pattern-analysis.png" width="400" height="200">
+<img src="./readme-img/spo2-analysis.png" width="400" height="200">
+<img src="./readme-img/step-analysis.png" width="400" height="200">
+<img src="./readme-img/emergency-contact-list.png" width="600" height="200">
+
+
