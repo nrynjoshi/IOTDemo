@@ -9,7 +9,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
 
     if (!data || !data.length) return;
 
-    const margin = { top: 30, right: 30, bottom: 50, left: 85 };
+    const margin = { top: 30, right: 30, bottom: 100, left: 90 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
