@@ -108,38 +108,6 @@ class PatientDashboard extends React.Component {
                                 </div>
 
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Sleep Minute'} displayValue={((data.TotalMinuteSleep == "" || data.TotalMinuteSleep == "0") ? '0' : data.TotalMinuteSleep)}   customSegmentStops={[0, 240, 420, 540, 780]} customSegmentLabels={[
-                                        {
-                                            text: 'Poor',
-                                            position: 'INSIDE',
-                                            color: '#555',
-                                            fontSize: '18px',
-                                        },
-                                        {
-                                            text: 'Moderate',
-                                            position: 'INSIDE',
-                                            color: '#551',
-                                            fontSize: '18px',
-                                        },
-                                        {
-                                            text: 'Good',
-                                            position: 'INSIDE',
-                                            color: '#558',
-                                            fontSize: '18px',
-                                        },
-                                        {
-                                            text: 'Oversleeping',
-                                            position: 'INSIDE',
-                                            color: '#558',
-                                            fontSize: '18px',
-                                        }
-                                        ]}/>
-                                </div>
-
-                                <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Total Steps Count'} displayValue={data.TotalStepCount}   customSegmentStops={[0, 2500, 5000, 10000]} />
-                                </div>
-                                <div className="card">
                                     <CurrentDashboardDisplay displayText={'Blood Pressure in mmHg'} displayValue={data.BloodPressure_mmHg} />
                                 </div>
 
