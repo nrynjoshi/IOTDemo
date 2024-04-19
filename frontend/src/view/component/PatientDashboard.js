@@ -65,7 +65,7 @@ class PatientDashboard extends React.Component {
 
             <>
                 <div className="grid grid-rows-3 grid-flow-col gap-4">
-                    
+
                     {data &&
                         <div className="row-span-3">
                             <div>
@@ -74,36 +74,74 @@ class PatientDashboard extends React.Component {
                             <div className="grid grid-cols-4 gap-4">
 
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Heart Rate'} displayValue={data.HeartRate} minNormalValue ={60} maxNormalValue ={100}/>
+                                    <CurrentDashboardDisplay displayText={'Heart Rate'} displayValue={data.HeartRate} minNormalValue={60} maxNormalValue={100} customSegmentStops={[0, 60, 100, 160]}  />
                                 </div>
 
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Body Temperature'} displayValue={data.BodyTemperate} minNormalValue ={97.8} maxNormalValue ={99.1}/>
+                                    <CurrentDashboardDisplay displayText={'Body Temperature'} displayValue={data.BodyTemperate} minNormalValue={97.8} maxNormalValue={99.1}  customSegmentStops={[90, 97.8, 99.1, 107]}/>
                                 </div>
                                 <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Blood Sugar Fasting'} displayValue={data.BloodSugarFasting} minNormalValue ={70} maxNormalValue ={100}/>
+                                    <CurrentDashboardDisplay displayText={'Blood Sugar Fasting'} displayValue={data.BloodSugarFasting} minNormalValue={70} maxNormalValue={100}  customSegmentStops={[0, 70, 100, 150]} />
 
+                                </div>
+
+                                <div className="card">
+                                    <CurrentDashboardDisplay displayText={'Respiratory Rate'} displayValue={data.RespiratoryRate} minNormalValue={12} maxNormalValue={20}  customSegmentStops={[0, 12, 20, 30]} />
+
+                                </div>
+                                <div className="card">
+                                    <CurrentDashboardDisplay displayText={'Blood Oxygen Saturation'} displayValue={data.BloodOxygenSaturation} minNormalValue={95} maxNormalValue={100}  customSegmentStops={[80, 95, 100]} customSegmentLabels={[
+                                        {
+                                            text: 'Low',
+                                            position: 'INSIDE',
+                                            color: '#555',
+                                            fontSize: '18px',
+                                        },
+                                        {
+                                            text: 'Normal',
+                                            position: 'INSIDE',
+                                            color: '#551',
+                                            fontSize: '18px',
+                                        }
+                                        ]}/>
+
+                                </div>
+
+                                <div className="card">
+                                    <CurrentDashboardDisplay displayText={'Sleep Minute'} displayValue={((data.TotalMinuteSleep == "" || data.TotalMinuteSleep == "0") ? '0' : data.TotalMinuteSleep)}   customSegmentStops={[0, 240, 420, 540, 780]} customSegmentLabels={[
+                                        {
+                                            text: 'Poor',
+                                            position: 'INSIDE',
+                                            color: '#555',
+                                            fontSize: '18px',
+                                        },
+                                        {
+                                            text: 'Moderate',
+                                            position: 'INSIDE',
+                                            color: '#551',
+                                            fontSize: '18px',
+                                        },
+                                        {
+                                            text: 'Good',
+                                            position: 'INSIDE',
+                                            color: '#558',
+                                            fontSize: '18px',
+                                        },
+                                        {
+                                            text: 'Oversleeping',
+                                            position: 'INSIDE',
+                                            color: '#558',
+                                            fontSize: '18px',
+                                        }
+                                        ]}/>
+                                </div>
+
+                                <div className="card">
+                                    <CurrentDashboardDisplay displayText={'Total Steps Count'} displayValue={data.TotalStepCount}   customSegmentStops={[0, 2500, 5000, 10000]} />
                                 </div>
                                 <div className="card">
                                     <CurrentDashboardDisplay displayText={'Blood Pressure in mmHg'} displayValue={data.BloodPressure_mmHg} />
                                 </div>
-                                <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Respiratory Rate'} displayValue={data.RespiratoryRate} minNormalValue ={12} maxNormalValue ={20}/>
-
-                                </div>
-                                <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Blood Oxygen Saturation'} displayValue={data.BloodOxygenSaturation} minNormalValue ={95} maxNormalValue ={100}/>
-
-                                </div>
-
-                                <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Sleep Minute'} displayValue={((data.TotalMinuteSleep == "" || data.TotalMinuteSleep == "0") ? '0' : data.TotalMinuteSleep) + ' min'} />
-                                </div>
-
-                                <div className="card">
-                                    <CurrentDashboardDisplay displayText={'Total Steps Count'} displayValue={data.TotalStepCount} />
-                                </div>
-
 
                             </div>
                         </div>
