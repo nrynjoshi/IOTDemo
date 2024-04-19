@@ -45,7 +45,7 @@ def todo_list():
 
 @app.route('/api/report/health-record', methods=['GET'])
 def health_record_analysis():
-    json_data = analysis_service.heart_record_analysis()
+    json_data = analysis_service.health_record_analysis()
     # json_data = csv_json_conversion_service.dump_to_json(json_data)
     return json_data
 
