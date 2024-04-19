@@ -10,40 +10,85 @@ import time
 #  page api part started
 
 # This function is the main entry function to gather the hourly health record of specific user for analysis
-def heart_record_analysis():
+def health_record_analysis():
     # get a json list for the hourlyHealthRecord blob name
-    list = azure_blob_call_service.getUserRecordDbContainerData("hourlyHeathRecord")
-    if len(list) == 0:
+    estart_time = time.time()
+    db_list = azure_blob_call_service.getUserRecordDbContainerData("hourlyHeathRecord")
+    if len(db_list) == 0:
         return {'status': 'error', 'message': ''}
 
-    estart_time = time.time()
+    # pre processing record
+    list = []
+    for entry in db_list:
+        entry['HeartRate'] = int(entry['HeartRate'])  # Convert value to integer
+        entry['ActivityHour_parsed'] = parse_time(entry['ActivityHour'])  # Convert value to integer
 
-    # this statement will split the whole json list into desired list with only given keys value inside new list
-    body_temperature = extract_required_key_value(list, ["ActivityHour", "BodyTemperate"])
-    heart_rate = extract_required_key_value(list, ["ActivityHour", "HeartRate"])
-    respiratory_rate = extract_required_key_value(list, ["ActivityHour", "RespiratoryRate"])
-    total_steps = extract_required_key_value(list, ["ActivityHour", "TotalStepCount"])
-    sleep_pattern = extract_required_key_value(list, ["ActivityHour", "TotalMinuteSleep"])
-    blood_sugar = extract_required_key_value(list, ["ActivityHour", "BloodSugarFasting"])
-    spo2 = extract_required_key_value(list, ["ActivityHour", "BloodOxygenSaturation"])
-    print("heart_record_analysis after extract --- %s seconds" % (time.time() - estart_time))
+        # Get the value of 'TotalMinuteSleep' and handle empty strings
+        TotalStepCount = entry['TotalStepCount']
+        if TotalStepCount == '' or pd.isna(TotalStepCount):
+            TotalStepCount = 0
+        else:
+            TotalStepCount = int(TotalStepCount)
+        entry['TotalStepCount'] = TotalStepCount  # Convert value to integer
 
-    estart_time = time.time()
-    # pre process data for ui diagram
+        # Get the value of 'TotalMinuteSleep' and handle empty strings
+        RespiratoryRate = entry['RespiratoryRate']
+        if RespiratoryRate == '' or pd.isna(RespiratoryRate):
+            RespiratoryRate = 0
+        else:
+            RespiratoryRate = int(RespiratoryRate)
+
+        entry['RespiratoryRate'] = RespiratoryRate  # Convert value to integer
+
+        # Get the value of 'TotalMinuteSleep' and handle empty strings
+        BloodOxygenSaturation = entry['BloodOxygenSaturation']
+        if BloodOxygenSaturation == '' or pd.isna(BloodOxygenSaturation):
+            BloodOxygenSaturation = 0
+        else:
+            BloodOxygenSaturation = int(BloodOxygenSaturation)
+
+        entry['BloodOxygenSaturation'] = BloodOxygenSaturation  # Convert value to integer
+
+        # Get the value of 'TotalMinuteSleep' and handle empty strings
+        BloodSugarFasting = entry['BloodSugarFasting']
+        if BloodSugarFasting == '' or pd.isna(BloodSugarFasting):
+            BloodSugarFasting = 0
+        else:
+            BloodSugarFasting = int(BloodSugarFasting)
+
+        entry['BloodSugarFasting'] = BloodSugarFasting  # Convert value to integer
+
+        # Get the value of 'TotalMinuteSleep' and handle empty strings
+        TotalMinuteSleep = entry['TotalMinuteSleep']
+        if TotalMinuteSleep == '' or pd.isna(TotalMinuteSleep):
+            TotalMinuteSleep = 0
+        else:
+            TotalMinuteSleep = int(TotalMinuteSleep)
+
+        entry['TotalMinuteSleep'] = TotalMinuteSleep  # Convert value to integer
+
+        if entry['ActivityHour_parsed']:  # Remove rows with NaT (empty strings)
+            list.append(entry)
+
+    # Create DataFrame
+    df = pd.DataFrame(list)
+
+    # Sort data by timestamp
+    df = df.sort_values(by='ActivityHour_parsed')
 
     # this below statement will parse the different health parameter list as per required data for visualization
-    heart_rate = heart_rate_analysis(heart_rate)
-    body_temperature = body_temperature_analysis(body_temperature)
-    respiratory_rate = respiratory_rate_analysis(respiratory_rate)
-    total_steps = total_steps_analysis(total_steps)
-    sleep_pattern = sleep_pattern_analysis(sleep_pattern)
-    blood_sugar = blood_sugar_anaysis(blood_sugar)
-    spo2 = spo2_analysis(spo2)
+    heart_rate = heart_rate_analysis(df)
+    body_temperature = body_temperature_analysis(list)
+    respiratory_rate = respiratory_rate_analysis(list)
+    total_steps = total_steps_analysis(df)
+    sleep_pattern = sleep_pattern_analysis(df)
+    blood_sugar = blood_sugar_anaysis(df)
+    spo2 = spo2_analysis(list)
 
     # preparing the json object for response
     data = {'heart_rate': heart_rate, 'sleep_pattern': sleep_pattern, 'body_temperature': body_temperature,
             'blood_sugar': blood_sugar, 'spo2': spo2, 'respiratory_rate': respiratory_rate, 'total_steps': total_steps}
-    print("heart_record_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
+    print("health_record_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return data
 
 
@@ -75,31 +120,19 @@ def cleanupNaNValueFromList(data):
     return filtered_data
 
 
-def heart_rate_analysis(list):
-    # Convert timestamp to datetime
-    for entry in list:
-        entry['HeartRate'] = int(entry['HeartRate'])  # Convert value to integer
-
-    # Create DataFrame
-    df = pd.DataFrame(list)
-
-    df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
-    # Remove rows with NaT (empty strings)
-    df = df.dropna(subset=['ActivityHour'])
-    # Sort data by timestamp
-    df = df.sort_values(by='ActivityHour')
-
+def heart_rate_analysis(df):
+    estart_time = time.time()
     # Initialize start time
-    start_time = df.iloc[0]['ActivityHour']
+    start_time = df.iloc[0]['ActivityHour_parsed']
 
     # Initialize a list to store JSON values
     json_list = []
 
     # Iterate over sorted data
     end_time = start_time + pd.Timedelta(hours=2)
-    while end_time <= df.iloc[-1]['ActivityHour']:
+    while end_time <= df.iloc[-1]['ActivityHour_parsed']:
         # Select data within the current 2-hour interval
-        interval_data = df[(df['ActivityHour'] >= start_time) & (df['ActivityHour'] < end_time)]
+        interval_data = df[(df['ActivityHour_parsed'] >= start_time) & (df['ActivityHour_parsed'] < end_time)]
         # Calculate average for this interval
         avg_value = interval_data['HeartRate'].mean()
 
@@ -113,25 +146,16 @@ def heart_rate_analysis(list):
         start_time = end_time
         end_time += pd.Timedelta(hours=2)
     json_list = cleanupNaNValueFromList(json_list)
+    print("heart_rate_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return json_list
 
 
 def respiratory_rate_analysis(list):
-    # Convert timestamp to datetime
-    for entry in list:
-        # Get the value of 'TotalMinuteSleep' and handle empty strings
-        total_minute_sleep = entry['RespiratoryRate']
-        if total_minute_sleep == '' or pd.isna(total_minute_sleep):
-            total_minute_sleep = 0
-        else:
-            total_minute_sleep = int(total_minute_sleep)
-
-        entry['RespiratoryRate'] = total_minute_sleep  # Convert value to integer
-
+    estart_time = time.time()
     response_list = []
 
     for x in list:
-        date_object = parse_time(x['ActivityHour'])
+        date_object = x['ActivityHour_parsed']
         if date_object:
             current_date = datetime.now()  # Get the current date
 
@@ -139,25 +163,16 @@ def respiratory_rate_analysis(list):
                 data = {'timestamp': x['ActivityHour'], 'spo2': int(x['RespiratoryRate'])}
                 response_list.append(data)
     response_list = cleanupNaNValueFromList(response_list)
+    print("respiratory_rate_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return response_list
 
 
 def spo2_analysis(list):
-    # Convert timestamp to datetime
-    for entry in list:
-        # Get the value of 'TotalMinuteSleep' and handle empty strings
-        total_minute_sleep = entry['BloodOxygenSaturation']
-        if total_minute_sleep == '' or pd.isna(total_minute_sleep):
-            total_minute_sleep = 0
-        else:
-            total_minute_sleep = int(total_minute_sleep)
-
-        entry['BloodOxygenSaturation'] = total_minute_sleep  # Convert value to integer
-
+    estart_time = time.time()
     response_list = []
 
     for x in list:
-        date_object = parse_time(x['ActivityHour'])
+        date_object = x['ActivityHour_parsed']
         if date_object:
             current_date = datetime.now()  # Get the current date
 
@@ -165,41 +180,23 @@ def spo2_analysis(list):
                 data = {'timestamp': x['ActivityHour'], 'spo2': int(x['BloodOxygenSaturation'])}
                 response_list.append(data)
     response_list = cleanupNaNValueFromList(response_list)
+    print("spo2_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return response_list
 
 
-def blood_sugar_anaysis(list):
-    # Convert timestamp to datetime
-    for entry in list:
-        # Get the value of 'TotalMinuteSleep' and handle empty strings
-        total_minute_sleep = entry['BloodSugarFasting']
-        if total_minute_sleep == '' or pd.isna(total_minute_sleep):
-            total_minute_sleep = 0
-        else:
-            total_minute_sleep = int(total_minute_sleep)
-
-        entry['BloodSugarFasting'] = total_minute_sleep  # Convert value to integer
-
-    # Create DataFrame
-    df = pd.DataFrame(list)
-
-    df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
-    # Remove rows with NaT (empty strings)
-    df = df.dropna(subset=['ActivityHour'])
-    # Sort data by timestamp
-    df = df.sort_values(by='ActivityHour')
-
+def blood_sugar_anaysis(df):
+    estart_time = time.time()
     # Initialize start time
-    start_time = df.iloc[0]['ActivityHour']
+    start_time = df.iloc[0]['ActivityHour_parsed']
 
     # Initialize a list to store JSON values
     json_list = []
 
     # Iterate over sorted data
     end_time = start_time + pd.Timedelta(days=1)
-    while end_time <= df.iloc[-1]['ActivityHour']:
+    while end_time <= df.iloc[-1]['ActivityHour_parsed']:
         # Select data within the current 2-hour interval
-        interval_data = df[(df['ActivityHour'] >= start_time) & (df['ActivityHour'] < end_time)]
+        interval_data = df[(df['ActivityHour_parsed'] >= start_time) & (df['ActivityHour_parsed'] < end_time)]
 
         # Calculate average for this interval
         BloodSugarFasting = interval_data['BloodSugarFasting'].mean()
@@ -214,41 +211,23 @@ def blood_sugar_anaysis(list):
         start_time = end_time
         end_time += pd.Timedelta(days=1)
     json_list = cleanupNaNValueFromList(json_list)
+    print("blood_sugar_anaysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return json_list
 
 
-def sleep_pattern_analysis(list):
-    # Convert timestamp to datetime
-    for entry in list:
-        # Get the value of 'TotalMinuteSleep' and handle empty strings
-        total_minute_sleep = entry['TotalMinuteSleep']
-        if total_minute_sleep == '' or pd.isna(total_minute_sleep):
-            total_minute_sleep = 0
-        else:
-            total_minute_sleep = int(total_minute_sleep)
-
-        entry['TotalMinuteSleep'] = total_minute_sleep  # Convert value to integer
-
-    # Create DataFrame
-    df = pd.DataFrame(list)
-
-    df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
-    # Remove rows with NaT (empty strings)
-    df = df.dropna(subset=['ActivityHour'])
-    # Sort data by timestamp
-    df = df.sort_values(by='ActivityHour')
-
+def sleep_pattern_analysis(df):
+    estart_time = time.time()
     # Initialize start time
-    start_time = df.iloc[0]['ActivityHour']
+    start_time = df.iloc[0]['ActivityHour_parsed']
 
     # Initialize a list to store JSON values
     json_list = []
 
     # Iterate over sorted data
     end_time = start_time + pd.Timedelta(days=1)
-    while end_time <= df.iloc[-1]['ActivityHour']:
+    while end_time <= df.iloc[-1]['ActivityHour_parsed']:
         # Select data within the current 2-hour interval
-        interval_data = df[(df['ActivityHour'] >= start_time) & (df['ActivityHour'] < end_time)]
+        interval_data = df[(df['ActivityHour_parsed'] >= start_time) & (df['ActivityHour_parsed'] < end_time)]
 
         # Calculate average for this interval
         TotalMinutesAsleep = interval_data['TotalMinuteSleep'].sum()
@@ -272,14 +251,16 @@ def sleep_pattern_analysis(list):
         start_time = end_time
         end_time += pd.Timedelta(days=1)
     json_list = cleanupNaNValueFromList(json_list)
+    print("sleep_pattern_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return json_list
 
 
 def body_temperature_analysis(list):
+    estart_time = time.time()
     response_list = []
 
     for x in list:
-        date_object = parse_time(x['ActivityHour'])
+        date_object = x['ActivityHour_parsed']
         if date_object:
             current_date = datetime.now()  # Get the current date
 
@@ -287,41 +268,23 @@ def body_temperature_analysis(list):
                 data = {'timestamp': x['ActivityHour'], 'spo2': int(x['BodyTemperate'])}
                 response_list.append(data)
     response_list = cleanupNaNValueFromList(response_list)
+    print("body_temperature_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return response_list
 
 
-def total_steps_analysis(list):
-    # Convert timestamp to datetime
-    for entry in list:
-        # Get the value of 'TotalMinuteSleep' and handle empty strings
-        TotalStepCount = entry['TotalStepCount']
-        if TotalStepCount == '' or pd.isna(TotalStepCount):
-            TotalStepCount = 0
-        else:
-            TotalStepCount = int(TotalStepCount)
-
-        entry['TotalStepCount'] = TotalStepCount  # Convert value to integer
-
-    # Create DataFrame
-    df = pd.DataFrame(list)
-
-    df['ActivityHour'] = df['ActivityHour'].apply(parse_time)
-    # Remove rows with NaT (empty strings)
-    df = df.dropna(subset=['ActivityHour'])
-    # Sort data by timestamp
-    df = df.sort_values(by='ActivityHour')
-
+def total_steps_analysis(df):
+    estart_time = time.time()
     # Initialize start time
-    start_time = df.iloc[0]['ActivityHour']
+    start_time = df.iloc[0]['ActivityHour_parsed']
 
     # Initialize a list to store JSON values
     json_list = []
 
     # Iterate over sorted data
     end_time = start_time + pd.Timedelta(days=1)
-    while end_time <= df.iloc[-1]['ActivityHour']:
+    while end_time <= df.iloc[-1]['ActivityHour_parsed']:
         # Select data within the current 2-hour interval
-        interval_data = df[(df['ActivityHour'] >= start_time) & (df['ActivityHour'] < end_time)]
+        interval_data = df[(df['ActivityHour_parsed'] >= start_time) & (df['ActivityHour_parsed'] < end_time)]
 
         filtered_data = interval_data[interval_data['TotalStepCount'] != 0]
         # Calculate average for this interval
@@ -337,6 +300,7 @@ def total_steps_analysis(list):
         start_time = end_time
         end_time += pd.Timedelta(days=1)
     json_list = cleanupNaNValueFromList(json_list)
+    print("total_steps_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return json_list
 
 
