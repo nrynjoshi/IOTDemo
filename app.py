@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect
 from flask_cors import CORS
-from service import azure_blob_call_service, activity_track_service, analysis_service, decision_tree_ml_service,todo_list_service
+from service import azure_blob_call_service, activity_track_service, analysis_service, decision_tree_ml_service
 
 # ------------------------------------------------------------------------
 
@@ -28,18 +28,6 @@ def current_heath_record():
     # json_data = csv_json_conversion_service.dump_to_json(latestedUpdatedRecord)
     return latestedUpdatedRecord
 
-
-# Dashboard page api part ended
-# ------------------------------------------------------------------------
-# TODO-List page api part started
-@app.route('/api/todo-list', methods=['GET'])
-def todo_list():
-    json_data = todo_list_service.todo_list()
-    # json_data = csv_json_conversion_service.dump_to_json(json_data)
-    return json_data
-
-
-# TODO-List page api part ended
 # ------------------------------------------------------------------------
 # Analysis page api part started
 

@@ -10,7 +10,6 @@ import DiseaseFinderML from "./view/component/DiseaseFinderML";
 import PageNotFound from "./view/component/PageNotFound";
 import { BACKEND_API_CALL } from "./view/util/Constant";
 import DateTime from './view/util/DateTime';
-import TodoList from './view/component/TodoList';
 import HttpRequestUtil from './view/util/HttpRequestUtil';
 
 class App extends React.Component {
@@ -36,7 +35,6 @@ class App extends React.Component {
           <div className="header">
             <ul>
               <li><NavLink to="/" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Dashboard</NavLink></li>
-              <li><NavLink to="/todo-list" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>TODO List</NavLink></li>
               <li><NavLink to="/activities-track" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Activities Track</NavLink></li>
               <li><NavLink to="/analysis" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Analysis</NavLink></li>
               <li><NavLink to="/emergency-contacts" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Emergency Contacts</NavLink></li>
@@ -51,7 +49,6 @@ class App extends React.Component {
               {jsonParams.userId && (<span>Welcome, {jsonParams.userId}</span>)}
               <Routes>
                 <Route path="/" element={<PatientDashboard />} />
-                <Route path="/todo-list" element={<TodoList dataEndpoint={BACKEND_API_CALL + '/todo-list'} />} />
                 <Route path="/activities-track" element={<ActivityTrack />} />
                 <Route path="/analysis" element={<Analysis />} />
                 <Route path="/emergency-contacts" element={<EmergencyContact dataEndpoint={BACKEND_API_CALL + '/emergency-contacts'} />} />
