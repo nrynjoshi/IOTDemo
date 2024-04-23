@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 
-from service import azure_blob_call_service
+from backend import azure_blob_call_service
 import time
 
 
