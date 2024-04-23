@@ -3,7 +3,7 @@ import * as d3 from "d3";
 export const createForceDirectedGraphSVG = (data) => {
   // Specify the dimensions of the chart.
   const width = 1200
-  const height = 600
+  const height = 800
 
   // Specify the color scale.
   const color = d3.scaleOrdinal()

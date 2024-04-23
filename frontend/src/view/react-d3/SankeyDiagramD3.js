@@ -6,7 +6,7 @@ export const createSankeyDiagramSVG = (data, linkColor, nodeAlignment) => {
 
     // Specify the dimensions of the chart.
     const width = 1200;
-    const height = 700;
+    const height = 800;
     const format = d3.format(",.0f");
     const color = d3.scaleOrdinal()
     .range([ "#C0C0C0", "#808080", "#FF0000", "#800000", "#FFFF00", "#808000", "#00FF00", "#008000", "#00FFFF",
