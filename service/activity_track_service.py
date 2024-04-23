@@ -3,6 +3,7 @@ from service import azure_blob_call_service, decision_tree_ml_service
 from datetime import datetime
 import pandas as pd
 import copy
+import re
 
 
 def activity_tracks():
@@ -64,16 +65,22 @@ def activity_tracks():
 
     nodes = []
     for x in links:
-        source_node = {
-            "name": x['source'],
-            "category": x['source']
-        }
-        nodes.append(source_node)
-        source_node = {
-            "name": x['target'],
-            "category": x['target']
-        }
-        nodes.append(source_node)
+        if x not in nodes:
+            source_node = {
+                "name": x['source'],
+                "category": x['source']
+            }
+            nodes.append(source_node)
+        if x not in nodes:
+            category = re.sub(r"[^a-zA-Z0-9]+", ' ',x['target'] )
+            # if(x.get("category")):
+            #     category = x['category']
+
+            source_node = {
+                "name": x['target'],
+                "category": category
+            }
+            nodes.append(source_node)
 
     unique_values = set((d["name"], d["category"]) for d in nodes)
     nodes = [{"name": name, "category": category} for name, category in unique_values]
@@ -199,3 +206,5 @@ def calculate_age(date_of_birth):
     age = current_date.year - dob.year - ((current_date.month, current_date.day) < (dob.month, dob.day))
 
     return age
+
+

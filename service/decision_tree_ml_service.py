@@ -78,7 +78,7 @@ def process(has_fever: str, has_cough: str, has_fatigue: str, has_difficulty_bre
     global clf_outcome
     global isInitDone
 
-    # this statment will only execute once in a whole application run time to train the model this statement will
+    # this statement will only execute once in a whole application run time to train the model this statement will
     # trigger whenever someone call for decision-making based on this machine learning only to save the performance
     # and load
     if not isInitDone:
