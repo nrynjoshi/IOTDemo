@@ -4,7 +4,6 @@ import { BACKEND_API_CALL } from "../util/Constant";
 import HttpClient from "../util/HttpClient"
 import LineChart from "./LineChart";
 import HeatMap from "./HeatMap";
-import HypnogramD3 from "../react-d3/HypnogramD3";
 import Hypnogram from "./Hypnogram";
 import LineChartWithThresholds from "./LineChartWithThresholds";
 
@@ -32,14 +31,8 @@ class Analysis extends React.Component {
 
     }
 
-    handleColorEncodingChange = (e) => {
-        console.log('handleColorEncodingChange called');
-        this.setState({ colorEncoding: e.target.value });
-    }
-
-
     render() {
-        const { httpErrorMessage, colorEncoding, isLoading, data } = this.state
+        const { httpErrorMessage, isLoading, data } = this.state
         return (<div>
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
@@ -74,7 +67,6 @@ class Analysis extends React.Component {
 
                     <div className="card">
                         <PageTitle title="SPO2 Analysis"></PageTitle>
-                        {/* <LineChartWithThresholds data={data.spo2} mild={90} normal={98} severe={100} ></LineChartWithThresholds> */}
                         <LineChartWithThresholds data={data.spo2} thresholds= {{'mild' : 90,'normal' : 95, 'severe' : 85 }}  xAxiasLable={'Today Hourly Record'} yAxiasLable={'Oxygen Saturation Percentage'}></LineChartWithThresholds>
 
                     </div>

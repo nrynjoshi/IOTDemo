@@ -1,10 +1,7 @@
 import React from "react";
 import { BACKEND_API_CALL } from "../util/Constant";
-import PageTitle from "./PageTitle";
 import HttpClient from "../util/HttpClient"
 
-import useSound from "use-sound";
-import beepSound from "./../audio/beep-02.mp3";
 import CurrentDashboardDisplay from "../util/CurrentDashboardDisplay";
 
 class PatientDashboard extends React.Component {
@@ -15,12 +12,9 @@ class PatientDashboard extends React.Component {
 
     componentDidMount() {
         const url = BACKEND_API_CALL + '/current/health-record';
-        const invervalPeriod = this.props.invervalPeriod;
         this.setState({ url: url })
 
         console.log('printing from componentDidMount', url)
-
-
 
         this.fetchData(false, url); // Fetch data initially
         this.interval = setInterval(() => this.fetchData(true, url), 60 * 1000);  // every 1 min this code will call the api to get latest information athough we have hourly data

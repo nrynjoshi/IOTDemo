@@ -1,7 +1,5 @@
 import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
-import HttpClient from "../util/HttpClient"
-import LineChartD3 from "../react-d3/LineChartD3.js";
 import HypnogramD3 from "../react-d3/HypnogramD3.js";
 
 

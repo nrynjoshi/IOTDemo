@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { COLOR_SCALE } from "../util/Constant";
 
 export const createForceDirectedGraphSVG = (data) => {
   // Specify the dimensions of the chart.
@@ -6,22 +7,13 @@ export const createForceDirectedGraphSVG = (data) => {
   const height = 800
 
   // Specify the color scale.
-  const color = d3.scaleOrdinal()
-    .range(["#C0C0C0", "#808080", "#FF0000", "#800000", "#FFFF00", "#808000", "#00FF00", "#008000", "#00FFFF",
-     "#008080", "#0000FF", "#000080", "#FF00FF", "#800080", "#CD5C5C", "#F08080", "#E9967A", "#FFA07A", "#DFFF00", "#6495ED", "#CCCCFF", "#40E0D0", "#9FE2BF"
-     , "#800980", "#CD525C", "#F08580", "#E9867A", "#FF507A", "#DF3F00", "#6415ED", "#CCC1FF", "#4010D0", "#9FE2AF"]);
+  const color = COLOR_SCALE;
 
   // The force simulation mutates links and nodes, so create a copy
   // so that re-evaluating this cell produces the same result.
   const links = data.links.map(d => ({ ...d }));
   const nodes = data.nodes.map(d => ({ ...d }));
 
-  // Create a simulation with several forces.
-  // const simulation = d3.forceSimulation(nodes)
-  //   .force("link", d3.forceLink(links).id(d => d.name))
-  //   .force("charge", d3.forceManyBody().strength(-100)) // Adjust charge strength
-  //   .force("center", d3.forceCenter(width / 2, height / 2));
-    // .on("tick", ticked);
     const simulation = d3.forceSimulation(nodes)
     .force("link", d3.forceLink(links).id(d => d.name).distance(250))
     .force("charge", d3.forceManyBody().strength(-400))
@@ -59,7 +51,7 @@ export const createForceDirectedGraphSVG = (data) => {
     .attr("fill", d => color(d.category));
 
   // Append labels to node group
-  const label = nodeGroup.append("text")
+  nodeGroup.append("text")
     .text(d => d.name)
     .attr("font-size", "12px")
     .attr("x", 30) // Adjust the x position of the label

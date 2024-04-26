@@ -1,8 +1,6 @@
 
 import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
-import HttpClient from "../util/HttpClient"
-import LineChartD3 from "../react-d3/LineChartD3.js";
 import LineChartWithThresholdsD3 from "../react-d3/LineChartWithThresholdsD3.js";
 
 class LineChartWithThresholds extends React.Component {
