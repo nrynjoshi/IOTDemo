@@ -14,7 +14,7 @@ export const createSankeyDiagramSVG = (data, linkColor, nodeAlignment) => {
     // Create a SVG container.
     const svg = d3.create("svg")
         .attr("width", "100%")
-        .attr("height", height)
+        .attr("height", null)
         .attr("viewBox", [0, 0, width, height])
         .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;");
 

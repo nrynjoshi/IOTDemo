@@ -30,10 +30,18 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
       .range([0, innerWidth])
       .domain(d3.extent(data, d => parseTime(d.timestamp)));
 
-    // Y scale
+    // Find the minimum and maximum y-values in your data
+    const minY = d3.min(data, d => +d.spo2)-10;
+    const maxY = d3.max(data, d => +d.spo2);
+
+    // Add a small padding to the upper limit
+    const padding = 10; // Adjust as needed
+    const adjustedMaxY = maxY + padding;
+
+    // Add Y axis
     const y = d3.scaleLinear()
-      .range([innerHeight, 0])
-      .domain([0, d3.max(data, d => d.spo2)]);
+    .domain([minY, adjustedMaxY]) // Set the domain to exclude 0 and include only the range from the minimum to maximum y-values
+    .range([innerHeight, 0]);
 
     // X axis
     svg.append('g')

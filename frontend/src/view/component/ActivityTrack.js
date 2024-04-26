@@ -1,5 +1,5 @@
 import React from "react";
-import PageTitle from "./PageTitle";
+import PageTitle from "../util/PageTitle";
 import { BACKEND_API_CALL } from "../util/Constant";
 import SankeyDiagram from "./SankeyDiagram";
 import ForceDirectedGraph from "./ForceDirectedGraph";

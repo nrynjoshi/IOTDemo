@@ -1,5 +1,5 @@
 import React from "react";
-import PageTitle from "./PageTitle";
+import PageTitle from "../util/PageTitle";
 
 class PageNotFound extends React.Component {
 
