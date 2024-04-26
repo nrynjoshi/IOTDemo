@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect
 from flask_cors import CORS
-from service import azure_blob_call_service, activity_track_service, analysis_service, decision_tree_ml_service
+from backend import azure_blob_call_service, activity_track_service, analysis_service, decision_tree_ml_service
 
 # ------------------------------------------------------------------------
 
