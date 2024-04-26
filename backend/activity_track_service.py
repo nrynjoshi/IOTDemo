@@ -1,5 +1,5 @@
 # Activities page api part started
-from service import azure_blob_call_service, decision_tree_ml_service
+from backend import azure_blob_call_service, decision_tree_ml_service
 from datetime import datetime
 import pandas as pd
 import copy

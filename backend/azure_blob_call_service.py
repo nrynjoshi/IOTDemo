@@ -104,7 +104,7 @@ def download_blob_from_storage(container_name, blob_name):
         start_time = time.time()
         print(f"download_blob_from_storage initialize : {container_name} -> {blob_name}")
 
-        # Create a blob client using the blob service client
+        # Create a blob client using the blob backend client
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
 
         # Download blob data

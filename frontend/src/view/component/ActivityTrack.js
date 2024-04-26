@@ -1,22 +1,16 @@
 import React from "react";
-import PageTitle from "./PageTitle";
+import PageTitle from "../util/PageTitle";
 import { BACKEND_API_CALL } from "../util/Constant";
 import SankeyDiagram from "./SankeyDiagram";
 import ForceDirectedGraph from "./ForceDirectedGraph";
-import ParallelCoordinates from "./ParallelCoordinates";
 
 class ActivityTrack extends React.Component {
 
-    state = { dataCar: null, dataKeys: null, colorEncoding: "weight (lb)", httpErrorMessage: null, isLoading: false };
-
-    handleColorEncodingChange = (e) => {
-        console.log('handleColorEncodingChange called');
-        this.setState({ colorEncoding: e.target.value });
-    }
+    state = {httpErrorMessage: null, isLoading: false };
 
 
     render() {
-        const { httpErrorMessage, colorEncoding, isLoading, dataCar } = this.state
+        const { httpErrorMessage, isLoading } = this.state
         return (<div>
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
@@ -32,15 +26,6 @@ class ActivityTrack extends React.Component {
                 <ForceDirectedGraph dataEndpoint={BACKEND_API_CALL + '/activity-tracks'}></ForceDirectedGraph>
 
             </div>
-
-            {/* <div className="card">
-                <PageTitle title="Montly Based Habitual Diagram"></PageTitle>
-                <ParallelCoordinates dataEndpoint={BACKEND_API_CALL + '/parallel-coordinate-cars'}
-                    keysEndpoint={BACKEND_API_CALL + '/parallel-coordinate-keys'}></ParallelCoordinates>
-
-            </div> */}
-
-
 
         </div>);
     }

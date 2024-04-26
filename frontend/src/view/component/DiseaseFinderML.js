@@ -1,7 +1,7 @@
 import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
 import HttpClient from "../util/HttpClient"
-import QRCode from 'react-qr-code';
+
 import { BACKEND_API_CALL } from "../util/Constant.js";
 
 class EmergencyContact extends React.Component {
@@ -40,7 +40,7 @@ class EmergencyContact extends React.Component {
                 this.setState({ responseBody: responseBody, httpErrorMessage: null });
             } catch (error) {
                 console.error('Error fetching data:', error);
-                this.setState({ data: null, httpErrorMessage: JSON.stringify(error.toString()) });
+                this.setState({ responseBody: null, httpErrorMessage: JSON.stringify(error.toString()) });
             } finally {
                 this.setState({ isLoading: false })
             }
@@ -162,10 +162,10 @@ class EmergencyContact extends React.Component {
                                 {responseBody['output'].map((item, index) => (                                   
                                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                             <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-white">{item.disease}</th>
-                                                            {item.outcome == 'Positive' && 
+                                                            {item.outcome === 'Positive' && 
                                                             <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-red-400">{item.outcome}</th>
                                                             }
-                                                            {item.outcome == 'Negative' && 
+                                                            {item.outcome === 'Negative' && 
                                                             <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-green-400">{item.outcome}</th>
                                                             }
                                                         </tr>

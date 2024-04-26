@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect
 from flask_cors import CORS
-from service import azure_blob_call_service, activity_track_service, analysis_service, decision_tree_ml_service
+from backend import azure_blob_call_service, activity_track_service, analysis_service, decision_tree_ml_service
 
 # ------------------------------------------------------------------------
 
@@ -25,7 +25,6 @@ def current_heath_record():
     if len(list) == 0:
         return {'status': 'error', 'message': ''}
     latestedUpdatedRecord = list[-1]
-    # json_data = csv_json_conversion_service.dump_to_json(latestedUpdatedRecord)
     return latestedUpdatedRecord
 
 # ------------------------------------------------------------------------
@@ -34,9 +33,50 @@ def current_heath_record():
 @app.route('/api/report/health-record', methods=['GET'])
 def health_record_analysis():
     json_data = analysis_service.health_record_analysis()
-    # json_data = csv_json_conversion_service.dump_to_json(json_data)
     return json_data
 
+
+@app.route('/api/report/heart-rate', methods=['POST'])
+def heart_record_analysis():
+    input_json = request.get_json(force=True)
+    json_data = analysis_service.heart_rate_analysis_with_filter(input_json.get('start_date'), input_json.get('end_date'), input_json.get('hourly_interval'))
+    return json_data
+
+@app.route('/api/report/sleep-pattern', methods=['POST'])
+def sleep_pattern_analysis():
+    input_json = request.get_json(force=True)
+    json_data = analysis_service.sleep_pattern_analysis_with_filter(input_json.get('start_date'), input_json.get('end_date'))
+    return json_data
+
+@app.route('/api/report/total-steps', methods=['POST'])
+def total_steps_analysis():
+    input_json = request.get_json(force=True)
+    json_data = analysis_service.steps_counts_analysis_with_filter(input_json.get('start_date'), input_json.get('end_date'))
+    return json_data
+
+@app.route('/api/report/blood-sugar', methods=['POST'])
+def blood_sugar_analysis():
+    input_json = request.get_json(force=True)
+    json_data = analysis_service.blood_sugar_analysis_with_filter(input_json.get('start_date'), input_json.get('end_date'))
+    return json_data
+
+@app.route('/api/report/body-temperate', methods=['POST'])
+def body_temperate_analysis():
+    input_json = request.get_json(force=True)
+    json_data = analysis_service.body_temp_analysis_with_filter(input_json.get('date'))
+    return json_data
+
+@app.route('/api/report/spo2', methods=['POST'])
+def spo2_analysis():
+    input_json = request.get_json(force=True)
+    json_data = analysis_service.spo2_analysis_with_filter(input_json.get('date'))
+    return json_data
+
+@app.route('/api/report/respiratory-rate', methods=['POST'])
+def respiratory_rate_temperate_analysis():
+    input_json = request.get_json(force=True)
+    json_data = analysis_service.respiratory_analysis_with_filter(input_json.get('date'))
+    return json_data
 
 # Analysis page api part ended
 # ------------------------------------------------------------------------

@@ -12,7 +12,7 @@ Experience the future of healthcare with our innovative solution, where data-dri
 </p>
 
 # Language Used
-1. Python - used as backend to process data
+1. Python 3.12 - used as backend to process data
 2. ReactJS - used to visualize representation of data using d3.js
 
 # Run Instruction in Local System

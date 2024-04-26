@@ -49,10 +49,18 @@ const LineChartD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
       .style('text-anchor', 'middle')
       .text(xAxiasLable);
 
+    // Find the minimum and maximum y-values in your data
+    const minY = d3.min(data, d => +d.y);
+    const maxY = d3.max(data, d => +d.y);
+
+    // Add a small padding to the upper limit
+    const padding = 10; // Adjust as needed
+    const adjustedMaxY = maxY + padding;
+
     // Add Y axis
     const y = d3.scaleLinear()
-      .domain([0, d3.max(data, function (d) { return +d.y; })])
-      .range([innerHeight, 0]);
+    .domain([minY, adjustedMaxY]) // Set the domain to exclude 0 and include only the range from the minimum to maximum y-values
+    .range([innerHeight, 0]);
 
     svg.append("g")
       .call(d3.axisLeft(y));

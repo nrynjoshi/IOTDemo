@@ -1,10 +1,7 @@
 import React from "react";
 import { BACKEND_API_CALL } from "../util/Constant";
-import PageTitle from "./PageTitle";
 import HttpClient from "../util/HttpClient"
 
-import useSound from "use-sound";
-import beepSound from "./../audio/beep-02.mp3";
 import CurrentDashboardDisplay from "../util/CurrentDashboardDisplay";
 
 class PatientDashboard extends React.Component {
@@ -15,12 +12,9 @@ class PatientDashboard extends React.Component {
 
     componentDidMount() {
         const url = BACKEND_API_CALL + '/current/health-record';
-        const invervalPeriod = this.props.invervalPeriod;
         this.setState({ url: url })
 
         console.log('printing from componentDidMount', url)
-
-
 
         this.fetchData(false, url); // Fetch data initially
         this.interval = setInterval(() => this.fetchData(true, url), 60 * 1000);  // every 1 min this code will call the api to get latest information athough we have hourly data
@@ -63,14 +57,14 @@ class PatientDashboard extends React.Component {
                 <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> : <span></span>)}
 
             <>
-                <div className="grid grid-rows-3 grid-flow-col gap-4">
+                <div className="grid grid-rows-3 grid-flow-col gap-4 ">
 
                     {data &&
                         <div className="row-span-3">
                             <div>
                                 <div>Information has been record on hourly basis and displayed hourly here. Last Updated information: <b>{data.ActivityHour}</b></div>
                             </div>
-                            <div className="grid grid-cols-4 gap-4">
+                            <div className="grid xl:grid-cols-4 xl:gap-4 lg:grid-cols-3 lg:gap-3 md:grid-cols-2 md:gap-2 sm:grid-cols-1 sm:gap-1">
 
                                 <div className="card">
                                     <CurrentDashboardDisplay displayText={'Heart Rate'} displayValue={data.HeartRate} minNormalValue={60} maxNormalValue={100} customSegmentStops={[0, 60, 100, 160]}  />

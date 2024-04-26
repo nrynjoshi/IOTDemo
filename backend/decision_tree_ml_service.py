@@ -3,11 +3,12 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
-from service import azure_blob_call_service
+from backend import azure_blob_call_service
 
 clf_disease = DecisionTreeClassifier()
 clf_outcome = DecisionTreeClassifier()
 isInitDone: bool = False
+
 
 # This init function will only trigger once on the application life cycle and this will only trigger when
 # decision-making application called first time
