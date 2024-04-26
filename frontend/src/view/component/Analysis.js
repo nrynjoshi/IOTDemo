@@ -41,42 +41,42 @@ class Analysis extends React.Component {
             {data && <div>
                 <div >
 
-                    <div className="card">
+                    <div className="card overflow-y-scroll">
                         <PageTitle title="Hourly Heart Rate Analysis"></PageTitle>
                         <HeatMap data={data.heart_rate} xAxiasLable={'Day of the Month'} yAxiasLable={'Hourly Record'}></HeatMap>
 
                     </div>
 
 
-                    <div className="card">
+                    <div className="card overflow-y-scroll">
                         <PageTitle title="Sleep Pattern Analysis"></PageTitle>
                         <Hypnogram data={data.sleep_pattern}></Hypnogram>
                     </div>
 
-                    <div className="card">
+                    <div className="card overflow-y-scroll">
                         <PageTitle title="Body Temperature Analysis"></PageTitle>
                         <LineChartWithThresholds data={data.body_temperature} thresholds= {{'mild' : 90,'normal' : 95, 'severe' : 99 }} xAxiasLable={'Today Hourly Record'} yAxiasLable={'Body Temperature in Fahrenheit '}></LineChartWithThresholds>
 
                     </div>
 
-                    <div className="card">
+                    <div className="card overflow-y-scroll">
                         <PageTitle title="Blood Sugar Analysis"></PageTitle>
                         <LineChart data={data.blood_sugar} xAxiasLable={'Day of the Month'} yAxiasLable={'Blood Sugar level in mg/dL'}></LineChart>
 
                     </div>
 
-                    <div className="card">
+                    <div className="card overflow-y-scroll">
                         <PageTitle title="SPO2 Analysis"></PageTitle>
                         <LineChartWithThresholds data={data.spo2} thresholds= {{'mild' : 90,'normal' : 95, 'severe' : 85 }}  xAxiasLable={'Today Hourly Record'} yAxiasLable={'Oxygen Saturation Percentage'}></LineChartWithThresholds>
 
                     </div>
 
-                    <div className="card">
+                    <div className="card overflow-y-scroll">
                         <PageTitle title="Respiratory Rate Analysis"></PageTitle>
                         <LineChartWithThresholds data={data.respiratory_rate} thresholds= {{'mild' : 12,'normal' : 16, 'severe' : 20 }} xAxiasLable={'Today Hourly Record'} yAxiasLable={'Respiratory Rate'}></LineChartWithThresholds>
                     </div>
 
-                    <div className="card">
+                    <div className="card overflow-y-scroll">
                         <PageTitle title="Steps Analysis"></PageTitle>
                         <LineChart data={data.total_steps} xAxiasLable={'Day of the Month'} yAxiasLable={'Total Steps Count'}></LineChart>
 

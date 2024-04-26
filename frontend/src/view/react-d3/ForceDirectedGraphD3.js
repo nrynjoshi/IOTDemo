@@ -22,7 +22,7 @@ export const createForceDirectedGraphSVG = (data) => {
 
   // Create the SVG container.
   const svg = d3.create("svg")
-    .attr("width", width)
+    .attr("width", "100%")
     .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
     .attr("style", "max-width: 100%; height: auto;");
@@ -47,15 +47,15 @@ export const createForceDirectedGraphSVG = (data) => {
 
   // Append circles to node group
   const node = nodeGroup.append("circle")
-    .attr("r", 15)
+    .attr("r", 6)
     .attr("fill", d => color(d.category));
 
   // Append labels to node group
   nodeGroup.append("text")
     .text(d => d.name)
     .attr("font-size", "12px")
-    .attr("x", 30) // Adjust the x position of the label
-    .attr("y", 5); // Adjust the y position of the label
+    .attr("x", 20) // Adjust the x position of the label
+    .attr("y", 3); // Adjust the y position of the label
 
 
   // Update node and link positions on each tick

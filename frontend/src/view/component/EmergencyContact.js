@@ -40,18 +40,18 @@ class EmergencyContact extends React.Component {
                 ) : (httpErrorMessage ? <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> :
                     <span></span>
                 )}
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid md:grid-cols-2 md:gap-2 sm:grid-cols-1 sm:gap-1">
                     {data && data.map((emergencyContact) => (
 
                         <div className="card">
-                            <div className="grid grid-cols-2 gap-2">
+                            <div className="grid md:grid-cols-2 md:gap-2 sm:grid-cols-1 sm:gap-1">
                                 <div>
                                     <div>Name: <span className="font-bold">{emergencyContact.name}</span></div>
                                     <div>Contact Number: {emergencyContact.contact_number}</div>
                                     <div>Address: {emergencyContact.address}</div>
                                     <div>Relationship: {emergencyContact.relationship}</div>
                                 </div>
-                                <div className="content-end">
+                                <div className="md:content-end">
                                     <QRCode
                                         title={emergencyContact.name}
                                         value={emergencyContact.contact_number}
