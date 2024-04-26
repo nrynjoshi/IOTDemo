@@ -9,6 +9,7 @@ clf_disease = DecisionTreeClassifier()
 clf_outcome = DecisionTreeClassifier()
 isInitDone: bool = False
 
+
 # This init function will only trigger once on the application life cycle and this will only trigger when
 # decision-making application called first time
 def init():

@@ -91,27 +91,6 @@ def health_record_analysis():
     print("health_record_analysis after preparing data --- %s seconds" % (time.time() - estart_time))
     return data
 
-
-# this will extract the defined json key value as a new list by eliminating rest of the json key value to make the
-# json lite and more simplified
-def extract_required_key_value(data, keys_to_keep):
-    # Define the keys you want to keep in the new list
-
-    # Initialize a list to store the dictionaries with selected key-value pairs
-    new_list = []
-
-    # Iterate over the original list of dictionaries
-    for item in data:
-        # Create a new dictionary with only the desired key-value pairs
-        new_dict = {key: item[key] for key in keys_to_keep if key in item}
-        # Append the new dictionary to the new list
-        new_list.append(new_dict)
-    # Filter out dictionaries with NaN values
-    new_list = [d for d in new_list if not any(math.isnan(v) if isinstance(v, float) else False for v in d.values())]
-
-    return new_list
-
-
 # this will help to clean all NaN value from list so that the process function will receive the clean list and
 # consitent
 def cleanupNaNValueFromList(data):
