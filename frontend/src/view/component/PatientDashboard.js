@@ -6,16 +6,14 @@ import CurrentDashboardDisplay from "../util/CurrentDashboardDisplay";
 
 class PatientDashboard extends React.Component {
 
-    state = { dataKeys: null, httpErrorMessage: null, isLoading: false };
-
-    state = { data: null, httpErrorMessage: null, isLoading: false, url: null, fetchingData: false };
+    state = { data: null, httpErrorMessage: null, isLoading: false, url: null, fetchingData: false, user: null, greeting: 'Hello ' };
 
     componentDidMount() {
         const url = BACKEND_API_CALL + '/current/health-record';
         this.setState({ url: url })
 
         console.log('printing from componentDidMount', url)
-
+        this.fetchUser()
         this.fetchData(false, url); // Fetch data initially
         this.interval = setInterval(() => this.fetchData(true, url), 60 * 1000);  // every 1 min this code will call the api to get latest information athough we have hourly data
     }
@@ -23,6 +21,20 @@ class PatientDashboard extends React.Component {
     componentWillUnmount() {
         clearInterval(this.interval); // Clear interval on component unmount
     }
+
+    getGreeting = () => {
+        const hour = new Date().getHours();
+        let greeting;
+
+        if (hour < 12) {
+            greeting = 'Good morning, ';
+        } else if (hour < 18) {
+            greeting = 'Good afternoon, ';
+        } else {
+            greeting = 'Good evening, ';
+        }
+        this.setState({ greeting: greeting })
+    };
 
     fetchData = async (isIntervalCall, url) => {
         const { fetchingData } = this.state
@@ -44,11 +56,22 @@ class PatientDashboard extends React.Component {
                 this.setState({ isLoading: false })
             }
         }
+        this.getGreeting();
+    };
 
+    fetchUser = async () => {
+        try {
+            const url = BACKEND_API_CALL + '/user'
+            const user = await HttpClient.get(url);
+            this.setState({ user: user});
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+        }
     };
 
     render() {
-        const { httpErrorMessage, isLoading, data } = this.state
+        const { httpErrorMessage, isLoading, data, user, greeting } = this.state
         console.log('Data from state')
         console.log(data)
         return (<div>
@@ -61,8 +84,12 @@ class PatientDashboard extends React.Component {
 
                     {data &&
                         <div className="row-span-3">
-                            <div>
-                                <div>Information has been record on hourly basis and displayed hourly here. Last Updated information: <b>{data.ActivityHour}</b></div>
+                            <div className="card">
+                                { user && <div >
+                                <b> {greeting} {user.Name} </b>
+                                    </div>}
+                                    <hr/>
+                                <div className="text-zinc-700 ">Information has been record on hourly basis and displayed hourly here. Last Updated information: <b>{data.ActivityHour}</b></div>
                             </div>
                             <div className="grid xl:grid-cols-4 xl:gap-4 lg:grid-cols-3 lg:gap-3 md:grid-cols-2 md:gap-2 sm:grid-cols-1 sm:gap-1">
 
