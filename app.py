@@ -27,6 +27,12 @@ def current_heath_record():
     latestedUpdatedRecord = list[-1]
     return latestedUpdatedRecord
 
+# current user information
+@app.route('/api/user', methods=['GET'])
+def user_info():
+    userInfo = azure_blob_call_service.getUserBasicInfoByIdentity()
+    return userInfo
+
 # ------------------------------------------------------------------------
 # Analysis page api part started
 
