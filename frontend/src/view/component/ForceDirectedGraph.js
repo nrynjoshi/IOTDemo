@@ -1,6 +1,6 @@
-import ErrorBoundary from "../util/ErrorBoundary.js"
+
 import React from "react";
-import HttpClient from "../util/HttpClient"
+import HttpClient from "./HttpClient"
 import { createForceDirectedGraphSVG } from "../react-d3/ForceDirectedGraphD3"
 
 
@@ -47,7 +47,7 @@ class ForceDirectedGraph extends React.Component {
   render() {
     const { httpErrorMessage, isLoading, data } = this.state
     return (
-      <div><ErrorBoundary>
+      <div>
 
         {isLoading ? (
           <p>Loading ...</p>
@@ -56,7 +56,7 @@ class ForceDirectedGraph extends React.Component {
         )}
         {data && <div id="SvgContainerIdForForceDirectedGraph"></div>}
 
-      </ErrorBoundary></div>
+      </div>
     );
   }
 }

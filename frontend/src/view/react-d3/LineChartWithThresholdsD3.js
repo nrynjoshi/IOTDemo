@@ -100,7 +100,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
   
       // Draw threshold lines
       var thresholdLabelLeftPosition = innerHeight
-      thresholds.forEach((threshold, index) => {
+      thresholds.forEach((threshold) => {
         svg.append('line')
           .attr('x1', 0)
           .attr('y1', y(threshold['value']))
@@ -124,7 +124,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
     }
    
 
-  }, [data, width, height]);
+  }, [data, width, height, xAxiasLable, yAxiasLable, thresholdsContext]);
 
   return (
     <svg ref={svgRef}></svg>

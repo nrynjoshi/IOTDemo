@@ -1,6 +1,5 @@
-import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
-import HttpClient from "../util/HttpClient"
+import HttpClient from "./HttpClient"
 import QRCode from 'react-qr-code';
 
 class EmergencyContact extends React.Component {
@@ -33,7 +32,7 @@ class EmergencyContact extends React.Component {
         const { httpErrorMessage, isLoading, data } = this.state
 
         return (
-            <div><ErrorBoundary>
+            <div>
 
                 {isLoading ? (
                     <p>Loading ...</p>
@@ -68,7 +67,7 @@ class EmergencyContact extends React.Component {
                     )
                     )}
                 </div>
-            </ErrorBoundary></div>
+            </div>
         );
     }
 }

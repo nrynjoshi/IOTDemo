@@ -8,27 +8,12 @@ import Analysis from "./view/component/Analysis";
 import EmergencyContact from "./view/component/EmergencyContact";
 import DiseaseFinderML from "./view/component/DiseaseFinderML";
 import PageNotFound from "./view/component/PageNotFound";
-import { BACKEND_API_CALL } from "./view/util/Constant";
-import DateTime from './view/util/DateTime';
-import HttpRequestUtil from './view/util/HttpRequestUtil';
+import TodayDateTime from './view/component/TodayDateTime';
 
 class App extends React.Component {
 
   render() {
-    // Call MyComponent to get jsonParams
-    const httpRequestUtil = new HttpRequestUtil();
 
-    // Access jsonParams
-    const jsonParams = httpRequestUtil.render();
-    console.log('-------------------------------------------------------')
-    console.log(jsonParams)
-    console.log('-------------------------------------------------------')
-    if (jsonParams['redirect']) {
-      // window.location.href = jsonParams['redirect']; // Redirect to the specified URL
-    }
-
-
-    console.log(jsonParams);
     return (
       <BrowserRouter>
         <div className="w-full text-2xl App">
@@ -39,19 +24,18 @@ class App extends React.Component {
               <li><NavLink to="/analysis" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Analysis</NavLink></li>
               <li><NavLink to="/emergency-contacts" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Emergency Contacts</NavLink></li>
               <li><NavLink to="/disease-identification" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Disease Finder</NavLink></li>
-              <li className='datetime'><DateTime></DateTime></li>
+              <li className='datetime'><TodayDateTime></TodayDateTime></li>
             </ul>
 
           </div>
           <div >
 
             <div className="m-4">
-              {jsonParams.userId && (<span>Welcome, {jsonParams.userId}</span>)}
               <Routes>
                 <Route path="/" element={<PatientDashboard />} />
                 <Route path="/activities-track" element={<ActivityTrack />} />
                 <Route path="/analysis" element={<Analysis />} />
-                <Route path="/emergency-contacts" element={<EmergencyContact dataEndpoint={BACKEND_API_CALL + '/emergency-contacts'} />} />
+                <Route path="/emergency-contacts" element={<EmergencyContact dataEndpoint={'/emergency-contacts'} />} />
                 <Route path="/disease-identification" element={<DiseaseFinderML />} />
                 <Route element={<PageNotFound />} />
               </Routes>

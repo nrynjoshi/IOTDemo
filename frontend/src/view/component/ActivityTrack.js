@@ -1,8 +1,7 @@
 import React from "react";
-import PageTitle from "../util/PageTitle";
-import { BACKEND_API_CALL } from "../util/Constant";
 import SankeyDiagram from "./SankeyDiagram";
 import ForceDirectedGraph from "./ForceDirectedGraph";
+import PageTitle from "./PageTitle";
 
 class ActivityTrack extends React.Component {
 
@@ -17,13 +16,14 @@ class ActivityTrack extends React.Component {
                 <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> : <span></span>)}
             <div className="card">
                 <PageTitle title="Daily Disease Evaluation Based on Symptoms"></PageTitle>
-                <SankeyDiagram dataEndpoint={BACKEND_API_CALL + '/activity-tracks'}></SankeyDiagram>
+                
+                <SankeyDiagram dataEndpoint={'/activity-tracks'}></SankeyDiagram>
 
             </div>
 
             <div className="card">
                 <PageTitle title="Daily Disease Evaluation Based on Symptoms"></PageTitle>
-                <ForceDirectedGraph dataEndpoint={BACKEND_API_CALL + '/activity-tracks'}></ForceDirectedGraph>
+                <ForceDirectedGraph dataEndpoint={'/activity-tracks'}></ForceDirectedGraph>
 
             </div>
 

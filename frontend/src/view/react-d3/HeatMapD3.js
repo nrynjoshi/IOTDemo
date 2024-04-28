@@ -63,7 +63,7 @@ const HeatMapD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
     svg.append("g")
       .call(d3.axisLeft(yScale));
 
-  }, [data, width, height]);
+  }, [data, width, height, xAxiasLable, yAxiasLable]);
 
   return (
     <svg ref={svgRef}></svg>

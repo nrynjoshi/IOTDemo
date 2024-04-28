@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useSound from 'use-sound';
 import beepSound from '../audio/beep-02.mp3';
 
-const SoundUtil = ({value, minNormalValue, maxNormalValue }) => {
+const BeepSound = ({value, minNormalValue, maxNormalValue }) => {
   const [play, { stop }] = useSound(beepSound);
   const [showTag, setShowTag] = useState(false);
 
@@ -35,4 +35,4 @@ const SoundUtil = ({value, minNormalValue, maxNormalValue }) => {
   );
 };
 
-export default SoundUtil;
+export default BeepSound;

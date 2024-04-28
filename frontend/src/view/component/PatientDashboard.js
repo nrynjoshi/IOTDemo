@@ -1,15 +1,14 @@
 import React from "react";
-import { BACKEND_API_CALL } from "../util/Constant";
-import HttpClient from "../util/HttpClient"
+import HttpClient from "./HttpClient"
 
-import CurrentDashboardDisplay from "../util/CurrentDashboardDisplay";
+import CurrentDashboardDisplay from "./CurrentDashboardDisplay";
 
 class PatientDashboard extends React.Component {
 
     state = { data: null, httpErrorMessage: null, isLoading: false, url: null, fetchingData: false, user: null, greeting: 'Hello ' };
 
     componentDidMount() {
-        const url = BACKEND_API_CALL + '/current/health-record';
+        const url = '/current/health-record';
         this.setState({ url: url })
 
         console.log('printing from componentDidMount', url)
@@ -61,7 +60,7 @@ class PatientDashboard extends React.Component {
 
     fetchUser = async () => {
         try {
-            const url = BACKEND_API_CALL + '/user'
+            const url = '/user'
             const user = await HttpClient.get(url);
             this.setState({ user: user});
         } catch (error) {

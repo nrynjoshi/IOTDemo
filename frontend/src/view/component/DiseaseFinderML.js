@@ -1,13 +1,10 @@
-import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
-import HttpClient from "../util/HttpClient"
-
-import { BACKEND_API_CALL } from "../util/Constant.js";
+import HttpClient from "./HttpClient"
 
 class EmergencyContact extends React.Component {
 
     state = {
-        // this is the default set to while initilizing the component
+        // this is the default set while initilizing the component
         requestBody: {
             'has_fever': 'yes',
             'has_cough': 'yes',
@@ -30,7 +27,7 @@ class EmergencyContact extends React.Component {
         console.log('Form Submit Record')
         console.log(requestBody)
 
-        const url = BACKEND_API_CALL + '/decision_tree';
+        const url = '/decision_tree';
         //calling api for data
         const postRecord = async () => {
             try {
@@ -64,7 +61,7 @@ class EmergencyContact extends React.Component {
         };
 
         return (
-            <div><ErrorBoundary>
+            <div>
                 <div className="card">
                     <form className="max-w-md mx-auto" onSubmit={this.formSubmitHandler} method="POST">
                         <div>
@@ -180,7 +177,7 @@ class EmergencyContact extends React.Component {
                         }
                     </div>
                 }
-            </ErrorBoundary></div>
+           </div>
         );
     }
 }

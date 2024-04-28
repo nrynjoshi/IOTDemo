@@ -1,7 +1,6 @@
 import React from "react";
-import HttpClient from "../util/HttpClient"
+import HttpClient from "./HttpClient"
 import HeatMapD3 from "../react-d3/HeatMapD3.js";
-import { BACKEND_API_CALL } from "../util/Constant.js";
 
 class HeatMap extends React.Component {
 
@@ -32,7 +31,7 @@ formSubmitHandler = e => {
   console.log('Form Submit Record')
   console.log(requestBody)
 
-  const url = BACKEND_API_CALL + '/report/heart-rate';
+  const url = '/report/heart-rate';
   //calling api for data
   const postRecord = async () => {
       try {

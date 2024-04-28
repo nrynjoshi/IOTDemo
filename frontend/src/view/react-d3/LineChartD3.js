@@ -85,7 +85,7 @@ const LineChartD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
         .y(function (d) { return y(d.y) })
       );
 
-  }, [data, width, height]);
+  }, [data, width, height, xAxiasLable, yAxiasLable]);
 
   return (
     <svg ref={svgRef} width={width} height={height}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment';
 
-export const DateTime = () => {
+export const TodayDateTime = () => {
 
     var [date, setDate] = useState(new Date());
 
@@ -18,6 +18,4 @@ export const DateTime = () => {
     )
 }
 
-export default DateTime
-
-//<p className="text-right">{ moment().format('MMMM Do YYYY, h:mm:ss a')}</p>
+export default TodayDateTime

@@ -1,4 +1,7 @@
 
+
+const BACKEND_API_CALL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_DEV_API_URL : process.env.REACT_APP_DEV_API_URL;
+
 const handleResponse = (response) => {
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -8,6 +11,7 @@ const handleResponse = (response) => {
 
 const HttpClient = {
   get: (url) => {
+    url = BACKEND_API_CALL + url;
     return fetch(`${url}`)
       .then(handleResponse)
       .catch((error) => {
@@ -16,6 +20,7 @@ const HttpClient = {
       });
   },
   post: (url, data) => {
+    url = BACKEND_API_CALL +  url;
     return fetch(`${url}`, {
       method: 'POST',
       headers: {

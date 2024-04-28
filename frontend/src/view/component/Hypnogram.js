@@ -1,6 +1,5 @@
-import { BACKEND_API_CALL } from "../util/Constant.js";
 import React from "react";
-import HttpClient from "../util/HttpClient"
+import HttpClient from "./HttpClient"
 import HypnogramD3 from "../react-d3/HypnogramD3.js";
 
 
@@ -27,7 +26,7 @@ class Hypnogram extends React.Component {
         console.log('Form Submit Record')
         console.log(requestBody)
       
-        const url = BACKEND_API_CALL + '/report/sleep-pattern';
+        const url = '/report/sleep-pattern';
         //calling api for data
         const postRecord = async () => {
             try {

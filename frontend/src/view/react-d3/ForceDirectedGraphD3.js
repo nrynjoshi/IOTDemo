@@ -1,5 +1,10 @@
 import * as d3 from "d3";
-import { COLOR_SCALE } from "../util/Constant";
+
+const COLOR_SCALE = d3.scaleOrdinal()
+    .range(["#C0C0C0", "#808080", "#FF0000", "#800000", "#FFFF00", "#808000", "#00FF00", "#008000", "#00FFFF",
+     "#008080", "#0000FF", "#000080", "#FF00FF", "#800080", "#CD5C5C", "#F08080", "#E9967A", "#FFA07A", "#DFFF00", "#6495ED", "#CCCCFF", "#40E0D0", "#9FE2BF"
+     , "#800980", "#CD525C", "#F08580", "#E9867A", "#FF507A", "#DF3F00", "#6415ED", "#CCC1FF", "#4010D0", "#9FE2AF"]);
+
 
 export const createForceDirectedGraphSVG = (data) => {
   // Specify the dimensions of the chart.
@@ -75,19 +80,6 @@ export const createForceDirectedGraphSVG = (data) => {
     .on("start", dragstarted)
     .on("drag", dragged)
     .on("end", dragended));
-
-  // Set the position attributes of links and nodes each time the simulation ticks.
-  function ticked() {
-    link
-      .attr("x1", d => d.source.x)
-      .attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x)
-      .attr("y2", d => d.target.y);
-
-    node
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
-  }
 
   // Reheat the simulation when drag starts, and fix the subject position.
   function dragstarted(event) {

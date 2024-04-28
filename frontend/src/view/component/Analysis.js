@@ -1,7 +1,6 @@
 import React from "react";
-import PageTitle from "../util/PageTitle";
-import { BACKEND_API_CALL } from "../util/Constant";
-import HttpClient from "../util/HttpClient"
+import PageTitle from "./PageTitle";
+import HttpClient from "./HttpClient"
 import LineChart from "./LineChart";
 import HeatMap from "./HeatMap";
 import Hypnogram from "./Hypnogram";
@@ -12,12 +11,11 @@ class Analysis extends React.Component {
     state = { data: null, httpErrorMessage: null, isLoading: false };
 
     componentDidMount() {
-        const url = BACKEND_API_CALL + '/report/health-record';
         //calling api for data
         const fetchData = async () => {
             try {
                 this.setState({ isLoading: true })
-                const data = await HttpClient.get(url);
+                const data = await HttpClient.get('/report/health-record');
                 this.setState({ data: data, httpErrorMessage: null });
             } catch (error) {
                 console.error('Error fetching data:', error);

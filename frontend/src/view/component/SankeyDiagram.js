@@ -1,5 +1,5 @@
 import React from "react";
-import HttpClient from "../util/HttpClient"
+import HttpClient from "./HttpClient"
 import { createSankeyDiagramSVG } from "../react-d3/SankeyDiagramD3"
 
 class SankeyDiagram extends React.Component {

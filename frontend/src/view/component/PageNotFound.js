@@ -1,5 +1,5 @@
 import React from "react";
-import PageTitle from "../util/PageTitle";
+import PageTitle from "./PageTitle";
 
 class PageNotFound extends React.Component {
 
@@ -12,7 +12,7 @@ class PageNotFound extends React.Component {
 
 
     render() {
-        const { httpErrorMessage, colorEncoding, isLoading, dataCar } = this.state
+        const { httpErrorMessage, isLoading } = this.state
         return (<div>
 
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?

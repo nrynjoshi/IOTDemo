@@ -1,15 +1,8 @@
-import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
-import SoundUtil from "../util/SoundUtil";
+import BeepSound from "./BeepSound";
 import SpeedometerD3 from "../react-d3/SpeedometerD3.js";
 
-
-
-
-
 class CurrentDashboardDisplay extends React.Component {
-
-
 
      render() {
           const displayText = this.props.displayText;
@@ -19,7 +12,7 @@ class CurrentDashboardDisplay extends React.Component {
           const customSegmentStops =  this.props.customSegmentStops;
           const customSegmentLabels =  this.props.customSegmentLabels;
           return (
-               <div><ErrorBoundary>
+               <div>
 
                     <div>
                          <h2>{displayText}</h2>
@@ -32,13 +25,13 @@ class CurrentDashboardDisplay extends React.Component {
                               
                               
                               <div>
-                                   <SoundUtil value={displayValue} minNormalValue={minNormalValue} maxNormalValue={maxNormalValue}></SoundUtil>
+                                   <BeepSound value={displayValue} minNormalValue={minNormalValue} maxNormalValue={maxNormalValue}></BeepSound>
                               </div>
                          </div>
 
                     </div>
 
-               </ErrorBoundary></div>
+               </div>
           );
      }
 }

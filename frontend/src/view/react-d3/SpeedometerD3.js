@@ -1,11 +1,11 @@
 import ReactSpeedometer from "react-d3-speedometer"
 
-import React, { useRef, useEffect } from 'react';
-import * as d3 from 'd3';
+import React from 'react';
 
 const SpeedometerD3 = ({ value, customSegmentStops, customSegmentLabels }) => {
-
-  if(!customSegmentLabels ){
+  
+// non things passed from root node than this below segment label will be set by default
+  if(!customSegmentLabels ){ 
     customSegmentLabels = [
       {
           text: 'Low',

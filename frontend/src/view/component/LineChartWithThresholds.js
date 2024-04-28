@@ -1,6 +1,5 @@
 
-import { BACKEND_API_CALL } from "../util/Constant.js";
-import HttpClient from "../util/HttpClient"
+import HttpClient from "./HttpClient"
 import React from "react";
 import LineChartWithThresholdsD3 from "../react-d3/LineChartWithThresholdsD3.js";
 
@@ -34,7 +33,7 @@ class LineChartWithThresholds extends React.Component {
         console.log('Form Submit Record')
         console.log(requestBody)
       
-        const url = BACKEND_API_CALL + endpoint;
+        const url = endpoint;
         //calling api for data
         const postRecord = async () => {
             try {
