@@ -1,7 +1,7 @@
 import React from "react";
 import HttpClient from "./HttpClient"
 
-class EmergencyContact extends React.Component {
+class DiseaseFinderML extends React.Component {
 
     state = {
         // this is the default set while initilizing the component
@@ -171,4 +171,4 @@ class EmergencyContact extends React.Component {
     }
 }
 
-export default EmergencyContact;
+export default DiseaseFinderML;

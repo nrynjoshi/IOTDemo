@@ -45,14 +45,12 @@ class ForceDirectedGraph extends React.Component {
     const { httpErrorMessage, isLoading, data } = this.state
     return (
       <div>
-
         {isLoading ? (
           <p>Loading ...</p>
         ) : (httpErrorMessage ? <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> :
           <span></span>
         )}
         {data && <div id="SvgContainerIdForForceDirectedGraph"></div>}
-
       </div>
     );
   }

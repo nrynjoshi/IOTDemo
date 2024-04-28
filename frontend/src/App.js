@@ -1,5 +1,6 @@
 import './App.css';
 import React from "react";
+import moment from 'moment';
 
 import PatientDashboard from "./view/component/PatientDashboard";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
@@ -8,7 +9,7 @@ import Analysis from "./view/component/Analysis";
 import EmergencyContact from "./view/component/EmergencyContact";
 import DiseaseFinderML from "./view/component/DiseaseFinderML";
 import PageNotFound from "./view/component/PageNotFound";
-import moment from 'moment';
+
 
 class App extends React.Component {
   state = { date: new Date() };
