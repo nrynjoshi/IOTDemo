@@ -1,5 +1,5 @@
 
-
+//get the backend endpoint api to call 
 const BACKEND_API_CALL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_DEV_API_URL : process.env.REACT_APP_DEV_API_URL;
 
 const handleResponse = (response) => {
@@ -10,6 +10,7 @@ const handleResponse = (response) => {
 };
 
 const HttpClient = {
+  //get method call
   get: (url) => {
     url = BACKEND_API_CALL + url;
     return fetch(`${url}`)
@@ -19,8 +20,9 @@ const HttpClient = {
         throw error;
       });
   },
+  //post method call
   post: (url, data) => {
-    url = BACKEND_API_CALL +  url;
+    url = BACKEND_API_CALL + url;
     return fetch(`${url}`, {
       method: 'POST',
       headers: {
@@ -34,7 +36,6 @@ const HttpClient = {
         throw error;
       });
   },
-
 }
 
 export default HttpClient;

@@ -1,7 +1,7 @@
 
 import React from "react";
-import HttpClient from "./HttpClient"
-import { createForceDirectedGraphSVG } from "../react-d3/ForceDirectedGraphD3"
+import HttpClient from "../HttpClient"
+import { createForceDirectedGraphSVG } from "./ForceDirectedGraphD3"
 
 
 
@@ -24,18 +24,15 @@ class ForceDirectedGraph extends React.Component {
         this.setState({ isLoading: false })
       }
     };
-
     fetchData();
-
   }
+
   componentDidUpdate() {
 
     const { data, httpErrorMessage } = this.state
 
     if (data != null && httpErrorMessage == null) {
-
       const svgNode = createForceDirectedGraphSVG(data);
-
       // Append the SVG to the container in your app.js
       const svgContainer = document.getElementById("SvgContainerIdForForceDirectedGraph"); // Replace with your actual container ID
       svgContainer.innerHTML = "";
@@ -60,6 +57,5 @@ class ForceDirectedGraph extends React.Component {
     );
   }
 }
-
 
 export default ForceDirectedGraph;

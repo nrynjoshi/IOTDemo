@@ -20,7 +20,6 @@ class EmergencyContact extends React.Component {
         isLoading: false
     };
 
-
     formSubmitHandler = e => {
         e.preventDefault()
         const { requestBody } = this.state
@@ -31,7 +30,7 @@ class EmergencyContact extends React.Component {
         //calling api for data
         const postRecord = async () => {
             try {
-                this.setState({ responseBody: null});
+                this.setState({ responseBody: null });
                 this.setState({ isLoading: true })
                 const responseBody = await HttpClient.post(url, requestBody);
                 this.setState({ responseBody: responseBody, httpErrorMessage: null });
@@ -44,8 +43,6 @@ class EmergencyContact extends React.Component {
         };
         postRecord()
     }
-
-
 
     render() {
         const { httpErrorMessage, isLoading, requestBody, responseBody } = this.state
@@ -138,49 +135,40 @@ class EmergencyContact extends React.Component {
                         {responseBody &&
                             <div>
                                 Based on the health parameters provided, it has been determined that the symptoms align with below mention disease with result outcome.
-                                
-
-                                
-
-<div class="relative overflow-x-auto">
-    <table class="w-6/12 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-black">
-            <tr>
-                <th scope="col" class="px-4 py-3">
-                Disease
-                </th>
-                <th scope="col" class="px-4 py-3">
-                Outcome
-                </th>
-            </tr>
-        </thead>
-                        <tbody>
-            
-                                {responseBody['output'].map((item, index) => (                                   
-                                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                            <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-white">{item.disease}</th>
-                                                            {item.outcome === 'Positive' && 
-                                                            <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-red-400">{item.outcome}</th>
-                                                            }
-                                                            {item.outcome === 'Negative' && 
-                                                            <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-green-400">{item.outcome}</th>
-                                                            }
-                                                        </tr>
-                                                    ))}
-            
-                    </tbody>
-    </table>
-</div>
-
-
+                                <div class="relative overflow-x-auto">
+                                    <table class="w-6/12 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-black">
+                                            <tr>
+                                                <th scope="col" class="px-4 py-3">
+                                                    Disease
+                                                </th>
+                                                <th scope="col" class="px-4 py-3">
+                                                    Outcome
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {responseBody['output'].map((item, index) => (
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-white">{item.disease}</th>
+                                                    {item.outcome === 'Positive' &&
+                                                        <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-red-400">{item.outcome}</th>
+                                                    }
+                                                    {item.outcome === 'Negative' &&
+                                                        <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-green-400">{item.outcome}</th>
+                                                    }
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         }
                     </div>
                 }
-           </div>
+            </div>
         );
     }
 }
-
 
 export default EmergencyContact;

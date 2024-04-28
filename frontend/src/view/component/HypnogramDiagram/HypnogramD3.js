@@ -7,8 +7,7 @@ const HypnogramD3 = ({ data, width, height }) => {
 
   useEffect(() => {
     if (!data) return;
-
-
+    
     const margin = { top: 10, right: 30, bottom: 50, left: 140 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;

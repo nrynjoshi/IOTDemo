@@ -1,6 +1,6 @@
 import React from "react";
-import HttpClient from "./HttpClient"
-import { createSankeyDiagramSVG } from "../react-d3/SankeyDiagramD3"
+import HttpClient from "../HttpClient"
+import { createSankeyDiagramSVG } from "./SankeyDiagramD3"
 
 class SankeyDiagram extends React.Component {
 
@@ -21,17 +21,13 @@ class SankeyDiagram extends React.Component {
                 this.setState({ isLoading: false })
             }
         };
-
         fetchData();
-
     }
 
     componentDidUpdate() {
-
         const { linkColor, nodeAlignment, data, httpErrorMessage } = this.state
 
         if (data != null && httpErrorMessage == null) {
-
             const svgNode = createSankeyDiagramSVG(data, linkColor, nodeAlignment);
 
             // Append the SVG to the container in your app.js
@@ -39,21 +35,16 @@ class SankeyDiagram extends React.Component {
             svgContainer.innerHTML = "";
             svgContainer.appendChild(svgNode);
         }
-
-
     }
 
     render() {
         const { httpErrorMessage, isLoading, data } = this.state
         return (<div className="p-1 pl-3">
-
             {isLoading ? (<p>Loading ...</p>) : (httpErrorMessage ?
                 <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> : <span></span>)}
             {data && <div id="SvgContainerId"></div>}
-
         </div>);
     }
 }
-
 
 export default SankeyDiagram;

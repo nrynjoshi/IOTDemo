@@ -8,12 +8,20 @@ import Analysis from "./view/component/Analysis";
 import EmergencyContact from "./view/component/EmergencyContact";
 import DiseaseFinderML from "./view/component/DiseaseFinderML";
 import PageNotFound from "./view/component/PageNotFound";
-import TodayDateTime from './view/component/TodayDateTime';
+import moment from 'moment';
 
 class App extends React.Component {
+  state = { date: new Date() };
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.setState({ date: new Date() }), 1000);  // every 1 min this code will call the api to get latest information athough we have hourly data
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval); // Clear interval on component unmount
+  }
 
   render() {
-
     return (
       <BrowserRouter>
         <div className="w-full text-2xl App">
@@ -24,12 +32,10 @@ class App extends React.Component {
               <li><NavLink to="/analysis" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Analysis</NavLink></li>
               <li><NavLink to="/emergency-contacts" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Emergency Contacts</NavLink></li>
               <li><NavLink to="/disease-identification" className={({ isActive }) => { return isActive ? "bg-black font-bold" : "text-white"; }}>Disease Finder</NavLink></li>
-              <li className='datetime'><TodayDateTime></TodayDateTime></li>
+              <li className='datetime'><p>{moment().format('dddd MMMM Do YYYY, h:mm a')}</p></li>
             </ul>
-
           </div>
           <div >
-
             <div className="m-4">
               <Routes>
                 <Route path="/" element={<PatientDashboard />} />
@@ -41,13 +47,10 @@ class App extends React.Component {
               </Routes>
             </div>
           </div>
-
-
         </div>
       </BrowserRouter>
     );
   }
-
 }
 
 export default App;
