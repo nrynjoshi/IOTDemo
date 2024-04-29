@@ -43,12 +43,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: reactjs-build
+          path: IOTDemo
 
       - name: Set up Python version
         uses: actions/setup-python@v1
         with:
           python-version: '3.12'
-          path: IOTDemo
 
       - name: Create and start a virtual environment
         run: |
