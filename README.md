@@ -55,7 +55,7 @@ The csv data set for the application has been save on csv datasets directory and
 <img src="./readme-img/Deployment-workflow-using-CI-CD-pipeline.png" width="800" >
 
 # Data Visualization Sample Screenshot
-<table>
+<table style="background-color: white">
  <tr>
     <td><img src="./readme-img/heart-rate-analysis.png" width="400" ></td>
     <td><img src="./readme-img/disease-finder.png" width="400" ></td>
