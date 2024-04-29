@@ -1,3 +1,14 @@
+# Declaration
+This an application prototype of Data Visualization for Elder home care research project. The research has been submitted to Leeds Beckett University in a partial fulfillment for the degree of the MSc. Information and Technology, May 2024.
+This research has been conducted under the supervision of Dr. Gopal Jamnal, a senior lecturer at Leeds Beckett University.
+
+# Author Information
+<div>
+<div>Name: <b>Narayan Joshi</b></div>
+<div>Student ID: <b>77354106</b> </div>
+<div>MSc. IT Software Engineering</div>
+</div>
+
 #  Data Visualization For Home Care
 <p float="left">
 <span>
@@ -8,6 +19,7 @@ All collected data is securely stored on the Azure cloud platform, ensuring reli
 Furthermore, leveraging state-of-the-art machine learning algorithms, our application offers predictive analysis based on individual health parameters. By analyzing historical data and trends, our algorithm provides personalized predictions, enabling users to proactively manage their health.
 
 Experience the future of healthcare with our innovative solution, where data-driven insights and advanced technology converge to enhance wellness and quality of life.
+<div>To access a live demo application,  <a href="https://elderdatavisualization.azurewebsites.net/">Click Me</a></div>
 </span>
 </p>
 
@@ -37,6 +49,10 @@ The csv data set for the application has been save on csv datasets directory and
 # Software Architecture Diagram
 
 <img src="./readme-img/software-architecture-diagram.png" width="800" height="300">
+
+# Deployment workflow using CI/CD pipeline
+
+<img src="./readme-img/Deployment-workflow-using-CI-CD-pipeline.png" width="800" height="300">
 
 # Data Visualization Sample Screenshot
 <table>
