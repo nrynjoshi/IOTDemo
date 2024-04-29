@@ -27,7 +27,16 @@ jobs:
             npm install
             npm run build
             cd ../
-            
+
+        - name: Remove the unwanted directory to make the application liteweight
+          run: |
+            rm -rf frontend
+            rm -rf "csv datasets"
+            rm -rf "readme-img"
+            rm -rf Terraform
+            rm -f build.bat
+            rm -f README.md
+          
         - name: Zip artifact for deployment
           run: zip release-reactbuild.zip ./* -r
 
