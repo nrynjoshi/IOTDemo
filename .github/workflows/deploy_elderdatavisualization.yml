@@ -26,6 +26,7 @@ jobs:
             cd frontend
             npm install
             npm run build
+            cd ../
 
   build:
     runs-on: ubuntu-latest
@@ -38,7 +39,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Create and start virtual environment
+      - name: Create and start a virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
