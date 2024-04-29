@@ -27,12 +27,26 @@ jobs:
             npm install
             npm run build
             cd ../
+            
+        - name: Zip artifact for buildPython
+          run: zip release-reactbuild.zip ./* -r
+  
+        - name: Upload artifact for deployment jobs
+          uses: actions/upload-artifact@v3
+          with:
+            name: reactbuild-app
+            path: |
+              release-reactbuild.zip
+              !venv/
 
-  build:
+  buildPython:
     runs-on: ubuntu-latest
     needs: buildReactJs
     steps:
-      # - uses: actions/checkout@v4
+      - name: Download artifact from buildReactJs job
+        uses: actions/download-artifact@v3
+        with:
+          name: reactbuild-app
 
       - name: Set up Python version
         uses: actions/setup-python@v1
@@ -68,7 +82,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: buildPython
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
