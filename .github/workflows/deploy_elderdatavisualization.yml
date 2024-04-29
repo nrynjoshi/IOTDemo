@@ -28,10 +28,10 @@ jobs:
             npm run build
             cd ../
             
-        - name: Archive build output
+        - name: Archive IOTDemo project directory
           uses: actions/upload-artifact@v2
           with:
-            name: reactjs-build
+            name: IOTDemo-artifact
             path: IOTDemo
 
   buildPython:
@@ -39,10 +39,10 @@ jobs:
     needs: buildReactJs
     
     steps:
-      - name: Download React.js build artifact
+      - name: Download IOTDemo project directory
         uses: actions/download-artifact@v2
         with:
-          name: reactjs-build
+          name: IOTDemo-artifact
           path: IOTDemo
 
       - name: Set up Python version
@@ -50,10 +50,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Create and start a virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
+      # - name: Create and start a virtual environment
+      #   run: |
+      #     python -m venv venv
+      #     source venv/bin/activate
       
       - name: Install dependencies
         run: pip install -r requirements.txt
