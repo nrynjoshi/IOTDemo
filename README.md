@@ -48,37 +48,37 @@ The csv data set for the application has been save on csv datasets directory and
 
 # Software Architecture Diagram
 
-<img src="./readme-img/software-architecture-diagram.png" width="800" height="300">
+<img src="./readme-img/software-architecture-diagram.png" width="800" >
 
 # Deployment workflow using CI/CD pipeline
 
-<img src="./readme-img/Deployment-workflow-using-CI-CD-pipeline.png" width="800" height="300">
+<img src="./readme-img/Deployment-workflow-using-CI-CD-pipeline.png" width="800" >
 
 # Data Visualization Sample Screenshot
 <table>
  <tr>
-    <td><img src="./readme-img/heart-rate-analysis.png" width="400" height="200"></td>
-    <td><img src="./readme-img/disease-finder.png" width="400" height="200"></td>
+    <td><img src="./readme-img/heart-rate-analysis.png" width="400" ></td>
+    <td><img src="./readme-img/disease-finder.png" width="400" ></td>
  </tr>
  <tr>
-    <td><img src="./readme-img/spo2-analysis.png" width="400" height="200"></td>
-    <td><img src="./readme-img/step-analysis.png" width="400" height="200"></td>
+    <td><img src="./readme-img/spo2-analysis.png" width="400" ></td>
+    <td><img src="./readme-img/step-analysis.png" width="400" ></td>
  </tr>
  <tr>
-    <td><img src="./readme-img/respiratory-rate-analysis.png" width="400" height="200"></td>
-    <td><img src="./readme-img/sleep-pattern-analysis.png" width="400" height="200"></td>
+    <td><img src="./readme-img/respiratory-rate-analysis.png" width="400" ></td>
+    <td><img src="./readme-img/sleep-pattern-analysis.png" width="400" ></td>
  </tr>
  <tr>
-    <td><img src="./readme-img/blood-sugar-analysis.png" width="400" height="200"></td>
-    <td><img src="./readme-img/body-temperature-analysis.png" width="400" height="200"></td>
+    <td><img src="./readme-img/blood-sugar-analysis.png" width="400" ></td>
+    <td><img src="./readme-img/body-temperature-analysis.png" width="400" ></td>
  </tr>
  <tr>
-    <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram.png" width="400" height="200"></td>
-    <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram1.png" width="400" height="200"></td>
+    <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram.png" width="400" ></td>
+    <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram1.png" width="400" ></td>
  </tr>
 <tr>
-    <td><img src="./readme-img/emergency-contact-list.png" width="600" height="200"></td>
-    <td><img src="./readme-img/dashboard-up-to-date-health-record.png" width="400" height="200"></td>
+    <td><img src="./readme-img/emergency-contact-list.png" width="600" ></td>
+    <td><img src="./readme-img/dashboard-up-to-date-health-record.png" width="400" ></td>
  </tr>
 </table>
 
