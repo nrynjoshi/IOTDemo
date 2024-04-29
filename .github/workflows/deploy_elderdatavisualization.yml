@@ -20,7 +20,10 @@ jobs:
           uses: actions/setup-node@v2
           with:
               node-version: '20.11.1'
-  
+
+        - name: Install dependencies
+          run: npm install
+      
         - name: Grant executable permission to build.bat
           run: chmod +x build.sh
                 
