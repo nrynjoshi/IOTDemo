@@ -15,23 +15,18 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v4
-
-        - name: Navigate to the frontend directory
-          run: cd frontend
-  
+        
         - name: Set up Node.js version
           uses: actions/setup-node@v2
           with:
               node-version: '20.11.1'
 
-        - name: Install dependencies
-          run: npm install
-      
-        - name: Grant executable permission to build.bat
-          run: npm run build
-                
-        - name: Navigate back to the backend directory
-          run: cd ..
+        - name: Install dependencies and build reactjs
+          run: | 
+            cd frontend
+            npm install
+            npm run build
+
   build:
     runs-on: ubuntu-latest
     needs: buildReactJs
