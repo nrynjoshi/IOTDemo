@@ -1,10 +1,8 @@
-import ErrorBoundary from "../util/ErrorBoundary.js"
 import React from "react";
-import HttpClient from "../util/HttpClient"
+import HttpClient from "./HttpClient"
 import QRCode from 'react-qr-code';
 
 class EmergencyContact extends React.Component {
-
     state = { data: null, httpErrorMessage: null, isLoading: false };
 
     componentDidMount() {
@@ -22,19 +20,14 @@ class EmergencyContact extends React.Component {
                 this.setState({ isLoading: false })
             }
         };
-
         fetchData();
-
     }
-
-
 
     render() {
         const { httpErrorMessage, isLoading, data } = this.state
 
         return (
-            <div><ErrorBoundary>
-
+            <div>
                 {isLoading ? (
                     <p>Loading ...</p>
                 ) : (httpErrorMessage ? <h2 style={{ backgroundColor: 'red' }}>{httpErrorMessage}</h2> :
@@ -42,7 +35,6 @@ class EmergencyContact extends React.Component {
                 )}
                 <div className="grid md:grid-cols-2 md:gap-2 sm:grid-cols-1 sm:gap-1">
                     {data && data.map((emergencyContact) => (
-
                         <div className="card">
                             <div className="grid md:grid-cols-2 md:gap-2 sm:grid-cols-1 sm:gap-1">
                                 <div>
@@ -59,19 +51,13 @@ class EmergencyContact extends React.Component {
                                     />
                                 </div>
                             </div>
-
-
                         </div>
-
-
-
                     )
                     )}
                 </div>
-            </ErrorBoundary></div>
+            </div>
         );
     }
 }
-
 
 export default EmergencyContact;

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
-const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLable, thresholdsContext  }) => {
+const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLable, thresholdsContext }) => {
   const svgRef = useRef();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
       .domain(d3.extent(data, d => parseTime(d.timestamp)));
 
     // Find the minimum and maximum y-values in your data
-    const minY = d3.min(data, d => +d.spo2)-10;
+    const minY = d3.min(data, d => +d.spo2) - 10;
     const maxY = d3.max(data, d => +d.spo2);
 
     // Add a small padding to the upper limit
@@ -40,8 +40,8 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
 
     // Add Y axis
     const y = d3.scaleLinear()
-    .domain([minY, adjustedMaxY]) // Set the domain to exclude 0 and include only the range from the minimum to maximum y-values
-    .range([innerHeight, 0]);
+      .domain([minY, adjustedMaxY]) // Set the domain to exclude 0 and include only the range from the minimum to maximum y-values
+      .range([innerHeight, 0]);
 
     // X axis
     svg.append('g')
@@ -82,13 +82,13 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
       .attr('d', line);
 
     // Define threshold values
-    if(thresholdsContext){
+    if (thresholdsContext) {
 
       // Convert JSON key-value pairs to array of objects
       const thresholds = Object.keys(thresholdsContext).map(key => ({ 'text': key, 'value': thresholdsContext[key] }));
 
-     // Sort the array of objects based on the value of the key value
-     thresholds.sort((a, b) => {
+      // Sort the array of objects based on the value of the key value
+      thresholds.sort((a, b) => {
         if (a.value < b.value) {
           return -1;
         }
@@ -97,10 +97,10 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
         }
         return 0;
       });
-  
+
       // Draw threshold lines
       var thresholdLabelLeftPosition = innerHeight
-      thresholds.forEach((threshold, index) => {
+      thresholds.forEach((threshold) => {
         svg.append('line')
           .attr('x1', 0)
           .attr('y1', y(threshold['value']))
@@ -109,7 +109,7 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
           .attr('stroke', `red`)
           .attr('stroke-dasharray', '4')
           .attr('stroke-width', 1);
-  
+
         // Add label for threshold
         svg.append('text')
           .attr('x', thresholdLabelLeftPosition)
@@ -119,12 +119,12 @@ const LineChartWithThresholdsD3 = ({ data, width, height, xAxiasLable, yAxiasLab
           .style('fill', 'red')
           .style('font-size', 'medium');;
 
-          thresholdLabelLeftPosition =  thresholdLabelLeftPosition-120
+        thresholdLabelLeftPosition = thresholdLabelLeftPosition - 120
       });
     }
-   
 
-  }, [data, width, height]);
+
+  }, [data, width, height, xAxiasLable, yAxiasLable, thresholdsContext]);
 
   return (
     <svg ref={svgRef}></svg>

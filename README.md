@@ -60,8 +60,11 @@ The csv data set for the application has been save on csv datasets directory and
     <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram.png" width="400" height="200"></td>
     <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram1.png" width="400" height="200"></td>
  </tr>
+<tr>
+    <td><img src="./readme-img/emergency-contact-list.png" width="600" height="200"></td>
+    <td><img src="./readme-img/dashboard-up-to-date-health-record.png" width="400" height="200"></td>
+ </tr>
 </table>
-<img src="./readme-img/emergency-contact-list.png" width="600" height="200">
 
 
 

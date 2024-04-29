@@ -59,8 +59,8 @@ const LineChartD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
 
     // Add Y axis
     const y = d3.scaleLinear()
-    .domain([minY, adjustedMaxY]) // Set the domain to exclude 0 and include only the range from the minimum to maximum y-values
-    .range([innerHeight, 0]);
+      .domain([minY, adjustedMaxY]) // Set the domain to exclude 0 and include only the range from the minimum to maximum y-values
+      .range([innerHeight, 0]);
 
     svg.append("g")
       .call(d3.axisLeft(y));
@@ -85,7 +85,7 @@ const LineChartD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
         .y(function (d) { return y(d.y) })
       );
 
-  }, [data, width, height]);
+  }, [data, width, height, xAxiasLable, yAxiasLable]);
 
   return (
     <svg ref={svgRef} width={width} height={height}>

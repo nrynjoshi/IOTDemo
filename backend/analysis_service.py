@@ -16,8 +16,6 @@ def health_record_analysis():
     db_list = azure_blob_call_service.getUserRecordDbContainerData("hourlyHeathRecord")
     if len(db_list) == 0:
         return {'status': 'error', 'message': ''}
-    start_date_string = "15/04/2024"
-    end_date_string = "30/04/2024"
 
     # pre processing record
     list = clean_record_and_preprocess(db_list, None, None)
