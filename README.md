@@ -1,3 +1,14 @@
+# Declaration
+This an application prototype of Data Visualization for Elder home care research project. The research has been submitted to Leeds Beckett University in a partial fulfillment for the degree of the MSc. Information and Technology, May 2024.
+This research has been conducted under the supervision of Dr. Gopal Jamnal, a senior lecturer at Leeds Beckett University.
+
+# Author Information
+<div>
+<div>Name: <b>Narayan Joshi</b></div>
+<div>Student ID: <b>77354106</b> </div>
+<div>MSc. IT Software Engineering</div>
+</div>
+
 #  Data Visualization For Home Care
 <p float="left">
 <span>
@@ -8,6 +19,7 @@ All collected data is securely stored on the Azure cloud platform, ensuring reli
 Furthermore, leveraging state-of-the-art machine learning algorithms, our application offers predictive analysis based on individual health parameters. By analyzing historical data and trends, our algorithm provides personalized predictions, enabling users to proactively manage their health.
 
 Experience the future of healthcare with our innovative solution, where data-driven insights and advanced technology converge to enhance wellness and quality of life.
+<div>To access a live demo application,  <a href="https://elderdatavisualization.azurewebsites.net/">Click Me</a></div>
 </span>
 </p>
 
@@ -36,33 +48,37 @@ The csv data set for the application has been save on csv datasets directory and
 
 # Software Architecture Diagram
 
-<img src="./readme-img/software-architecture-diagram.png" width="800" height="300">
+<img src="./readme-img/software-architecture-diagram.png" width="800" >
+
+# Deployment workflow using CI/CD pipeline
+
+<img src="./readme-img/Deployment-workflow-using-CI-CD-pipeline.png" width="800" >
 
 # Data Visualization Sample Screenshot
-<table>
+<table style="background-color: white">
  <tr>
-    <td><img src="./readme-img/heart-rate-analysis.png" width="400" height="200"></td>
-    <td><img src="./readme-img/disease-finder.png" width="400" height="200"></td>
+    <td><img src="./readme-img/heart-rate-analysis.png" width="400" ></td>
+    <td><img src="./readme-img/disease-finder.png" width="400" ></td>
  </tr>
  <tr>
-    <td><img src="./readme-img/spo2-analysis.png" width="400" height="200"></td>
-    <td><img src="./readme-img/step-analysis.png" width="400" height="200"></td>
+    <td><img src="./readme-img/spo2-analysis.png" width="400" ></td>
+    <td><img src="./readme-img/step-analysis.png" width="400" ></td>
  </tr>
  <tr>
-    <td><img src="./readme-img/respiratory-rate-analysis.png" width="400" height="200"></td>
-    <td><img src="./readme-img/sleep-pattern-analysis.png" width="400" height="200"></td>
+    <td><img src="./readme-img/respiratory-rate-analysis.png" width="400" ></td>
+    <td><img src="./readme-img/sleep-pattern-analysis.png" width="400" ></td>
  </tr>
  <tr>
-    <td><img src="./readme-img/blood-sugar-analysis.png" width="400" height="200"></td>
-    <td><img src="./readme-img/body-temperature-analysis.png" width="400" height="200"></td>
+    <td><img src="./readme-img/blood-sugar-analysis.png" width="400" ></td>
+    <td><img src="./readme-img/body-temperature-analysis.png" width="400" ></td>
  </tr>
  <tr>
-    <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram.png" width="400" height="200"></td>
-    <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram1.png" width="400" height="200"></td>
+    <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram.png" width="400" ></td>
+    <td><img src="./readme-img/Health-Parameter-and-possible-disease-outcome-flow-diagram1.png" width="400" ></td>
  </tr>
 <tr>
-    <td><img src="./readme-img/emergency-contact-list.png" width="600" height="200"></td>
-    <td><img src="./readme-img/dashboard-up-to-date-health-record.png" width="400" height="200"></td>
+    <td><img src="./readme-img/emergency-contact-list.png" width="600" ></td>
+    <td><img src="./readme-img/dashboard-up-to-date-health-record.png" width="400" ></td>
  </tr>
 </table>
 
