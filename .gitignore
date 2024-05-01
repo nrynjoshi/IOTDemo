@@ -1,23 +1,29 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# C extensions
+*.so
 
-# testing
-/coverage
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
 
-# production
-/build
+# Environment variables
+.env
 
-# misc
+# Local development settings
+local_settings.py
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Miscellaneous
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
