@@ -14,16 +14,14 @@ class CurrentDashboardDisplay extends React.Component {
           return (
                <div>
                     <div>
-                         <h2>{displayText}</h2>
+                         <h2>{displayText}<BeepSound value={displayValue} minNormalValue={minNormalValue} maxNormalValue={maxNormalValue}></BeepSound></h2>
                          <div className="flex items-center">
                               {customSegmentStops ? (
                                    <SpeedometerD3 value={displayValue} customSegmentStops={customSegmentStops} customSegmentLabels={customSegmentLabels} />
                               ) : (
                                    <span className="text-red-500 text-6xl font-bold text-center p-3">{displayValue}</span>
                               )}
-                              <div>
-                                   <BeepSound value={displayValue} minNormalValue={minNormalValue} maxNormalValue={maxNormalValue}></BeepSound>
-                              </div>
+                            
                          </div>
                     </div>
                </div>
