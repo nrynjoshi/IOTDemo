@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useSound from 'use-sound';
-import beepSound from '../audio/beep-02.mp3';
+import beepSound from './audio/beep-02.mp3';
 
 const BeepSound = ({ value, minNormalValue, maxNormalValue }) => {
   const [play, { stop }] = useSound(beepSound);

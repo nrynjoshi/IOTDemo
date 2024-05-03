@@ -1,5 +1,4 @@
 import React from "react";
-import HttpClient from "../HttpClient"
 import { createSankeyDiagramSVG } from "./SankeyDiagramD3"
 
 class SankeyDiagram extends React.Component {
@@ -7,21 +6,10 @@ class SankeyDiagram extends React.Component {
     state = { data: null, linkColor: "source", nodeAlignment: "sankeyJustify", httpErrorMessage: null, isLoading: false };
 
     componentDidMount() {
-        const url = this.props.dataEndpoint;
-        //calling api for data
-        const fetchData = async () => {
-            try {
-                this.setState({ isLoading: true })
-                const data = await HttpClient.get(url);
-                this.setState({ data: data, httpErrorMessage: null });
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                this.setState({ data: null, httpErrorMessage: JSON.stringify(error.toString()) });
-            } finally {
-                this.setState({ isLoading: false })
-            }
-        };
-        fetchData();
+        const activitiesTrack = this.props.data;
+        this.setState({httpErrorMessage: activitiesTrack.httpErrorMessage})
+        this.setState({isLoading: activitiesTrack.isLoading})
+        this.setState({data: activitiesTrack.data})
     }
 
     componentDidUpdate() {

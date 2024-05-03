@@ -1,5 +1,5 @@
 import React from "react";
-import BeepSound from "./BeepSound";
+import BeepSound from "./BeepSound.js";
 import SpeedometerD3 from "./SpeedometerDiagram/SpeedometerD3.js";
 
 class CurrentDashboardDisplay extends React.Component {

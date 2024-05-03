@@ -1,5 +1,4 @@
 import React from "react";
-import HttpClient from "../HttpClient"
 import HeatMapD3 from "./HeatMapD3.js";
 
 class HeatMap extends React.Component {
@@ -25,38 +24,24 @@ class HeatMap extends React.Component {
     this.setState({ yAxiasLable: this.props.yAxiasLable })
   }
 
+  componentDidUpdate() {
+    const data = this.props.data;
+    // Check if the data prop has changed
+    if ((this.state.responseBody !== data)) {
+        this.setState({responseBody: data})
+    }
+  }
+
   formSubmitHandler = e => {
     e.preventDefault()
     const { requestBody } = this.state
-    console.log('Form Submit Record')
-    console.log(requestBody)
-
-    const url = '/report/heart-rate';
-    //calling api for data
-    const postRecord = async () => {
-      try {
-        this.setState({ responseBody: null });
-        this.setState({ isLoading: true })
-        const responseBody = await HttpClient.post(url, requestBody);
-        this.setState({ responseBody: responseBody, httpErrorMessage: null });
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        this.setState({ responseBody: null, httpErrorMessage: JSON.stringify(error.toString()) });
-      } finally {
-        this.setState({ isLoading: false })
-      }
-    };
-    postRecord()
+    this.props.onFormSubmit(requestBody)
   }
 
   render() {
     const { httpErrorMessage, isLoading, requestBody, responseBody, xAxiasLable, yAxiasLable } = this.state
 
     const handleChange = (event, staticValue) => {
-      // You can now use both the selected value and the static value
-      console.log("Selected Value:", event.target.value);
-      console.log("Static Value:", staticValue);
-
       const { requestBody } = this.state
       requestBody[staticValue] = event.target.value
       this.setState({ requestBody: requestBody })

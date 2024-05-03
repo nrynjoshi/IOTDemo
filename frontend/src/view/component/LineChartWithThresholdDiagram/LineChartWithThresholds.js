@@ -1,5 +1,4 @@
 
-import HttpClient from "../HttpClient"
 import React from "react";
 import LineChartWithThresholdsD3 from "./LineChartWithThresholdsD3.js";
 
@@ -27,28 +26,18 @@ class LineChartWithThresholds extends React.Component {
         this.setState({ thresholds: this.props.thresholds })
     }
 
+    componentDidUpdate() {
+        const data = this.props.data;
+        // Check if the data prop has changed
+        if ((this.state.responseBody !== data)) {
+            this.setState({responseBody: data})
+        }
+      }
+
     formSubmitHandler = e => {
         e.preventDefault()
-        const { requestBody, endpoint } = this.state
-        console.log('Form Submit Record')
-        console.log(requestBody)
-
-        const url = endpoint;
-        //calling api for data
-        const postRecord = async () => {
-            try {
-                this.setState({ responseBody: null });
-                this.setState({ isLoading: true })
-                const responseBody = await HttpClient.post(url, requestBody);
-                this.setState({ responseBody: responseBody, httpErrorMessage: null });
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                this.setState({ responseBody: null, httpErrorMessage: JSON.stringify(error.toString()) });
-            } finally {
-                this.setState({ isLoading: false })
-            }
-        };
-        postRecord()
+        const { requestBody } = this.state
+        this.props.onFormSubmit(requestBody)
     }
 
 
@@ -58,10 +47,6 @@ class LineChartWithThresholds extends React.Component {
         const { httpErrorMessage, isLoading, requestBody, responseBody, xAxiasLable, yAxiasLable, thresholds } = this.state
 
         const handleChange = (event, staticValue) => {
-            // You can now use both the selected value and the static value
-            console.log("Selected Value:", event.target.value);
-            console.log("Static Value:", staticValue);
-
             const { requestBody } = this.state
             requestBody[staticValue] = event.target.value
             this.setState({ requestBody: requestBody })
