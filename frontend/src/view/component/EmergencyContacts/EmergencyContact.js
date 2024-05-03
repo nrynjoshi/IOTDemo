@@ -1,31 +1,18 @@
 import React from "react";
-import HttpClient from "./HttpClient"
 import QRCode from 'react-qr-code';
 
 class EmergencyContact extends React.Component {
-    state = { data: null, httpErrorMessage: null, isLoading: false };
+    state = { httpErrorMessage:null, isLoading:false, data:null };
 
     componentDidMount() {
-        const url = this.props.dataEndpoint;
-        //calling api for data
-        const fetchData = async () => {
-            try {
-                this.setState({ isLoading: true })
-                const data = await HttpClient.get(url);
-                this.setState({ data: data, httpErrorMessage: null });
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                this.setState({ data: null, httpErrorMessage: JSON.stringify(error.toString()) });
-            } finally {
-                this.setState({ isLoading: false })
-            }
-        };
-        fetchData();
+        const emergencyContacts = this.props.data;
+        this.setState({httpErrorMessage: emergencyContacts.httpErrorMessage})
+        this.setState({isLoading: emergencyContacts.isLoading})
+        this.setState({data: emergencyContacts.data})
     }
 
     render() {
         const { httpErrorMessage, isLoading, data } = this.state
-
         return (
             <div>
                 {isLoading ? (
@@ -47,7 +34,7 @@ class EmergencyContact extends React.Component {
                                     <QRCode
                                         title={emergencyContact.name}
                                         value={emergencyContact.contact_number}
-                                        size={'120'}
+                                        size={120}
                                     />
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 # Declaration
-This an application prototype of Data Visualization for Elder home care research project. The research has been submitted to Leeds Beckett University in a partial fulfillment for the degree of the MSc. Information and Technology, May 2024.
+This an application prototype of 'Efficient Data Visualization & Machine Learning (ML) for Home care: D3 Components in Python-React on Azure with DevOps' research project. The research has been submitted to Leeds Beckett University in a partial fulfillment for the degree of the MSc. Information and Technology, May 2024.
 This research has been conducted under the supervision of Dr. Gopal Jamnal, a senior lecturer at Leeds Beckett University.
 
 # Author Information
@@ -9,7 +9,7 @@ This research has been conducted under the supervision of Dr. Gopal Jamnal, a se
 <div>MSc. IT Software Engineering</div>
 </div>
 
-#  Data Visualization For Home Care
+#  Efficient Data Visualization & ML for Home care: D3 Components in Python-React on Azure with DevOps
 <p float="left">
 <span>
 Welcome to our cutting-edge application designed for comprehensive health monitoring through advanced data visualization. Our platform integrates seamlessly with various sensors via third-party applications to gather vital health metrics such as heart rate, blood pressure, sugar levels, respiratory data, and more.

@@ -1,5 +1,4 @@
 import React from "react";
-import HttpClient from "./HttpClient"
 
 class DiseaseFinderML extends React.Component {
 
@@ -20,28 +19,25 @@ class DiseaseFinderML extends React.Component {
         isLoading: false
     };
 
+  componentDidUpdate() {
+    const diseaseFinder = this.props.data;
+    // Check if the data prop has changed
+    if ((this.state.responseBody !== diseaseFinder.data) ||
+    (this.state.httpErrorMessage !== diseaseFinder.httpErrorMessage) ||
+    (this.state.isLoading !== diseaseFinder.isLoading)
+) {
+        const diseaseFinder = this.props.data;
+        this.setState({httpErrorMessage: diseaseFinder.httpErrorMessage})
+        this.setState({isLoading: diseaseFinder.isLoading})
+        this.setState({responseBody: diseaseFinder.data})
+    }
+  }
+
     formSubmitHandler = e => {
         e.preventDefault()
         const { requestBody } = this.state
-        console.log('Form Submit Record')
-        console.log(requestBody)
-
-        const url = '/decision_tree';
-        //calling api for data
-        const postRecord = async () => {
-            try {
-                this.setState({ responseBody: null });
-                this.setState({ isLoading: true })
-                const responseBody = await HttpClient.post(url, requestBody);
-                this.setState({ responseBody: responseBody, httpErrorMessage: null });
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                this.setState({ responseBody: null, httpErrorMessage: JSON.stringify(error.toString()) });
-            } finally {
-                this.setState({ isLoading: false })
-            }
-        };
-        postRecord()
+        this.props.onFormSubmit(requestBody)
+        
     }
 
     render() {
@@ -49,9 +45,6 @@ class DiseaseFinderML extends React.Component {
 
         const handleChange = (event, staticValue) => {
             // You can now use both the selected value and the static value
-            console.log("Selected Value:", event.target.value);
-            console.log("Static Value:", staticValue);
-
             const { requestBody } = this.state
             requestBody[staticValue] = event.target.value
             this.setState({ requestBody: requestBody })
@@ -135,21 +128,21 @@ class DiseaseFinderML extends React.Component {
                         {responseBody &&
                             <div>
                                 Based on the health parameters provided, it has been determined that the symptoms align with below mention disease with result outcome.
-                                <div class="relative overflow-x-auto">
-                                    <table class="w-6/12 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-black">
+                                <div className="relative overflow-x-auto">
+                                    <table className="w-6/12 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-black">
                                             <tr>
-                                                <th scope="col" class="px-4 py-3">
+                                                <th scope="col" className="px-4 py-3">
                                                     Disease
                                                 </th>
-                                                <th scope="col" class="px-4 py-3">
+                                                <th scope="col" className="px-4 py-3">
                                                     Outcome
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {responseBody['output'].map((item, index) => (
-                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                     <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-white">{item.disease}</th>
                                                     {item.outcome === 'Positive' &&
                                                         <th scope="row" className="px-6 py-4 font-medium text-xl text-gray-900 whitespace-nowrap dark:text-red-400">{item.outcome}</th>

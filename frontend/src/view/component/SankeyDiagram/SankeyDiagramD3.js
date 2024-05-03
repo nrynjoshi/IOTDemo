@@ -65,7 +65,6 @@ export const createSankeyDiagramSVG = (data, linkColor, nodeAlignment) => {
 
     // Creates a gradient, if necessary, for the source-target color option.
     if (linkColor === "source-target") {
-        console.log("inside source-target");
         const gradient = link.append("linearGradient")
             .attr("id", d => d.uid)
             .attr("gradientUnits", "userSpaceOnUse")

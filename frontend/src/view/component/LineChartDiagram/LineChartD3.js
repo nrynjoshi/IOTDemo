@@ -9,11 +9,8 @@ const LineChartD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
 
     // Parse dates
     const parseDate = d3.timeParse('%m/%d/%Y');
-    data.forEach(d => {
-      d.x = parseDate(d.x);
-      d.y = +d.y; // Convert y to number
-    });
-    console.log(data);
+
+
 
     // set the dimensions and margins of the graph
     const margin = { top: 10, right: 30, bottom: 50, left: 85 };
@@ -30,7 +27,7 @@ const LineChartD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
 
     // Add X axis --> it is a date format
     const x = d3.scaleTime()
-      .domain(d3.extent(data, function (d) { return d.x; }))
+      .domain(d3.extent(data, function (d) { return parseDate(d.x); }))
       .range([0, innerWidth]);
 
     svg.append("g")
@@ -81,7 +78,7 @@ const LineChartD3 = ({ data, width, height, xAxiasLable, yAxiasLable }) => {
       .attr("stroke", "steelblue")
       .attr("stroke-width", 1.5)
       .attr("d", d3.line()
-        .x(function (d) { return x(d.x) })
+        .x(function (d) { return x(parseDate(d.x)) })
         .y(function (d) { return y(d.y) })
       );
 
